@@ -1,0 +1,25 @@
+zerops:
+  - setup: static
+    # ==== How to build your application ====
+    build:
+      # build container technology
+      base: nodejs@20
+
+      # commands to run before deployment
+      buildCommands:
+        - npm i
+        - npm run build
+
+      # files/folders to deploy to web root
+      deployFiles:
+        - ./~
+
+      # files to cache between builds
+      cache:
+        - node_modules
+        - package-lock.json
+
+    # ==== How to run your application ====
+    run:
+      # static web server for serving HTML/JS/CSS
+      base: static

@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "build": "echo 'Static site ready for deployment'",
     "translate": "node tools/translate.mjs"
   }
 }

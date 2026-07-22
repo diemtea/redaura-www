@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/modernist-99379f4a-fac2-43db-8b78-a1aa757bd913/styles.css">
+  <script src="_ds/modernist-99379f4a-fac2-43db-8b78-a1aa757bd913/_ds_bundle.js"></script>
+  <script src="image-slot.js"></script>
+  <style>
+    body { margin: 0; background: transparent; overflow: hidden; }
+    @keyframes sp-push { 0% { transform: translateY(-130%); opacity: 0; } 70% { transform: translateY(4px); } 100% { transform: none; opacity: 1; } }
+    @keyframes sp-screen { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px;">
+  <div style="width: {{ phoneW }}; height: {{ phoneH }}; flex: none;">
+  <div style="transform: scale({{ phoneScale }}); transform-origin: top left; width: 402px; height: 874px;">
+  <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+    <div dir="{{ dir }}" style="position: relative; height: 100%; display: flex; flex-direction: column; background: var(--color-bg); overflow: hidden; font-family: var(--font-body); padding-top: 62px; box-sizing: border-box;">
+      <sc-if value="{{ screenFeed }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; flex: 1; min-height: 0; animation: sp-screen 260ms ease-out;">
+          <div style="padding: 14px 18px 12px; border-bottom: 2px solid var(--color-divider);">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 9px;">
+              <div style="display: flex; align-items: center; gap: 9px;">
+                <span style="width: 10px; height: 10px; background: var(--color-accent);"></span>
+                <span style="font-family: var(--font-heading); font-weight: 800; font-size: 19px; letter-spacing: -0.01em;">Red<span style="color: var(--color-accent);">aura</span></span>
+              </div>
+              <select value="{{ lang }}" onChange="{{ setLang }}" aria-label="Language" style="appearance: none; -webkit-appearance: none; border: 2px solid var(--color-text); border-radius: 0; background: transparent; color: var(--color-text); font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 8px; cursor: pointer;">
+                <option value="en">EN</option>
+                <option value="nl">NL</option>
+                <option value="de">DE</option>
+                <option value="fr">FR</option>
+                <option value="es">ES</option>
+                <option value="it">IT</option>
+                <option value="ar">AR</option>
+                <option value="pap">PAP</option>
+                <option value="zh">ZH</option>
+                <option value="ja">JA</option>
+              </select>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 8px;">
+              <span style="font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 600; font-feature-settings: 'tnum' 1;">{{ regionLabel }}</span>
+              <span style="font-size: 11px; color: color-mix(in srgb, var(--color-text) 60%, transparent);">{{ t.localBy }} {{ regionOrg }}</span>
+            </div>
+          </div>
+          <div style="flex: 1; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none;">
+            <div style="padding: 16px 18px 6px; font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">{{ t.near }}</div>
+            <sc-for list="{{ near }}" as="a" hint-placeholder-count="2">
+              <div onClick="{{ a.open }}" role="button" tabindex="0" style="display: grid; grid-template-columns: 14px 1fr; gap: 4px 12px; padding: 13px 18px 14px; border-top: 1px solid var(--color-divider); cursor: pointer; transition: background 120ms;" style-hover="background: color-mix(in srgb, var(--color-text) 4%, transparent);" style-active="background: color-mix(in srgb, var(--color-text) 9%, transparent);">
+                <span style="width: 10px; height: 10px; margin-top: 4px; background: {{ a.dotBg }}; border: 2px solid {{ a.dotBd }}; box-sizing: border-box;"></span>
+                <div style="min-width: 0;">
+                  <div style="font-family: var(--font-heading); font-weight: 800; font-size: 15px; line-height: 1.25; letter-spacing: -0.01em;">{{ a.title }}</div>
+                  <div style="font-size: 13px; line-height: 1.45; margin-top: 3px; color: color-mix(in srgb, var(--color-text) 72%, transparent);">{{ a.finding }}</div>
+                  <div style="font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; margin-top: 7px; color: color-mix(in srgb, var(--color-text) 55%, transparent); font-feature-settings: 'tnum' 1;">{{ a.org }} · {{ a.time }}</div>
+                </div>
+              </div>
+            </sc-for>
+            <div style="padding: 22px 18px 6px; font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 60%, transparent); font-weight: 600; border-top: 2px solid var(--color-divider); margin-top: 14px;">{{ t.network }}</div>
+            <sc-for list="{{ net }}" as="a" hint-placeholder-count="3">
+              <div onClick="{{ a.open }}" role="button" tabindex="0" style="display: grid; grid-template-columns: 14px 1fr; gap: 4px 12px; padding: 13px 18px 14px; border-top: 1px solid var(--color-divider); cursor: pointer; transition: background 120ms;" style-hover="background: color-mix(in srgb, var(--color-text) 4%, transparent);" style-active="background: color-mix(in srgb, var(--color-text) 9%, transparent);">
+                <span style="width: 10px; height: 10px; margin-top: 4px; background: {{ a.dotBg }}; border: 2px solid {{ a.dotBd }}; box-sizing: border-box;"></span>
+                <div style="min-width: 0;">
+                  <div style="font-family: var(--font-heading); font-weight: 800; font-size: 15px; line-height: 1.25; letter-spacing: -0.01em;">{{ a.title }}</div>
+                  <div style="font-size: 13px; line-height: 1.45; margin-top: 3px; color: color-mix(in srgb, var(--color-text) 72%, transparent);">{{ a.finding }}</div>
+                  <div style="font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; margin-top: 7px; color: color-mix(in srgb, var(--color-text) 55%, transparent); font-feature-settings: 'tnum' 1;">{{ a.org }} · {{ a.city }} · {{ a.time }}</div>
+                </div>
+              </div>
+            </sc-for>
+            <div style="padding: 18px 18px 48px; border-top: 1px solid var(--color-divider); font-size: 11.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.privacy }}</div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ screenDetail }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; flex: 1; min-height: 0; animation: sp-screen 260ms ease-out;">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 12px 10px 6px; border-bottom: 2px solid var(--color-divider);">
+            <button type="button" class="btn btn-ghost" onClick="{{ back }}">‹ {{ t.back }}</button>
+            <span style="font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 60%, transparent);">{{ d.time }}</span>
+          </div>
+          <div style="flex: 1; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; padding: 18px 18px 56px;">
+            <span style="display: inline-block; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; padding: 4px 10px; background: {{ d.sevBg }}; color: {{ d.sevFg }}; border: 2px solid {{ d.sevBd }};">{{ d.sevLabel }}</span>
+            <h2 style="font-family: var(--font-heading); font-weight: 800; font-size: 24px; line-height: 1.12; letter-spacing: -0.015em; margin: 14px 0 6px;">{{ d.title }}</h2>
+            <p style="font-size: 13.5px; line-height: 1.55; margin: 0 0 16px; color: color-mix(in srgb, var(--color-text) 75%, transparent);">{{ d.finding }}</p>
+            <div style="height: 190px; border: 1px solid var(--color-divider); background: repeating-linear-gradient(-45deg, var(--color-surface) 0 10px, var(--color-neutral-200) 10px 20px); display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: 14px 16px; gap: 4px;">
+              <span style="width: 10px; height: 10px; background: var(--color-neutral-500);"></span>
+              <span style="font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-neutral-700);">{{ t.sample }} · {{ d.org }}</span>
+            </div>
+            <div style="margin-top: 18px; border-top: 2px solid var(--color-divider);">
+              <sc-for list="{{ d.rows }}" as="r" hint-placeholder-count="4">
+                <div style="display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--color-divider);">
+                  <span style="font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 60%, transparent); padding-top: 2px;">{{ r.k }}</span>
+                  <span style="font-size: 13.5px; line-height: 1.45; font-weight: 600;">{{ r.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top: 20px; font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">{{ t.todo }}</div>
+            <sc-for list="{{ d.advice }}" as="tip" hint-placeholder-count="3">
+              <div style="display: flex; gap: 11px; align-items: flex-start; margin-top: 10px;">
+                <span style="width: 8px; height: 8px; flex: none; margin-top: 5px; background: var(--color-accent);"></span>
+                <span style="font-size: 13.5px; line-height: 1.5;">{{ tip }}</span>
+              </div>
+            </sc-for>
+            <div style="margin-top: 24px; padding: 14px 16px; background: var(--color-surface); display: flex; flex-direction: column; gap: 4px;">
+              <span style="font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 60%, transparent);">{{ t.published }}</span>
+              <span style="font-family: var(--font-heading); font-weight: 800; font-size: 15px;">{{ d.org }}</span>
+              <span style="font-size: 12px; color: color-mix(in srgb, var(--color-text) 65%, transparent);">{{ t.verified }} · {{ d.fence }}</span>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ pushVisible }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ openPush }}" onAnimationEnd="{{ settlePush }}" role="button" tabindex="0" style="position: absolute; top: 70px; left: 12px; right: 12px; z-index: 40; background: var(--color-neutral-900); color: var(--color-bg); padding: 13px 15px 14px; box-shadow: var(--shadow-lg); cursor: pointer; animation: {{ pushAnim }};">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <span style="display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75;"><span style="width: 8px; height: 8px; background: var(--color-accent-500);"></span>Redaura</span>
+            <span style="font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.6;">{{ t.now }}</span>
+          </div>
+          <div style="font-family: var(--font-heading); font-weight: 800; font-size: 14.5px; line-height: 1.25; margin-top: 7px;">{{ pushTitle }}</div>
+          <div style="font-size: 12.5px; line-height: 1.45; margin-top: 3px; opacity: 0.8;">{{ pushBody }}</div>
+        </div>
+      </sc-if>
+    </div>
+  </x-import>
+  </div>
+  </div>
+  <button type="button" class="btn btn-ghost" onClick="{{ replay }}">{{ t.replay }}</button>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1360, &quot;height&quot;: 940}, &quot;region&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;Amsterdam&quot;, &quot;Utrecht&quot;, &quot;New York&quot;], &quot;default&quot;: &quot;Amsterdam&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Demo&quot;}, &quot;autoPush&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Demo&quot;}}">
+const ORG = { Amsterdam: 'Unity · Jellinek', Utrecht: 'Trimbos · DIMS', 'New York': 'DanceSafe NYC' };
+const ALERTS = [
+  { id: 'ams-pmma', city: 'Amsterdam', sev: 'danger', title: 'Red alert: "skull" pills contain PMMA', finding: 'Orange pills with a skull logo, sold as MDMA, contain PMMA and no MDMA. Onset is slow, so people redose and overdose — two hospitalisations this week.', org: 'Unity · Jellinek', time: '1h ago', fence: 'Geofence: Amsterdam, city-wide',
+    rows: [{ k: 'Sold as', v: 'Ecstasy (MDMA)' }, { k: 'Contains', v: 'PMMA — no MDMA' }, { k: 'Risk', v: 'Fatal at high doses, delayed onset' }, { k: 'Sample', v: 'Orange pill, skull logo' }],
+    advice: ['Do not take this pill — PMMA can be deadly.', 'It comes up slowly; never redose because "nothing is happening".', 'Test any pill free and anonymously at a DIMS testing point.'] },
+  { id: 'ams-punisher', city: 'Amsterdam', sev: 'high', title: '"Blue Punisher" — 330 mg MDMA', finding: 'More than double a common adult dose. The same stamp is turning up at festivals across the Netherlands.', org: 'Unity · Jellinek', time: '5h ago', fence: 'Geofence: Amsterdam, Westerpark area',
+    rows: [{ k: 'Sold as', v: 'Ecstasy (MDMA)' }, { k: 'Contains', v: 'MDMA, ~330 mg per pill' }, { k: 'Risk', v: '2–3× a common adult dose' }, { k: 'Sample', v: 'Blue pill, Punisher stamp' }],
+    advice: ['A quarter is plenty this weekend — start low, wait two hours.', 'Drink roughly 250 ml water an hour and take breaks from dancing.', 'Free testing through the DIMS network, by appointment.'] },
+  { id: 'utr-2fdck', city: 'Utrecht', sev: 'high', title: '2-FDCK sold as ketamine', finding: 'Slower and longer-lasting than ketamine — easy to redose too early and go far deeper than intended.', org: 'Trimbos · DIMS', time: 'Yesterday', fence: 'Geofence: Utrecht, city-wide',
+    rows: [{ k: 'Sold as', v: 'Ketamine' }, { k: 'Contains', v: '2-FDCK (fluorexetamine)' }, { k: 'Risk', v: 'Accidental redosing, deep dissociation' }, { k: 'Sample', v: 'White crystalline powder' }],
+    advice: ['Wait at least 90 minutes before considering any more.', 'Stay seated, with people you trust.', 'Impossible to tell apart by eye — have it tested first.'] },
+  { id: 'nyc-fent', city: 'New York', sev: 'danger', title: 'Fentanyl found in cocaine', finding: 'Powder sold as cocaine in Brooklyn tested positive for fentanyl. Stimulant users rarely have opioid tolerance, so overdose risk is extreme.', org: 'DanceSafe NYC', time: '1d ago', fence: 'Geofence: New York, five boroughs',
+    rows: [{ k: 'Sold as', v: 'Cocaine' }, { k: 'Contains', v: 'Cocaine + fentanyl' }, { k: 'Risk', v: 'Fatal overdose, no opioid tolerance' }, { k: 'Sample', v: 'White powder, Brooklyn' }],
+    advice: ['Carry naloxone (Narcan) and never use alone.', 'Use fentanyl test strips before every batch.', 'Go slow — take a small test dose first, even if it looks fine.'] },
+  { id: 'nyc-tranq', city: 'New York', sev: 'notice', title: 'Xylazine ("tranq") in the opioid supply', finding: 'Xylazine is being mixed into fentanyl. Naloxone still reverses the opioid, but not the xylazine sedation, and it causes severe wounds.', org: 'DanceSafe NYC', time: '3d ago', fence: 'Geofence: New York, five boroughs',
+    rows: [{ k: 'Sold as', v: 'Heroin / fentanyl' }, { k: 'Contains', v: 'Fentanyl + xylazine' }, { k: 'Risk', v: 'Prolonged sedation, skin wounds' }, { k: 'Sample', v: 'Tan powder' }],
+    advice: ['Still give naloxone — it reverses the opioid part.', 'Place in the recovery position; sedation outlasts naloxone.', 'Free xylazine test strips are available from NEXT Distro.'] }
+];
+const SEV = {
+  danger: { label: 'Danger — do not use', bg: 'var(--color-accent)', fg: 'var(--color-bg)', bd: 'var(--color-accent)', dotBg: 'var(--color-accent)', dotBd: 'var(--color-accent)' },
+  high: { label: 'High dose / missold', bg: 'transparent', fg: 'var(--color-accent-700)', bd: 'var(--color-accent)', dotBg: 'transparent', dotBd: 'var(--color-accent)' },
+  notice: { label: 'Notice', bg: 'transparent', fg: 'var(--color-neutral-700)', bd: 'var(--color-neutral-500)', dotBg: 'transparent', dotBd: 'var(--color-neutral-500)' }
+};
+// App chrome per language (alert *content* stays as published — translating it
+// on delivery is the product feature, not the demo shell's job)
+const UI = {
+  en: { localBy: 'Local alerts by', near: 'Near you', network: 'Across the network', privacy: 'Location matching happens on this phone. No account, no history, nothing sent back.', back: 'Alerts', sample: 'Sample photo', todo: 'What to do', published: 'Published by', verified: 'Verified drug checking service', now: 'now', replay: 'Replay the push', sev_danger: 'Danger — do not use', sev_high: 'High dose / missold', sev_notice: 'Notice', rowK: ['Sold as', 'Contains', 'Risk', 'Sample'], pushNear: 'Near you:', alertBy: 'Alert by' },
+  nl: { localBy: 'Lokale meldingen door', near: 'Bij jou in de buurt', network: 'In het netwerk', privacy: 'Locatiematching gebeurt op deze telefoon. Geen account, geen geschiedenis, niets wordt teruggestuurd.', back: 'Meldingen', sample: 'Voorbeeldfoto', todo: 'Wat te doen', published: 'Gepubliceerd door', verified: 'Geverifieerde drugscheckdienst', now: 'nu', replay: 'Push opnieuw afspelen', sev_danger: 'Gevaar — niet gebruiken', sev_high: 'Hoge dosis / verkeerd verkocht', sev_notice: 'Let op', rowK: ['Verkocht als', 'Bevat', 'Risico', 'Sample'], pushNear: 'Bij jou in de buurt:', alertBy: 'Melding van' },
+  de: { localBy: 'Lokale Warnungen von', near: 'In deiner Nähe', network: 'Im Netzwerk', privacy: 'Der Standortabgleich passiert auf diesem Telefon. Kein Konto, kein Verlauf, nichts wird zurückgesendet.', back: 'Warnungen', sample: 'Beispielfoto', todo: 'Was zu tun ist', published: 'Veröffentlicht von', verified: 'Verifizierter Drug-Checking-Dienst', now: 'jetzt', replay: 'Push erneut abspielen', sev_danger: 'Gefahr — nicht konsumieren', sev_high: 'Hohe Dosis / falsch verkauft', sev_notice: 'Hinweis', rowK: ['Verkauft als', 'Enthält', 'Risiko', 'Probe'], pushNear: 'In deiner Nähe:', alertBy: 'Meldung von' },
+  fr: { localBy: 'Alertes locales par', near: 'Près de vous', network: 'Dans le réseau', privacy: "La correspondance de position se fait sur ce téléphone. Pas de compte, pas d'historique, rien n'est renvoyé.", back: 'Alertes', sample: "Photo d'exemple", todo: 'Que faire', published: 'Publié par', verified: "Service d'analyse vérifié", now: 'maintenant', replay: 'Rejouer le push', sev_danger: 'Danger — ne pas consommer', sev_high: 'Dose élevée / vendu autrement', sev_notice: 'Avis', rowK: ['Vendu comme', 'Contient', 'Risque', 'Échantillon'], pushNear: 'Près de vous :', alertBy: 'Alerte de' },
+  es: { localBy: 'Alertas locales de', near: 'Cerca de ti', network: 'En la red', privacy: 'La comprobación de ubicación ocurre en este teléfono. Sin cuenta, sin historial, nada se envía de vuelta.', back: 'Alertas', sample: 'Foto de muestra', todo: 'Qué hacer', published: 'Publicado por', verified: 'Servicio de análisis verificado', now: 'ahora', replay: 'Reproducir el push', sev_danger: 'Peligro — no consumir', sev_high: 'Dosis alta / vendido como otra cosa', sev_notice: 'Aviso', rowK: ['Vendido como', 'Contiene', 'Riesgo', 'Muestra'], pushNear: 'Cerca de ti:', alertBy: 'Alerta de' },
+  ar: { localBy: 'تنبيهات محلية من', near: 'بالقرب منك', network: 'عبر الشبكة', privacy: 'مطابقة الموقع تتم على هذا الهاتف. لا حساب، لا سجلّ، ولا يُرسل أي شيء.', back: 'التنبيهات', sample: 'صورة العينة', todo: 'ما العمل', published: 'نُشر بواسطة', verified: 'خدمة فحص مخدرات موثّقة', now: 'الآن', replay: 'إعادة تشغيل الإشعار', sev_danger: 'خطر — لا تستخدم', sev_high: 'جرعة عالية / بيع مضلل', sev_notice: 'تنبيه', rowK: ['يُباع كـ', 'يحتوي على', 'الخطر', 'العينة'], pushNear: 'بالقرب منك:', alertBy: 'تنبيه من' },
+  it: { localBy: 'Allerte locali di', near: 'Vicino a te', network: 'Nella rete', privacy: 'Il matching della posizione avviene su questo telefono. Nessun account, nessuna cronologia, nulla viene rimandato indietro.', back: 'Allerte', sample: 'Foto del campione', todo: 'Cosa fare', published: 'Pubblicato da', verified: 'Servizio di drug checking verificato', now: 'adesso', replay: 'Riproduci la push', sev_danger: 'Pericolo — non usare', sev_high: 'Dose alta / venduto come altro', sev_notice: 'Avviso', rowK: ['Venduto come', 'Contiene', 'Rischio', 'Campione'], pushNear: 'Vicino a te:', alertBy: 'Allerta di' },
+  pap: { localBy: 'Alerta lokal di', near: 'Serka di bo', network: 'Den e red', privacy: 'E matching di lokashon ta sosodé riba e telefon aki. Sin kuenta, sin historia, nada no ta wòrdu mandá bèk.', back: 'Alertanan', sample: 'Foto di muestra', todo: 'Kiko pa hasi', published: 'Publiká pa', verified: 'Servisio di tèst di droga verifiká', now: 'awor', replay: 'Pasa e push atrobe', sev_danger: 'Peliger — no usa', sev_high: 'Dosis haltu / bendé robes', sev_notice: 'Atenshon', rowK: ['Bendé komo', 'Ta kontené', 'Riesgo', 'Muestra'], pushNear: 'Serka di bo:', alertBy: 'Alerta di' },
+  zh: { localBy: '本地警报来自', near: '你附近', network: '网络其他地区', privacy: '位置匹配在本机完成。无账户、无历史记录、不回传任何数据。', back: '警报', sample: '样品照片', todo: '应对建议', published: '发布方', verified: '经认证的药检服务', now: '刚刚', replay: '重播推送', sev_danger: '危险 — 请勿使用', sev_high: '剂量过高 / 冒充销售', sev_notice: '提示', rowK: ['以何售卖', '含有', '风险', '样品'], pushNear: '你附近：', alertBy: '警报来自' },
+  ja: { localBy: 'ローカル警報:', near: '近くの警報', network: 'ネットワーク全体', privacy: '位置照合はこの端末内で行われます。アカウント不要、履歴なし、何も送信されません。', back: '警報', sample: 'サンプル写真', todo: '取るべき行動', published: '発行元', verified: '認証済み薬物検査サービス', now: 'たった今', replay: 'プッシュを再生', sev_danger: '危険 — 使用しないで', sev_high: '高用量 / 偽装販売', sev_notice: '注意', rowK: ['販売名', '含有物', 'リスク', 'サンプル'], pushNear: '近くで:', alertBy: '発行:' }
+};
+// Localized alert CONTENT — this is the product's on-delivery translation, demoed.
+// Sparse per language: any missing field falls back to the English base.
+// rows = the four row values, in base order.
+const L10N = {
+  nl: {
+    'ams-pmma': { title: 'Red alert: pillen met doodshoofdlogo bevatten PMMA', finding: 'Oranje pillen met een doodshoofdlogo, verkocht als MDMA, bevatten PMMA en geen MDMA. De werking komt traag op, dus mensen nemen bij en raken overgedoseerd — twee ziekenhuisopnames deze week.', time: '1 u geleden', fence: 'Geofence: Amsterdam, hele stad', rows: ['Ecstasy (MDMA)', 'PMMA — geen MDMA', 'Dodelijk bij hoge doses, trage werking', 'Oranje pil, doodshoofdlogo'], advice: ['Neem deze pil niet — PMMA kan dodelijk zijn.', 'Hij komt traag op; neem nooit bij omdat "er niets gebeurt".', 'Laat elke pil gratis en anoniem testen bij een DIMS-testpunt.'] },
+    'ams-punisher': { finding: 'Meer dan het dubbele van een gangbare dosis voor volwassenen. Dezelfde stempel duikt op festivals door heel Nederland op.', time: '5 u geleden', fence: 'Geofence: Amsterdam, omgeving Westerpark', rows: ['Ecstasy (MDMA)', 'MDMA, ±330 mg per pil', '2–3× een gangbare dosis', 'Blauwe pil, Punisher-stempel'], advice: ['Een kwart is dit weekend genoeg — begin laag, wacht twee uur.', 'Drink ongeveer 250 ml water per uur en neem danspauzes.', 'Gratis testen via het DIMS-netwerk, op afspraak.'] },
+    'utr-2fdck': { title: '2-FDCK verkocht als ketamine', finding: 'Trager en langduriger dan ketamine — je neemt makkelijk te vroeg bij en gaat veel dieper dan bedoeld.', time: 'Gisteren', fence: 'Geofence: Utrecht, hele stad', rows: ['Ketamine', '2-FDCK (fluorexetamine)', 'Per ongeluk bijdoseren, diepe dissociatie', 'Wit kristallijn poeder'], advice: ['Wacht minstens 90 minuten voor je meer overweegt.', 'Blijf zitten, met mensen die je vertrouwt.', 'Met het oog niet te onderscheiden — laat het eerst testen.'] },
+    'nyc-fent': { title: 'Fentanyl aangetroffen in cocaïne', finding: 'Poeder verkocht als cocaïne in Brooklyn testte positief op fentanyl. Stimulantgebruikers hebben zelden opioïdtolerantie, dus het overdoseringsrisico is extreem.', time: '1 dag geleden', fence: 'Geofence: New York, vijf boroughs', rows: ['Cocaïne', 'Cocaïne + fentanyl', 'Dodelijke overdosis, geen opioïdtolerantie', 'Wit poeder, Brooklyn'], advice: ['Draag naloxon (Narcan) bij je en gebruik nooit alleen.', 'Gebruik fentanyl-teststrips vóór elke batch.', 'Rustig aan — neem eerst een kleine testdosis, ook als het er goed uitziet.'] },
+    'nyc-tranq': { title: 'Xylazine ("tranq") in het opioïdenaanbod', finding: 'Xylazine wordt door fentanyl gemengd. Naloxon keert het opioïde nog steeds om, maar niet de xylazine-verdoving, en het veroorzaakt ernstige wonden.', time: '3 dagen geleden', fence: 'Geofence: New York, vijf boroughs', rows: ['Heroïne / fentanyl', 'Fentanyl + xylazine', 'Langdurige verdoving, huidwonden', 'Bruinig poeder'], advice: ['Geef alsnog naloxon — het keert het opioïde deel om.', 'Leg de persoon in stabiele zijligging; de verdoving duurt langer dan naloxon.', 'Gratis xylazine-teststrips via NEXT Distro.'] }
+  },
+  de: {
+    'ams-pmma': { title: 'Red Alert: Pillen mit Totenkopf-Logo enthalten PMMA', finding: 'Orange Pillen mit Totenkopf-Logo, als MDMA verkauft, enthalten PMMA und kein MDMA. Die Wirkung setzt langsam ein — Menschen legen nach und überdosieren. Zwei Krankenhauseinweisungen diese Woche.', time: 'vor 1 Std.', fence: 'Geofence: Amsterdam, stadtweit', rows: ['Ecstasy (MDMA)', 'PMMA — kein MDMA', 'Tödlich bei hohen Dosen, verzögerter Wirkeintritt', 'Orange Pille, Totenkopf-Logo'], advice: ['Diese Pille nicht nehmen — PMMA kann tödlich sein.', 'Sie wirkt langsam; nie nachlegen, weil „nichts passiert".', 'Jede Pille kostenlos und anonym an einem DIMS-Testpunkt testen lassen.'] },
+    'ams-punisher': { finding: 'Mehr als das Doppelte einer üblichen Erwachsenendosis. Derselbe Stempel taucht auf Festivals in den ganzen Niederlanden auf.', time: 'vor 5 Std.', fence: 'Geofence: Amsterdam, Gegend Westerpark', rows: ['Ecstasy (MDMA)', 'MDMA, ca. 330 mg pro Pille', '2–3× eine übliche Erwachsenendosis', 'Blaue Pille, Punisher-Stempel'], advice: ['Ein Viertel reicht dieses Wochenende — niedrig anfangen, zwei Stunden warten.', 'Etwa 250 ml Wasser pro Stunde trinken und Tanzpausen machen.', 'Kostenlose Tests über das DIMS-Netzwerk, mit Termin.'] },
+    'utr-2fdck': { title: '2-FDCK als Ketamin verkauft', finding: 'Langsamer und langanhaltender als Ketamin — man legt leicht zu früh nach und gerät viel tiefer als beabsichtigt.', time: 'Gestern', fence: 'Geofence: Utrecht, stadtweit', rows: ['Ketamin', '2-FDCK (Fluorexetamin)', 'Versehentliches Nachdosieren, tiefe Dissoziation', 'Weißes kristallines Pulver'], advice: ['Mindestens 90 Minuten warten, bevor mehr in Frage kommt.', 'Sitzen bleiben, mit Menschen, denen du vertraust.', 'Mit bloßem Auge nicht zu unterscheiden — vorher testen lassen.'] },
+    'nyc-fent': { title: 'Fentanyl in Kokain gefunden', finding: 'Als Kokain verkauftes Pulver in Brooklyn wurde positiv auf Fentanyl getestet. Stimulanzien-Konsumierende haben selten Opioidtoleranz — das Überdosisrisiko ist extrem.', time: 'vor 1 Tag', fence: 'Geofence: New York, fünf Boroughs', rows: ['Kokain', 'Kokain + Fentanyl', 'Tödliche Überdosis, keine Opioidtoleranz', 'Weißes Pulver, Brooklyn'], advice: ['Naloxon (Narcan) dabei haben und nie allein konsumieren.', 'Vor jeder Charge Fentanyl-Teststreifen benutzen.', 'Langsam — erst eine kleine Testdosis, auch wenn es harmlos aussieht.'] },
+    'nyc-tranq': { title: 'Xylazin („Tranq") im Opioid-Angebot', finding: 'Xylazin wird Fentanyl beigemischt. Naloxon kehrt das Opioid weiterhin um, nicht aber die Xylazin-Sedierung, und es verursacht schwere Wunden.', time: 'vor 3 Tagen', fence: 'Geofence: New York, fünf Boroughs', rows: ['Heroin / Fentanyl', 'Fentanyl + Xylazin', 'Anhaltende Sedierung, Hautwunden', 'Bräunliches Pulver'], advice: ['Trotzdem Naloxon geben — es kehrt den Opioidanteil um.', 'In die stabile Seitenlage bringen; die Sedierung hält länger als Naloxon.', 'Kostenlose Xylazin-Teststreifen gibt es bei NEXT Distro.'] }
+  },
+  fr: {
+    'ams-pmma': { title: 'Alerte rouge : des pilules « tête de mort » contiennent de la PMMA', finding: "Des pilules orange au logo tête de mort, vendues comme MDMA, contiennent de la PMMA et pas de MDMA. La montée est lente : on reprend une dose et on surdose — deux hospitalisations cette semaine.", time: 'il y a 1 h', fence: 'Géofence : Amsterdam, toute la ville', rows: ['Ecstasy (MDMA)', 'PMMA — pas de MDMA', 'Mortel à haute dose, montée retardée', 'Pilule orange, logo tête de mort'], advice: ['Ne prenez pas cette pilule — la PMMA peut être mortelle.', "La montée est lente ; ne reprenez jamais parce que « rien ne se passe ».", 'Faites tester toute pilule, gratuitement et anonymement, à un point DIMS.'] },
+    'ams-punisher': { title: '« Blue Punisher » — 330 mg de MDMA', finding: "Plus du double d'une dose adulte courante. Le même tampon circule dans les festivals de tous les Pays-Bas.", time: 'il y a 5 h', fence: 'Géofence : Amsterdam, secteur Westerpark', rows: ['Ecstasy (MDMA)', 'MDMA, ≈330 mg par pilule', "2–3× une dose adulte courante", 'Pilule bleue, tampon Punisher'], advice: ["Un quart suffit ce week-end — commencez bas, attendez deux heures.", "Buvez environ 250 ml d'eau par heure et faites des pauses.", 'Test gratuit via le réseau DIMS, sur rendez-vous.'] },
+    'utr-2fdck': { title: '2-FDCK vendue comme kétamine', finding: 'Plus lente et plus longue que la kétamine — on reprend trop tôt et on part bien plus loin que prévu.', time: 'Hier', fence: 'Géofence : Utrecht, toute la ville', rows: ['Kétamine', '2-FDCK (fluorexétamine)', 'Redosage accidentel, dissociation profonde', 'Poudre cristalline blanche'], advice: ['Attendez au moins 90 minutes avant d’envisager plus.', 'Restez assis, avec des gens de confiance.', "Impossible à distinguer à l'œil — faites-la tester d'abord."] },
+    'nyc-fent': { title: 'Fentanyl détecté dans de la cocaïne', finding: 'Une poudre vendue comme cocaïne à Brooklyn a été testée positive au fentanyl. Les usagers de stimulants ont rarement une tolérance aux opioïdes : risque de surdose extrême.', time: 'il y a 1 j', fence: 'Géofence : New York, cinq boroughs', rows: ['Cocaïne', 'Cocaïne + fentanyl', 'Surdose mortelle, pas de tolérance aux opioïdes', 'Poudre blanche, Brooklyn'], advice: ['Ayez de la naloxone (Narcan) et ne consommez jamais seul.', 'Utilisez des bandelettes fentanyl avant chaque lot.', "Allez-y doucement — petite dose d'essai d'abord, même si ça semble normal."] },
+    'nyc-tranq': { title: 'Xylazine (« tranq ») dans l’offre d’opioïdes', finding: "De la xylazine est mélangée au fentanyl. La naloxone inverse toujours l'opioïde, mais pas la sédation à la xylazine, qui cause de graves plaies.", time: 'il y a 3 j', fence: 'Géofence : New York, cinq boroughs', rows: ['Héroïne / fentanyl', 'Fentanyl + xylazine', 'Sédation prolongée, plaies cutanées', 'Poudre brunâtre'], advice: ["Donnez quand même de la naloxone — elle inverse la part opioïde.", 'Position latérale de sécurité ; la sédation dure plus que la naloxone.', 'Bandelettes xylazine gratuites chez NEXT Distro.'] }
+  },
+  es: {
+    'ams-pmma': { title: 'Alerta roja: pastillas con calavera contienen PMMA', finding: 'Pastillas naranjas con logo de calavera, vendidas como MDMA, contienen PMMA y nada de MDMA. La subida es lenta: la gente repite dosis y sufre sobredosis — dos hospitalizaciones esta semana.', time: 'hace 1 h', fence: 'Geocerca: Ámsterdam, toda la ciudad', rows: ['Éxtasis (MDMA)', 'PMMA — sin MDMA', 'Mortal en dosis altas, subida retardada', 'Pastilla naranja, logo de calavera'], advice: ['No tomes esta pastilla — la PMMA puede ser letal.', 'Sube lento; nunca repitas porque "no pasa nada".', 'Analiza cualquier pastilla gratis y de forma anónima en un punto DIMS.'] },
+    'ams-punisher': { title: '"Blue Punisher" — 330 mg de MDMA', finding: 'Más del doble de una dosis adulta habitual. El mismo sello aparece en festivales por todos los Países Bajos.', time: 'hace 5 h', fence: 'Geocerca: Ámsterdam, zona Westerpark', rows: ['Éxtasis (MDMA)', 'MDMA, ~330 mg por pastilla', '2–3× una dosis adulta habitual', 'Pastilla azul, sello Punisher'], advice: ['Un cuarto basta este fin de semana — empieza bajo, espera dos horas.', 'Bebe unos 250 ml de agua por hora y descansa de bailar.', 'Análisis gratuito a través de la red DIMS, con cita.'] },
+    'utr-2fdck': { title: '2-FDCK vendida como ketamina', finding: 'Más lenta y duradera que la ketamina — es fácil repetir dosis demasiado pronto e ir mucho más profundo de lo previsto.', time: 'Ayer', fence: 'Geocerca: Utrecht, toda la ciudad', rows: ['Ketamina', '2-FDCK (fluorexetamina)', 'Redosificación accidental, disociación profunda', 'Polvo cristalino blanco'], advice: ['Espera al menos 90 minutos antes de plantearte más.', 'Quédate sentado, con gente de confianza.', 'Imposible distinguirla a simple vista — analízala primero.'] },
+    'nyc-fent': { title: 'Fentanilo hallado en cocaína', finding: 'Polvo vendido como cocaína en Brooklyn dio positivo en fentanilo. Quienes usan estimulantes rara vez tienen tolerancia a opioides: riesgo extremo de sobredosis.', time: 'hace 1 día', fence: 'Geocerca: Nueva York, cinco distritos', rows: ['Cocaína', 'Cocaína + fentanilo', 'Sobredosis mortal, sin tolerancia a opioides', 'Polvo blanco, Brooklyn'], advice: ['Lleva naloxona (Narcan) y nunca consumas solo.', 'Usa tiras de detección de fentanilo antes de cada lote.', 'Ve despacio — primero una pequeña dosis de prueba, aunque parezca normal.'] },
+    'nyc-tranq': { title: 'Xilacina ("tranq") en el suministro de opioides', finding: 'Se está mezclando xilacina con fentanilo. La naloxona sigue revirtiendo el opioide, pero no la sedación por xilacina, que además causa heridas graves.', time: 'hace 3 días', fence: 'Geocerca: Nueva York, cinco distritos', rows: ['Heroína / fentanilo', 'Fentanilo + xilacina', 'Sedación prolongada, heridas en la piel', 'Polvo pardo'], advice: ['Administra naloxona igualmente — revierte la parte opioide.', 'Posición lateral de seguridad; la sedación dura más que la naloxona.', 'Tiras de detección de xilacina gratis en NEXT Distro.'] }
+  },
+  ar: {
+    'ams-pmma': { title: 'إنذار أحمر: حبوب «الجمجمة» تحتوي على PMMA', finding: 'حبوب برتقالية بشعار جمجمة، تُباع كـ MDMA، تحتوي على PMMA ولا تحتوي على MDMA. المفعول بطيء، فيكرر الناس الجرعة ويصابون بجرعة زائدة — حالتا دخول للمستشفى هذا الأسبوع.', time: 'قبل ساعة', fence: 'السياج الجغرافي: أمستردام، المدينة كاملة', rows: ['إكستاسي (MDMA)', 'PMMA — بلا MDMA', 'قاتل بجرعات عالية، مفعول متأخر', 'حبة برتقالية، شعار جمجمة'], advice: ['لا تتناول هذه الحبة — قد يكون PMMA قاتلًا.', 'مفعولها بطيء؛ لا تكرر الجرعة أبدًا لأن «شيئًا لا يحدث».', 'افحص أي حبة مجانًا وبسرية في نقطة فحص DIMS.'] },
+    'ams-punisher': { title: '«Blue Punisher» — 330 ملغ MDMA', finding: 'أكثر من ضعف الجرعة المعتادة للبالغين. الختم نفسه يظهر في مهرجانات في أنحاء هولندا.', time: 'قبل 5 ساعات', fence: 'السياج الجغرافي: أمستردام، منطقة ويستربارك', rows: ['إكستاسي (MDMA)', 'MDMA، نحو 330 ملغ للحبة', '2–3 أضعاف الجرعة المعتادة', 'حبة زرقاء، ختم Punisher'], advice: ['ربع حبة يكفي هذا الأسبوع — ابدأ بقليل وانتظر ساعتين.', 'اشرب نحو 250 مل ماء كل ساعة وخذ فترات راحة من الرقص.', 'فحص مجاني عبر شبكة DIMS، بموعد مسبق.'] },
+    'utr-2fdck': { title: '2-FDCK يُباع ككيتامين', finding: 'أبطأ وأطول مفعولًا من الكيتامين — من السهل تكرار الجرعة مبكرًا والذهاب أعمق بكثير مما قصدت.', time: 'أمس', fence: 'السياج الجغرافي: أوترخت، المدينة كاملة', rows: ['كيتامين', '2-FDCK (فلوريكسيتامين)', 'تكرار جرعة غير مقصود، انفصال عميق', 'مسحوق بلوري أبيض'], advice: ['انتظر 90 دقيقة على الأقل قبل التفكير في المزيد.', 'ابقَ جالسًا مع أشخاص تثق بهم.', 'لا يمكن تمييزه بالعين — افحصه أولًا.'] },
+    'nyc-fent': { title: 'فنتانيل في الكوكايين', finding: 'مسحوق بيع ككوكايين في بروكلين ثبت احتواؤه على الفنتانيل. مستخدمو المنشطات نادرًا ما لديهم تحمّل للأفيونات، فخطر الجرعة الزائدة بالغ.', time: 'قبل يوم', fence: 'السياج الجغرافي: نيويورك، الأحياء الخمسة', rows: ['كوكايين', 'كوكايين + فنتانيل', 'جرعة زائدة قاتلة، لا تحمّل للأفيونات', 'مسحوق أبيض، بروكلين'], advice: ['احمل نالوكسون (ناركان) ولا تستخدم وحدك أبدًا.', 'استخدم شرائط فحص الفنتانيل قبل كل دفعة.', 'تمهّل — خذ جرعة اختبار صغيرة أولًا حتى لو بدا سليمًا.'] },
+    'nyc-tranq': { title: 'زايلازين («ترانك») في معروض الأفيونات', finding: 'يُخلط الزايلازين بالفنتانيل. النالوكسون يعكس الأفيون، لكنه لا يعكس تخدير الزايلازين، وهو يسبب جروحًا شديدة.', time: 'قبل 3 أيام', fence: 'السياج الجغرافي: نيويورك، الأحياء الخمسة', rows: ['هيروين / فنتانيل', 'فنتانيل + زايلازين', 'تخدير مطوّل، جروح جلدية', 'مسحوق بُنّي فاتح'], advice: ['أعطِ النالوكسون رغم ذلك — فهو يعكس الجزء الأفيوني.', 'ضع الشخص في وضعية الإفاقة؛ التخدير يدوم أطول من النالوكسون.', 'شرائط فحص الزايلازين مجانية من NEXT Distro.'] }
+  },
+  it: {
+    'ams-pmma': { title: 'Allerta rossa: pasticche «teschio» contengono PMMA', finding: 'Pasticche arancioni con logo a teschio, vendute come MDMA, contengono PMMA e niente MDMA. L\u2019effetto sale lentamente: si ridosa e si va in overdose — due ricoveri questa settimana.', time: '1 h fa', fence: 'Geofence: Amsterdam, tutta la città', rows: ['Ecstasy (MDMA)', 'PMMA — niente MDMA', 'Letale ad alte dosi, effetto ritardato', 'Pasticca arancione, logo a teschio'], advice: ['Non prendere questa pasticca — la PMMA può essere letale.', 'Sale lentamente; non ridosare mai perché «non fa effetto».', 'Fai analizzare qualsiasi pasticca, gratis e in anonimato, a un punto DIMS.'] },
+    'ams-punisher': { title: '«Blue Punisher» — 330 mg di MDMA', finding: 'Più del doppio di una comune dose per adulti. Lo stesso timbro sta comparendo nei festival di tutti i Paesi Bassi.', time: '5 h fa', fence: 'Geofence: Amsterdam, zona Westerpark', rows: ['Ecstasy (MDMA)', 'MDMA, ~330 mg a pasticca', '2–3× una comune dose per adulti', 'Pasticca blu, timbro Punisher'], advice: ['Un quarto basta questo weekend — inizia basso, aspetta due ore.', 'Bevi circa 250 ml d\u2019acqua all\u2019ora e fai pause dal ballo.', 'Analisi gratuita tramite la rete DIMS, su appuntamento.'] },
+    'utr-2fdck': { title: '2-FDCK venduta come ketamina', finding: 'Più lenta e più duratura della ketamina — è facile ridosare troppo presto e andare molto più a fondo del previsto.', time: 'Ieri', fence: 'Geofence: Utrecht, tutta la città', rows: ['Ketamina', '2-FDCK (fluorexetamina)', 'Ridosaggio accidentale, dissociazione profonda', 'Polvere cristallina bianca'], advice: ['Aspetta almeno 90 minuti prima di considerarne altra.', 'Resta seduto, con persone di cui ti fidi.', 'Impossibile distinguerla a occhio — falla analizzare prima.'] },
+    'nyc-fent': { title: 'Fentanyl trovato nella cocaina', finding: 'Polvere venduta come cocaina a Brooklyn è risultata positiva al fentanyl. Chi usa stimolanti raramente ha tolleranza agli oppioidi: rischio di overdose estremo.', time: '1 g fa', fence: 'Geofence: New York, cinque borough', rows: ['Cocaina', 'Cocaina + fentanyl', 'Overdose letale, nessuna tolleranza agli oppioidi', 'Polvere bianca, Brooklyn'], advice: ['Porta con te naloxone (Narcan) e non usare mai da solo.', 'Usa le strisce di rilevamento del fentanyl prima di ogni lotto.', 'Vai piano — prima una piccola dose di prova, anche se sembra a posto.'] },
+    'nyc-tranq': { title: 'Xilazina («tranq») nell\u2019offerta di oppioidi', finding: 'La xilazina viene miscelata al fentanyl. Il naloxone inverte ancora l\u2019oppioide, ma non la sedazione da xilazina, che causa anche gravi ferite.', time: '3 g fa', fence: 'Geofence: New York, cinque borough', rows: ['Eroina / fentanyl', 'Fentanyl + xilazina', 'Sedazione prolungata, ferite cutanee', 'Polvere brunastra'], advice: ['Somministra comunque naloxone — inverte la parte oppioide.', 'Posizione laterale di sicurezza; la sedazione dura più del naloxone.', 'Strisce di rilevamento della xilazina gratuite da NEXT Distro.'] }
+  },
+  pap: {
+    'ams-pmma': { title: 'Alerta kòrá: pìlnan ku logo di kalavera ta kontené PMMA', finding: 'Pìlnan oraño ku logo di kalavera, bendé komo MDMA, ta kontené PMMA i niun MDMA. E efekto ta subi poko-poko, pues hende ta tuma mas i ta haña sobredosis — dos hospitalisashon e siman aki.', time: '1 or pasá', fence: 'Geofence: Amsterdam, henter stat', rows: ['Ecstasy (MDMA)', 'PMMA — sin MDMA', 'Mortal na dosis haltu, efekto atrasá', 'Pìl oraño, logo di kalavera'], advice: ['No tuma e pìl aki — PMMA por ta mortal.', 'E ta subi poko-poko; nunka tuma mas pasobra "nada no ta pasa".', 'Tèst kualke pìl grátis i anónimo na un punto di tèst DIMS.'] },
+    'ams-punisher': { finding: 'Mas ku dòbel di un dosis normal pa adulto. E mesun stèmpel ta aparesé na festivalnan den henter Hulanda.', time: '5 or pasá', fence: 'Geofence: Amsterdam, zona Westerpark', rows: ['Ecstasy (MDMA)', 'MDMA, ±330 mg pa pìl', '2–3× un dosis normal', 'Pìl blou, stèmpel Punisher'], advice: ['Un kuart ta basta e wikent aki — kuminsá abou, warda dos ora.', 'Bebe mas o ménos 250 ml di awa pa ora i tuma pousa di baila.', 'Tèst grátis via e red DIMS, ku sita.'] },
+    'utr-2fdck': { title: '2-FDCK bendé komo ketamina', finding: 'Mas slo i mas largu ku ketamina — fásil pa tuma mas muchu trempan i baha muchu mas profundo ku bo kier.', time: 'Ayera', fence: 'Geofence: Utrecht, henter stat', rows: ['Ketamina', '2-FDCK (fluorexetamina)', 'Tuma mas sin intenshon, disosashon profundo', 'Pòlvo kristal blanku'], advice: ['Warda por lo ménos 90 minüt promé ku bo pensa riba mas.', 'Keda sintá, ku hende ku bo ta konfia.', 'Imposibel pa distinguí ku wowo — laga tèst e promé.'] },
+    'nyc-fent': { title: 'Fentanyl hañá den kokaina', finding: 'Pòlvo bendé komo kokaina na Brooklyn a tèst positivo pa fentanyl. Usuarionan di stimulante kasi nunka tin toleransia pa opioide — riesgo di sobredosis ta ekstremo.', time: '1 dia pasá', fence: 'Geofence: New York, sinku boroughs', rows: ['Kokaina', 'Kokaina + fentanyl', 'Sobredosis mortal, sin toleransia pa opioide', 'Pòlvo blanku, Brooklyn'], advice: ['Karga naloxon (Narcan) i nunka usa bo so.', 'Usa strip di tèst di fentanyl promé ku kada batch.', 'Bai poko-poko — tuma un dosis di prueba chikitu promé, asta si e ta parse bon.'] },
+    'nyc-tranq': { title: 'Xylazine ("tranq") den e suministro di opioide', finding: 'Xylazine ta wòrdu mesklá den fentanyl. Naloxon ainda ta revertí e opioide, pero no e sedashon di xylazine, i e ta kousa herida serio.', time: '3 dia pasá', fence: 'Geofence: New York, sinku boroughs', rows: ['Heroina / fentanyl', 'Fentanyl + xylazine', 'Sedashon prolongá, herida di kueru', 'Pòlvo maron kla'], advice: ['Duna naloxon tòg — e ta revertí e parti opioide.', 'Pone e persona den posishon di rekuperashon; e sedashon ta dura mas ku naloxon.', 'Strip di tèst di xylazine grátis serka NEXT Distro.'] }
+  },
+  zh: {
+    'ams-pmma': { title: '红色警报："骷髅"药丸含有 PMMA', finding: '带骷髅标志的橙色药丸以 MDMA 名义出售，实际含 PMMA 而不含 MDMA。起效缓慢，导致人们补服而过量——本周已有两人入院。', time: '1小时前', fence: '地理围栏：阿姆斯特丹全市', rows: ['摇头丸（MDMA）', 'PMMA——不含 MDMA', '高剂量致命，起效延迟', '橙色药丸，骷髅标志'], advice: ['不要服用这种药丸——PMMA 可能致命。', '它起效很慢；绝不要因为"没感觉"而补服。', '可在 DIMS 检测点免费匿名检测任何药丸。'] },
+    'ams-punisher': { title: '"Blue Punisher"——330 毫克 MDMA', finding: '超过常见成人剂量的两倍。同一压印正在荷兰各地的音乐节出现。', time: '5小时前', fence: '地理围栏：阿姆斯特丹 Westerpark 一带', rows: ['摇头丸（MDMA）', 'MDMA，每粒约 330 毫克', '常见成人剂量的 2–3 倍', '蓝色药丸，Punisher 压印'], advice: ['这个周末四分之一就够了——从低剂量开始，等两小时。', '每小时喝约 250 毫升水，跳舞时注意休息。', '通过 DIMS 网络免费检测，需预约。'] },
+    'utr-2fdck': { title: '以氯胺酮名义出售的 2-FDCK', finding: '比氯胺酮起效更慢、持续更久——很容易过早补服，陷得比预想深得多。', time: '昨天', fence: '地理围栏：乌得勒支全市', rows: ['氯胺酮', '2-FDCK（氟西他敏）', '意外补服，深度解离', '白色结晶粉末'], advice: ['至少等 90 分钟再考虑是否继续。', '保持坐姿，和信任的人在一起。', '肉眼无法分辨——请先检测。'] },
+    'nyc-fent': { title: '可卡因中检出芬太尼', finding: '布鲁克林以可卡因名义出售的粉末检出芬太尼。兴奋剂使用者很少有阿片耐受性，过量风险极高。', time: '1天前', fence: '地理围栏：纽约五区', rows: ['可卡因', '可卡因 + 芬太尼', '致命过量，无阿片耐受', '白色粉末，布鲁克林'], advice: ['随身携带纳洛酮（Narcan），绝不独自使用。', '每批货使用前先用芬太尼检测条。', '慢慢来——先试小剂量，即使看起来没问题。'] },
+    'nyc-tranq': { title: '阿片供应中出现赛拉嗪（"tranq"）', finding: '赛拉嗪正被混入芬太尼。纳洛酮仍能逆转阿片成分，但不能逆转赛拉嗪的镇静作用，且会造成严重创口。', time: '3天前', fence: '地理围栏：纽约五区', rows: ['海洛因 / 芬太尼', '芬太尼 + 赛拉嗪', '长时间镇静，皮肤创口', '浅棕色粉末'], advice: ['仍要给纳洛酮——它能逆转阿片部分。', '摆成恢复体位；镇静持续时间比纳洛酮长。', 'NEXT Distro 提供免费赛拉嗪检测条。'] }
+  },
+  ja: {
+    'ams-pmma': { title: '赤色警報：「スカル」錠剤にPMMA', finding: 'ドクロのロゴ入りオレンジ色の錠剤がMDMAとして売られていますが、MDMAは含まれずPMMAを含有。効き始めが遅いため追加摂取して過量摂取に——今週2名が入院。', time: '1時間前', fence: 'ジオフェンス：アムステルダム全域', rows: ['エクスタシー（MDMA）', 'PMMA——MDMA不含', '高用量で致死的、効果発現が遅い', 'オレンジ色の錠剤、ドクロのロゴ'], advice: ['この錠剤は摂取しないで——PMMAは致死的になり得ます。', '効き始めが遅い薬物です。「効かない」と思っても絶対に追加しない。', 'どんな錠剤もDIMS検査ポイントで無料・匿名で検査できます。'] },
+    'ams-punisher': { title: '「Blue Punisher」——MDMA 330mg', finding: '一般的な成人用量の2倍以上。同じ刻印がオランダ各地のフェスで出回っています。', time: '5時間前', fence: 'ジオフェンス：アムステルダム、ウェスターパーク周辺', rows: ['エクスタシー（MDMA）', 'MDMA、1錠あたり約330mg', '一般的な成人用量の2〜3倍', '青い錠剤、Punisherの刻印'], advice: ['今週末は4分の1で十分——少量から始めて2時間待つ。', '1時間に約250mlの水分補給を。踊りの合間に休憩を。', 'DIMSネットワークで無料検査（要予約）。'] },
+    'utr-2fdck': { title: 'ケタミンとして売られる2-FDCK', finding: 'ケタミンより効きが遅く長い——早すぎる追加摂取で意図よりはるかに深く入ってしまいがち。', time: '昨日', fence: 'ジオフェンス：ユトレヒト全域', rows: ['ケタミン', '2-FDCK（フルオレキセタミン）', '意図しない追加摂取、深い解離', '白色結晶粉末'], advice: ['追加を考える前に最低90分待つ。', '座ったまま、信頼できる人と一緒に。', '見た目では区別不可能——まず検査を。'] },
+    'nyc-fent': { title: 'コカインからフェンタニル検出', finding: 'ブルックリンでコカインとして売られた粉末がフェンタニル陽性。刺激剤の使用者はオピオイド耐性がほぼなく、過量摂取リスクが極めて高い。', time: '1日前', fence: 'ジオフェンス：ニューヨーク5区', rows: ['コカイン', 'コカイン＋フェンタニル', '致死的過量摂取、オピオイド耐性なし', '白色粉末、ブルックリン'], advice: ['ナロキソン（Narcan）を携帯し、決して一人で使わない。', '毎回使用前にフェンタニル検査ストリップを。', '焦らずに——見た目が普通でも、まず少量のテストドーズを。'] },
+    'nyc-tranq': { title: 'オピオイド流通にキシラジン（「トランク」）', finding: 'フェンタニルにキシラジンが混入しています。ナロキソンはオピオイド分は逆転させますが、キシラジンの鎮静は逆転せず、重度の創傷も引き起こします。', time: '3日前', fence: 'ジオフェンス：ニューヨーク5区', rows: ['ヘロイン／フェンタニル', 'フェンタニル＋キシラジン', '長時間の鎮静、皮膚の創傷', '淡褐色の粉末'], advice: ['それでもナロキソンを投与——オピオイド分は逆転します。', '回復体位に。鎮静はナロキソンより長く続きます。', 'キシラジン検査ストリップはNEXT Distroで無料配布。'] }
+  }
+};
+class Component extends DCLogic {
+  state = { screen: 'feed', id: null, push: false, scale: 1, pushSettled: false, lang: 'en' };
+  componentDidMount() {
+    if (this.props.autoPush ?? true) this._t = setTimeout(() => this.firePush(), 3000);
+    this._onR = () => {
+      const s = Math.max(0.5, Math.min(1, (window.innerHeight - 130) / 874));
+      if (Math.abs(s - this.state.scale) > 0.005) this.setState({ scale: s });
+    };
+    this._onR();
+    window.addEventListener('resize', this._onR);
+    // Forward pointer position to the embedding page so its cursor-tracked grid
+    // spotlight keeps following through this iframe (which otherwise swallows the
+    // parent's pointermove, freezing the effect over the app and its shadow).
+    if (window.parent !== window) {
+      this._onMove = (e) => window.parent.postMessage({ t: 'redaura-pointer', x: e.clientX, y: e.clientY }, '*');
+      this._onLeave = () => window.parent.postMessage({ t: 'redaura-pointer', out: true }, '*');
+      window.addEventListener('pointermove', this._onMove);
+      document.addEventListener('pointerleave', this._onLeave);
+    }
+    // stay in sync with the landing page's language picker
+    this._onMsg = (e) => {
+      if (e.data && e.data.t === 'redaura-lang' && UI[e.data.code] && e.data.code !== this.state.lang) this.setState({ lang: e.data.code });
+    };
+    window.addEventListener('message', this._onMsg);
+  }
+  componentWillUnmount() {
+    clearTimeout(this._t); window.removeEventListener('resize', this._onR);
+    if (this._onMove) { window.removeEventListener('pointermove', this._onMove); document.removeEventListener('pointerleave', this._onLeave); }
+    if (this._onMsg) window.removeEventListener('message', this._onMsg);
+  }
+  open(id) { this.setState({ screen: 'detail', id: id, push: false }); }
+  firePush() { this.setState({ push: true, pushSettled: false }); }
+  renderVals() {
+    const region = this.props.region ?? 'Amsterdam';
+    const t = UI[this.state.lang] || UI.en;
+    const loc = L10N[this.state.lang] || {};
+    const deco = ALERTS.map((a) => {
+      const s = SEV[a.sev];
+      const o = loc[a.id] || {};
+      const rowsV = o.rows || a.rows.map((r) => r.v);
+      return { ...a,
+        title: o.title || a.title, finding: o.finding || a.finding,
+        time: o.time || a.time, fence: o.fence || a.fence, advice: o.advice || a.advice,
+        rows: a.rows.map((r, i) => ({ k: t.rowK[i], v: rowsV[i] })),
+        dotBg: s.dotBg, dotBd: s.dotBd, sevLabel: t['sev_' + a.sev], sevBg: s.bg, sevFg: s.fg, sevBd: s.bd, open: () => this.open(a.id) };
+    });
+    const near = deco.filter((a) => a.city === region);
+    const net = deco.filter((a) => a.city !== region);
+    const d = deco.find((a) => a.id === this.state.id) || deco[0];
+    const pushAlert = near.find((a) => a.sev === 'danger') || near[0] || deco[0];
+    return {
+      screenFeed: this.state.screen === 'feed',
+      screenDetail: this.state.screen === 'detail',
+      pushVisible: this.state.push,
+      pushAnim: this.state.pushSettled ? 'none' : 'sp-push 480ms cubic-bezier(0.2, 0.9, 0.3, 1.05) both',
+      settlePush: () => this.setState({ pushSettled: true }),
+      phoneScale: this.state.scale,
+      phoneW: Math.round(402 * this.state.scale) + 'px',
+      phoneH: Math.round(874 * this.state.scale) + 'px',
+      near, net, d, t,
+      lang: this.state.lang,
+      dir: this.state.lang === 'ar' ? 'rtl' : 'ltr',
+      setLang: (e) => this.setState({ lang: e.target.value }),
+      regionLabel: region.toUpperCase(),
+      regionOrg: ORG[region] || 'the local service',
+      pushTitle: t.pushNear + ' ' + pushAlert.title,
+      pushBody: pushAlert.finding + ' ' + t.alertBy + ' ' + pushAlert.org + '.',
+      back: () => this.setState({ screen: 'feed' }),
+      openPush: () => this.open(pushAlert.id),
+      replay: () => {
+        clearTimeout(this._t);
+        this.setState({ push: false, screen: 'feed' });
+        this._t = setTimeout(() => this.firePush(), 700);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

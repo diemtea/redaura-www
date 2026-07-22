@@ -1,0 +1,748 @@
+<!-- @template name="Landing" description="A one-page product landing in the system's own voice — an invented product (Takt: Swiss-clockwork timetables), a ruled hero, stat row, feature rows, a grayscale photograph and a red poster close" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Redaura — alert infrastructure for harm reduction</title>
+<script src="./ds-base.js"></script>
+<style>
+/* Template scaffolding — page layout and web-scale sizing only; every color,
+   font, radius and shadow comes from ../../styles.css. The voice is the
+   deck's, re-derived for a scrolling page: the grid SHOWS — 2px
+   rules draw the structure — red is spent as a mark, and its one field
+   moment is the poster close (the deck's divider logic: the red page sets
+   nothing small).
+
+   THE RHYTHM: a 28px leading unit (17px Archivo body at ~1.65), 14px
+   half-step; line-heights and block margins in unit multiples, heads
+   cap-trimmed, ?baselines/B to review. The deck's seat-pinning relaxes to
+   per-block discipline on a fluid page. The system's own interface
+   components (nav, buttons, inputs) keep their styles.css leading — the
+   rhythm governs the page's text, not the controls.
+
+   THE LANDING LAWS (shared by all six systems' landing templates):
+   #1 display headers break per sentence (.line spans); #2 the landing
+   advertises an invented product played straight — modernist's is Takt,
+   timetables that run like Switzerland; #3 spacing is cluster-scoped
+   (display leading ratio-governed ≈1.06 for Archivo's tight caps — the
+   display-block lattice exemption — tight single-unit gaps inside a text
+   cluster, the air between sections); #4 no hero eyebrow — the nav brand
+   names the product.
+
+   Optical left alignment: the deck's measured Archivo 800 value carries
+   verbatim (-0.058em where caps lead a display line; em-scaled). */
+:root {
+  --leading: 28px;
+  --half: 14px;
+  --edge: clamp(20px, 5vw, 72px);
+  --measure: 58ch;
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; text-wrap: pretty; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--edge); }
+/* the component demo pads the masthead with its own spacing; on the page the
+   masthead's contents take the page gutter and sit on the wrap's text axis
+   (padding-only — full-width paint such as a masthead rule is untouched) */
+.nav { position: sticky; top: 0; z-index: 100; background: var(--color-bg); border-bottom: 2px solid var(--color-text); padding-inline: max(var(--edge), calc((100% - 1200px) / 2 + var(--edge))); }
+.nav .lang-wrap { position: relative; display: inline-flex; align-items: center; border: 2px solid var(--color-text); border-radius: 0;
+  background: transparent url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M1 1l4 4 4-4' stroke='%23201e1d' stroke-width='2' fill='none'/></svg>") no-repeat right 9px center;
+  color: var(--color-text); font-family: var(--font-body); font-size: 12.5px; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase; padding: 7px 27px 7px 10px; cursor: pointer; }
+.nav .lang-wrap:hover { background-color: color-mix(in srgb, var(--color-text) 6%, transparent); }
+.nav .lang-wrap:focus-within { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.nav .lang-select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.nav a { white-space: nowrap; }
+.nav a[aria-current='location'] { color: var(--color-accent); } /* in-page anchor, not
+   a page link — 'location' is the truthful value; carry the component's active ink */
+.nav a.btn-primary, .nav a.btn-primary:hover { color: var(--color-bg); } /* the .nav a
+   link rules outrank .btn-primary's label color and turn it accent-on-accent on
+   hover — pin the paper ink; background hover/active states come from .btn-primary */
+.nav a.btn-primary:hover { background: var(--color-accent-600); }
+.nav a.btn-primary:active { background: var(--color-accent-700); }
+@media (max-width: 760px) { /* tablet squeeze: drop the text links first; brand,
+   language and the one action remain */
+  .nav a:not(.btn-primary) { display: none; }
+  .nav { gap: var(--space-3); }
+}
+@media (max-width: 480px) { /* phone width: tighten paddings and let the CTA
+   shrink its label instead of overflowing (layout-only — component look untouched) */
+  .nav { padding-inline: var(--space-3); gap: var(--space-2); }
+  .nav .nav-brand { font-size: 16px; }
+  .nav a.btn-primary { padding: 8px 12px; font-size: 12.5px; white-space: nowrap; }
+  .nav .lang-wrap { font-size: 11.5px; padding: 6px 22px 6px 8px; background-position: right 7px center; }
+}
+@media (max-width: 350px) { .nav .lang-wrap { display: none; } } /* smallest phones:
+   the action wins; language stays reachable via the browser default (en detect) */
+
+/* — drawn structure: the 2px rule is the section seam (the deck's header
+   band as page grammar; rules span the content column, solid — this system
+   does not fade its rules) — */
+.rule2 { height: 2px; border: 0; margin: 0; background: var(--color-divider); }
+
+/* — kicker (deck grammar: uppercase, tabular, accent; no hanging dash —
+   modernist marks are squares, and they belong to lists, not labels) — */
+.kicker {
+  display: block; font-size: 13px; line-height: var(--half);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-accent-700); /* accent-colored SMALL text takes the deep step —
+     6.4:1, where the base accent measures 3.8:1 (a large-text value; the
+     deck's kickers are 24px, this one is 13px) */
+  font-feature-settings: "tnum" 1;
+  margin: 0 0 calc(var(--leading) - var(--half));
+}
+
+/* — hero — */
+.hero { padding: calc(4 * var(--leading)) 0 calc(3 * var(--leading)); position: relative; }
+/* final-pulse cover: a full-bleed ground behind the hero fades to the exact
+   fence-fill tint, faking the circle having swallowed the whole block */
+.hero::before { content: ""; position: absolute; inset: 0 calc(50% - 50vw);
+  background: color-mix(in srgb, var(--color-accent) 6%, var(--color-bg));
+  opacity: 0; transition: opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none; z-index: -1; }
+.hero.covered::before { opacity: 1; }
+/* the modular grid, drawn across the WHOLE page — fixed, full-viewport, faint
+   ink under every light-ground section (colored blocks paint over it); a
+   circular spotlight of the strong grid follows the pointer anywhere */
+body::before, body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+body::before {
+  background:
+    repeating-linear-gradient(to right, color-mix(in srgb, var(--color-text) 2.5%, transparent) 0 1px, transparent 1px 36px),
+    repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-text) 2.5%, transparent) 0 1px, transparent 1px 36px); }
+body::after {
+  background:
+    repeating-linear-gradient(to right, color-mix(in srgb, var(--color-text) 26%, transparent) 0 1px, transparent 1px 36px),
+    repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-text) 26%, transparent) 0 1px, transparent 1px 36px);
+  -webkit-mask-image: radial-gradient(240px circle at var(--mx, -999px) var(--my, -999px), #000 0%, transparent 72%),
+    radial-gradient(240px circle at var(--hx, -999px) var(--hy, -999px), #000 0%, transparent 72%);
+  mask-image: radial-gradient(240px circle at var(--mx, -999px) var(--my, -999px), #000 0%, transparent 72%),
+    radial-gradient(240px circle at var(--hx, -999px) var(--hy, -999px), #000 0%, transparent 72%); }
+.hero > .display, .hero > .sub, .hero > .row { position: relative; z-index: 2; }
+
+/* — hero art: a cartographic geofence — street fragments in faint ink, an
+   irregular red fence that surveys itself in ONCE (vertices first, then the
+   boundary, then the fill), phones inside the fence lighting up in sequence,
+   the push landing in ink — then the scene holds still, save a heartbeat on
+   the pin. No frame, no loop. */
+.hero-art { position: absolute; z-index: 1; right: 0; top: 50%; transform: translateY(-50%);
+  width: min(460px, 36vw); aspect-ratio: 1;
+  pointer-events: none; }
+.hero-art svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.ha-label { position: absolute; right: 4px; bottom: -6px; font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; font-weight: 600; color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  font-feature-settings: 'tnum' 1; opacity: 0; animation: ha-in 0.6s ease 3.6s forwards; }
+.ha-fence { fill: none; stroke: var(--color-accent); stroke-width: 2.5;
+  stroke-dasharray: 100; stroke-dashoffset: 100;
+  animation: ha-fence 1.5s cubic-bezier(0.6, 0, 0.3, 1) 0.9s forwards; }
+@keyframes ha-fence { to { stroke-dashoffset: 0; } }
+.ha-fill { fill: var(--color-accent); opacity: 0; animation: ha-fill 0.8s ease 2.3s forwards; }
+@keyframes ha-fill { to { opacity: 0.06; } }
+.ha-pulse { fill: none; stroke: var(--color-accent); stroke-width: 1.5; opacity: 0;
+  transform-box: fill-box; transform-origin: center;
+  animation: ha-pulse 9s ease-out 2.6s infinite; }
+.ha-pulse.p2 { animation-delay: 3.5s; }
+@keyframes ha-pulse {
+  0% { transform: scale(0.12); opacity: 0; }
+  4% { opacity: 0.55; }
+  26% { transform: scale(1.28); opacity: 0; }
+  100% { transform: scale(1.28); opacity: 0; }
+}
+.ha-ph { fill: var(--color-neutral-400); transform-box: fill-box; transform-origin: center;
+  transition: fill 0.45s ease; }
+.ha-ph.in { animation: ha-ph 0.5s ease forwards; }
+/* a reached node turns confident ink, not red — red stays the signal itself */
+.hero-art circle.ha-ph.active { fill: var(--color-text); }
+@keyframes ha-ph { 40% { transform: scale(1.7); } 100% { fill: var(--color-text); transform: scale(1); } }
+.ha-pin { fill: var(--color-accent); opacity: 0; transform-box: fill-box; transform-origin: center;
+  animation: ha-pin 0.5s cubic-bezier(0.2, 1.2, 0.4, 1) 0.3s forwards, ha-beat 5s ease 4.5s infinite; }
+@keyframes ha-pin { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: none; } }
+@keyframes ha-beat { 0%, 88%, 100% { opacity: 1; } 93% { opacity: 0.55; } }
+@keyframes ha-in { to { opacity: 1; } }
+.ha-push { position: absolute; left: calc(50% + 26px); top: calc(50% - 128px); max-width: 250px;
+  background: var(--color-neutral-900); color: var(--color-bg);
+  padding: 10px 14px 12px; box-shadow: var(--shadow-md);
+  opacity: 0; transform: translateY(-10px);
+  animation: ha-push 0.55s cubic-bezier(0.2, 1, 0.3, 1) 3.3s forwards; }
+.ha-push .k { display: flex; align-items: center; gap: 7px; font-size: 9.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; opacity: 0.75; margin-bottom: 5px; }
+.ha-push .k::before { content: ""; width: 7px; height: 7px; background: var(--color-accent-500); }
+.ha-push strong { display: block; font-family: var(--font-heading); font-weight: 800;
+  font-size: 12.5px; line-height: 1.3; letter-spacing: -0.01em; }
+@keyframes ha-push { to { opacity: 1; transform: none; } }
+/* nav CTA draws a quiet pulse once you scroll past the hero */
+@keyframes nav-cta-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 45%, transparent); }
+  50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-accent) 0%, transparent); }
+}
+.nav-cta.pulsing { animation: nav-cta-pulse 2.4s ease-out 3; }
+@media (prefers-reduced-motion: reduce) { .nav-cta.pulsing { animation: none; } }
+@media (min-width: 641px) {
+  .hero > .display, .hero > .row { max-width: calc(100% - min(460px, 36vw) - 40px); }
+}
+@media (max-width: 1080px) {
+  .hero-art { width: min(340px, 40vw); }
+  .ha-push { left: calc(50% + 14px); top: calc(50% - 112px); max-width: 220px; }
+}
+@media (max-width: 640px) { .hero-art { display: none; } .hero p.sub { max-width: var(--measure); } }
+@media (prefers-reduced-motion: reduce) {
+  .ha-fence, .ha-fill, .ha-ph, .ha-pin, .ha-push, .ha-label { animation: none; }
+  .ha-fence { stroke-dashoffset: 0; }
+  .ha-fill { opacity: 0.06; }
+  .ha-vx, .ha-pin, .ha-push, .ha-label { opacity: 1; transform: none; }
+  .ha-ph.in { fill: var(--color-text); }
+  .ha-pulse { display: none; }
+}
+.display {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(42px, 6.2vw, 84px);
+  line-height: clamp(44.5px, 6.57vw, 89px); /* law #3: ratio-governed ≈1.06 —
+     Archivo's 800 sits tight and all-cap-height; the display-block lattice
+     exemption (no 14px step is both tighter than the old look and clear) */
+  letter-spacing: -0.02em; margin: 0;
+  margin-left: -0.058em; /* optical left alignment — the deck's measured Archivo 800 value */
+  text-box: trim-both cap alphabetic;
+}
+.display .line { display: block; } /* law #1: one sentence per line */
+.ha-word { display: inline-block; text-align: left; vertical-align: baseline; }
+.ha-word::after { content: "."; }
+.hero .sub { font-size: 17px; line-height: var(--leading); max-width: min(var(--measure), calc(100% - min(460px, 36vw) - 40px));
+  margin: calc(1.5 * var(--leading) - 1cap) 0 0;
+  text-box: trim-both cap alphabetic; } /* 1.5 units: clears the display's descenders with cluster-tight air (law #3) */
+.hero .row { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--leading); }
+
+/* — stat row: the red field — full-width accent block, numerals reversed to
+   paper (display-grade on the accent, the system's own 3:1 large-text bar) — */
+.stats { background: var(--color-accent); color: var(--color-bg); }
+.stats .wrap { padding-top: calc(2.5 * var(--leading)); padding-bottom: calc(2.5 * var(--leading)); }
+.stats .grid { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: calc(1.5 * var(--leading)) var(--leading); }
+.stat-num { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(34px, 3.4vw, 48px); line-height: calc(2 * var(--leading));
+  color: var(--color-bg);
+  margin: 0; margin-left: -0.045em; /* digits lead — the deck's "0"-population value */
+  text-box: trim-both cap alphabetic; }
+.stat-label { font-size: 13px; line-height: var(--half); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-bg);
+  margin: var(--half) 0 0; }
+
+/* — feature rows (the deck's ruled-toc grammar: 2px rules ON the seams,
+   red square marks hanging at the numbers — drawn structure, no cards) — */
+.features { padding: calc(3 * var(--leading)) 0 calc(2.5 * var(--leading)); }
+.feature { display: grid; grid-template-columns: minmax(64px, 160px) minmax(0, 420px) minmax(0, 1fr);
+  gap: var(--leading) clamp(24px, 4vw, 72px); align-items: baseline;
+  padding: calc(1.5 * var(--leading)) 0; }
+.feature + .feature { border-top: 0; }
+.f-num { position: relative; font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 15px; line-height: var(--leading); color: var(--color-text);
+  font-feature-settings: "tnum" 1; margin: 0; text-box: trim-both cap alphabetic; }
+.f-num::before { content: ""; position: absolute; left: -24px; top: calc(0.5cap - 5px);
+  width: 10px; height: 10px; background: var(--color-accent); } /* the deck's 10px red square,
+     hanging left of the number's axis — at narrow widths the gutter folds it away */
+@media (max-width: 1280px) { .f-num::before { display: none; } }
+.f-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 24px; line-height: var(--leading); letter-spacing: -0.01em;
+  margin: 0; text-box: trim-both cap alphabetic; }
+.f-copy { font-size: 15.5px; line-height: var(--leading); margin: 0;
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+  max-width: 52ch; text-box: trim-both cap alphabetic; }
+
+/* — imagery split (grayscale photograph — the system prints in black and
+   white; the box pins the bundled asset's 951×665 ratio so swaps
+   cover-crop into the same frame) — */
+.split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--leading) clamp(24px, 5vw, 96px); align-items: center;
+  padding: calc(2 * var(--leading)) 0 calc(3 * var(--leading)); }
+.split-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 32px; line-height: calc(1.5 * var(--leading)); letter-spacing: -0.015em;
+  margin: 0; text-box: trim-both cap alphabetic; }
+.split-copy .note { font-size: 15.5px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+  margin: calc(var(--leading) - 1cap) 0 0; max-width: 48ch; text-box: trim-both cap alphabetic; }
+.split-figure { margin: 0; }
+.split-figure .app-frame { width: 100%; height: 960px; border: 0; display: block; background: transparent; overflow: hidden; }
+
+/* — quote (hanging punctuation, the deck's measured Archivo advances) — */
+.quote { padding: calc(2.5 * var(--leading)) 0 calc(3.5 * var(--leading)); }
+.quote blockquote {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(24px, 2.6vw, 34px); line-height: calc(1.5 * var(--leading));
+  letter-spacing: -0.015em; max-width: 32ch; margin: 0;
+  text-indent: -0.496em; /* hang the opening “ (the deck's measured advance in the 800) */
+  text-box: trim-both cap alphabetic;
+}
+.quote figcaption { font-size: 15.5px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-text) 70%, transparent); /* 5.8:1 — see .stat-label */
+  margin: calc(2 * var(--leading) - 1cap) 0 0; /* two grid units below the quote's
+     last baseline — one reads as part of the quote block; the attribution needs air */
+  text-indent: -1.209em; /* hang the leading em-dash + space (measured in the Regular) */
+  text-box: trim-both cap alphabetic; }
+
+@media (max-width: 720px) {
+  /* the phone gutter (--edge bottoms out at 20px) is narrower than the hung
+     marks' measured advances, so a hung “ or em-dash would press into or past
+     the viewport edge — seat the quote flush below this width; the hang
+     returns with the wider gutter */
+  .quote blockquote, .quote figcaption { text-indent: 0; }
+}
+
+/* — the red poster close (the deck's divider logic: the accent's one field
+   moment, type reversed to the paper token). COPY on the red is
+   display-grade only — paper display type measures 3.8:1, the deck
+   dividers' own derivation. The one small element is the ghost button, a
+   CONTROL: paper-on-red measures the same 3.8:1, which meets the system's
+   documented interface-chrome bar (the readme tunes the accent pair to at
+   least 3:1 — "enough for icons, large text and interface chrome, not for
+   body copy") — the same bar the system's own accent-filled primary button
+   label rides everywhere. */
+.close { background: var(--color-accent); color: var(--color-bg); }
+.close .wrap { padding-top: calc(3 * var(--leading)); padding-bottom: calc(3 * var(--leading)); }
+.close h3 { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(34px, 4.2vw, 56px); line-height: clamp(36px, 4.45vw, 59.4px); /* ≈1.06 —
+     display-grade, so it carries the display-block lattice exemption (the
+     rhythm probe excludes .display and .close h3 alike) */
+  letter-spacing: -0.015em; margin: 0; margin-left: -0.058em;
+  text-box: trim-both cap alphabetic; }
+.close h3 .line { display: block; }
+.close .row { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: calc(1.5 * var(--leading)); }
+.close .btn-ghost { color: var(--color-bg); border-color: var(--color-bg); } /* paper outline on the red field */
+footer { padding: calc(2 * var(--leading)) 0; font-size: 13px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-text) 70%, transparent); /* 5.8:1 — see .stat-label */ }
+
+/* — responsive collapse — */
+/* the feature grid's fixed-max columns (160 + 420 + gaps) crush the copy
+   column in the tablet band, so it collapses earlier than the page */
+@media (max-width: 880px) {
+  .feature { grid-template-columns: 1fr; gap: var(--half); }
+  .f-copy { max-width: var(--measure); }
+}
+@media (max-width: 720px) {
+  .hero { padding-top: calc(2.5 * var(--leading)); }
+  .stats .grid { grid-template-columns: repeat(2, 1fr); justify-content: start; }
+  .split { grid-template-columns: 1fr; }
+  .split-figure { display: none; } /* live prototype is touch/pointer-heavy; hide on
+     phones and keep the section copy — the app is reachable on desktop */
+}
+
+/* — pilot form: the ink block — a full-width dark field before the red close;
+   type reverses to the paper token, the accent stays the one red — */
+.pilot { background: var(--color-neutral-900); color: var(--color-bg); }
+.pilot .wrap { padding-top: calc(3 * var(--leading)); padding-bottom: calc(3 * var(--leading)); }
+.pilot .kicker { color: var(--color-accent-400); } /* deep steps vanish on ink — the light
+   step carries the accent at small size on the dark ground */
+.pilot-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(32px, 3.4vw, 44px); line-height: 1.1; letter-spacing: -0.015em;
+  margin: 0; margin-left: -0.058em; text-box: trim-both cap alphabetic; }
+.pilot .note { font-size: 15.5px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-bg) 75%, transparent);
+  margin: calc(var(--leading) - 1cap) 0 0; max-width: 56ch; text-box: trim-both cap alphabetic; }
+.pilot-form { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: flex-end;
+  margin-top: calc(1.5 * var(--leading)); max-width: 720px; }
+.pilot-form .field { flex: 1 1 220px; margin: 0; }
+.pilot-form .field > label { color: color-mix(in srgb, var(--color-bg) 70%, transparent); }
+.pilot-form .input { background: color-mix(in srgb, var(--color-bg) 8%, transparent);
+  border-color: color-mix(in srgb, var(--color-bg) 40%, transparent); color: var(--color-bg); }
+.pilot-form .input::placeholder { color: color-mix(in srgb, var(--color-bg) 45%, transparent); }
+.pilot-form .input:hover { border-color: color-mix(in srgb, var(--color-bg) 60%, transparent); }
+.pilot-form .btn { min-height: 36px; }
+.pilot-done { display: none; margin-top: calc(1.5 * var(--leading)); font-size: 15.5px; line-height: var(--leading); }
+.pilot-done .sq { display: inline-block; width: 10px; height: 10px; background: var(--color-accent-500); margin-right: 10px; }
+.pilot[data-sent] .pilot-form { display: none; }
+.pilot[data-sent] .pilot-done { display: block; }
+
+/* Review aid: the 28px rhythm drawn as hairlines — debug chrome, toggled by
+   ?baselines or the B key, never part of the look. */
+body[data-baselines] { position: relative; }
+body[data-baselines]::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom,
+      color-mix(in srgb, var(--color-accent) 35%, transparent) 0 1px,
+      transparent 1px var(--leading)),
+    repeating-linear-gradient(to bottom,
+      transparent 0 var(--half),
+      color-mix(in srgb, var(--color-accent) 16%, transparent) var(--half) calc(var(--half) + 1px),
+      transparent calc(var(--half) + 1px) var(--leading));
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-brand">Red<span style="color: var(--color-accent);">aura</span></span>
+  <a href="#product" aria-current="location" data-i18n="nav.how">How it works</a>
+  <a href="#app" data-i18n="nav.app">User app</a>
+  <a href="#pilot" data-i18n="nav.pilot">Pilot</a>
+  <span class="lang-wrap"><span class="lang-code" id="lang-code" aria-hidden="true">EN</span><select class="lang-select" id="lang-select" aria-label="Language"></select></span>
+  <a href="#pilot" class="btn btn-primary nav-cta" data-i18n="nav.cta">Request pilot access</a>
+</nav>
+<div class="wrap">
+
+  <section class="hero">
+    <h1 class="display"><span class="line" style="color: var(--color-accent)" data-i18n="hero.line1">One bad batch.</span> <span class="line"><span data-i18n="hero.line2pre">Alert an entire</span> <span class="ha-word">comunity</span></span></h1>
+    <p class="sub" data-i18n-html="hero.sub"><b>Redaura is an open-source public health infrastructure for harm reduction services.</b><br><br>Test the sample, drop a pin, hit publish — everyone inside the geofence gets the warning, credited to your organization by name. You bring the trust and the data. We bring the tech, free.</p>
+    <div class="row">
+      <a href="#pilot" class="btn btn-primary" data-i18n="hero.ctaPrimary">Request pilot access</a>
+      <a href="#app" class="btn btn-ghost" data-i18n="hero.ctaDemo">See the demo app</a>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 480 480">
+        <circle class="ha-fill" cx="240" cy="240" r="152"></circle>
+        <circle class="ha-fill" cx="240" cy="240" r="152"></circle>
+        <circle class="ha-pulse" cx="240" cy="240" r="152"></circle>
+        <circle class="ha-pulse p2" cx="240" cy="240" r="152"></circle>
+        <circle class="ha-fence" pathLength="100" cx="240" cy="240" r="152"></circle>
+        <circle class="ha-ph in" cx="200" cy="180" r="4" style="animation-delay: 2.7s;"></circle>
+        <circle class="ha-ph in" cx="316" cy="220" r="4" style="animation-delay: 2.85s;"></circle>
+        <circle class="ha-ph in" cx="262" cy="334" r="4" style="animation-delay: 3s;"></circle>
+        <circle class="ha-ph in" cx="180" cy="260" r="4" style="animation-delay: 2.75s;"></circle>
+        <circle class="ha-ph in" cx="300" cy="300" r="4" style="animation-delay: 3.1s;"></circle>
+        <circle class="ha-ph in" cx="232" cy="148" r="4" style="animation-delay: 2.9s;"></circle>
+        <circle class="ha-ph in" cx="340" cy="180" r="4" style="animation-delay: 3.2s;"></circle>
+        <circle class="ha-ph in" cx="158" cy="210" r="4" style="animation-delay: 2.8s;"></circle>
+        <circle class="ha-ph in" cx="288" cy="122" r="4" style="animation-delay: 3.25s;"></circle>
+        <circle class="ha-ph in" cx="210" cy="330" r="4" style="animation-delay: 3.05s;"></circle>
+        <circle class="ha-ph" cx="62" cy="124" r="4"></circle>
+        <circle class="ha-ph" cx="434" cy="402" r="4"></circle>
+        <circle class="ha-ph" cx="40" cy="300" r="4"></circle>
+        <circle class="ha-ph" cx="120" cy="58" r="4"></circle>
+        <circle class="ha-ph" cx="420" cy="118" r="4"></circle>
+        <circle class="ha-ph" cx="92" cy="420" r="4"></circle>
+        <circle class="ha-ph" cx="400" cy="340" r="4"></circle>
+        <circle class="ha-ph" cx="346" cy="58" r="4"></circle>
+        <circle class="ha-ph" cx="58" cy="236" r="4"></circle>
+        <circle class="ha-ph" cx="440" cy="240" r="4"></circle>
+        <circle class="ha-ph amb" cx="-149" cy="355" r="4" style="opacity: 0.73;"></circle>
+        <circle class="ha-ph amb" cx="617" cy="447" r="4" style="opacity: 0.70;"></circle>
+        <circle class="ha-ph amb" cx="156" cy="417" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="519" cy="343" r="4" style="opacity: 0.89;"></circle>
+        <circle class="ha-ph amb" cx="-81" cy="236" r="4" style="opacity: 0.86;"></circle>
+        <circle class="ha-ph amb" cx="25" cy="-51" r="4" style="opacity: 0.80;"></circle>
+        <circle class="ha-ph amb" cx="219" cy="9" r="4" style="opacity: 0.98;"></circle>
+        <circle class="ha-ph amb" cx="621" cy="258" r="4" style="opacity: 0.77;"></circle>
+        <circle class="ha-ph amb" cx="-35" cy="98" r="4" style="opacity: 0.87;"></circle>
+        <circle class="ha-ph amb" cx="32" cy="50" r="4" style="opacity: 0.91;"></circle>
+        <circle class="ha-ph amb" cx="15" cy="160" r="4" style="opacity: 0.97;"></circle>
+        <circle class="ha-ph amb" cx="368" cy="4" r="4" style="opacity: 0.93;"></circle>
+        <circle class="ha-ph amb" cx="454" cy="400" r="4" style="opacity: 0.93;"></circle>
+        <circle class="ha-ph amb" cx="609" cy="208" r="4" style="opacity: 0.79;"></circle>
+        <circle class="ha-ph amb" cx="153" cy="539" r="4" style="opacity: 0.87;"></circle>
+        <circle class="ha-ph amb" cx="-53" cy="103" r="4" style="opacity: 0.85;"></circle>
+        <circle class="ha-ph amb" cx="416" cy="533" r="4" style="opacity: 0.83;"></circle>
+        <circle class="ha-ph amb" cx="380" cy="71" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="124" cy="-16" r="4" style="opacity: 0.91;"></circle>
+        <circle class="ha-ph amb" cx="172" cy="293" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="113" cy="59" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="160" cy="276" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="338" cy="170" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="27" cy="384" r="4" style="opacity: 0.95;"></circle>
+        <circle class="ha-ph amb" cx="419" cy="145" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="127" cy="171" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="-80" cy="380" r="4" style="opacity: 0.82;"></circle>
+        <circle class="ha-ph amb" cx="457" cy="-16" r="4" style="opacity: 0.83;"></circle>
+        <circle class="ha-ph amb" cx="230" cy="516" r="4" style="opacity: 0.92;"></circle>
+        <circle class="ha-ph amb" cx="139" cy="139" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="-30" cy="168" r="4" style="opacity: 0.92;"></circle>
+        <circle class="ha-ph amb" cx="-31" cy="208" r="4" style="opacity: 0.92;"></circle>
+        <circle class="ha-ph amb" cx="631" cy="169" r="4" style="opacity: 0.75;"></circle>
+        <circle class="ha-ph amb" cx="459" cy="-45" r="4" style="opacity: 0.80;"></circle>
+        <circle class="ha-ph amb" cx="-52" cy="96" r="4" style="opacity: 0.85;"></circle>
+        <circle class="ha-ph amb" cx="-104" cy="504" r="4" style="opacity: 0.69;"></circle>
+        <circle class="ha-ph amb" cx="462" cy="386" r="4" style="opacity: 0.93;"></circle>
+        <circle class="ha-ph amb" cx="641" cy="528" r="4" style="opacity: 0.61;"></circle>
+        <circle class="ha-ph amb" cx="278" cy="278" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="-172" cy="557" r="4" style="opacity: 0.57;"></circle>
+        <circle class="ha-ph amb" cx="59" cy="386" r="4" style="opacity: 0.98;"></circle>
+        <circle class="ha-ph amb" cx="-40" cy="134" r="4" style="opacity: 0.89;"></circle>
+        <circle class="ha-ph amb" cx="-37" cy="243" r="4" style="opacity: 0.92;"></circle>
+        <circle class="ha-ph amb" cx="46" cy="45" r="4" style="opacity: 0.92;"></circle>
+        <circle class="ha-ph amb" cx="288" cy="377" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="598" cy="181" r="4" style="opacity: 0.80;"></circle>
+        <circle class="ha-ph amb" cx="288" cy="174" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="393" cy="369" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-ph amb" cx="655" cy="402" r="4" style="opacity: 0.68;"></circle>
+        <circle class="ha-ph amb" cx="49" cy="327" r="4" style="opacity: 1.00;"></circle>
+        <circle class="ha-pin" cx="240" cy="240" r="8"></circle>
+      </svg>
+      <div class="ha-push"><span class="k" data-i18n="hero.pushKicker">Redaura · now</span><strong data-i18n="hero.pushBody">Near you: pills sold as MDMA contain PMMA. Alert by Unity · Jellinek.</strong></div>
+    </div>
+  </section>
+
+</div>
+
+<section class="stats" aria-label="Redaura, by the numbers">
+  <div class="wrap">
+    <div class="grid">
+      <div><p class="stat-num">200k+</p><p class="stat-label" data-i18n="stats.l1">Downloads of one venue's alert feed — demand is proven</p></div>
+      <div><p class="stat-num">€0</p><p class="stat-label" data-i18n="stats.l2">Cost to your organization, ever</p></div>
+      <div><p class="stat-num">60s</p><p class="stat-label" data-i18n="stats.l3">From publish to phones in the fence</p></div>
+      <div><p class="stat-num">0</p><p class="stat-label" data-i18n="stats.l4">Personal data retained</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <section class="features" id="product">
+    <span class="kicker" data-i18n="feat.kicker">How it works</span>
+    <div class="feature">
+      <p class="f-num">01</p>
+      <h2 class="f-title" data-i18n="feat1.title">You publish</h2>
+      <p class="f-copy" data-i18n-html="feat1.copy">Log in to your dashboard. Upload the test result, draw a boundary around the festival or city, and hit publish. Alerts are instantly formatted to international public health standards (CAP). The whole process takes exactly as long as it took to read this.</p>
+    </div>
+    <div class="feature">
+      <p class="f-num">02</p>
+      <h2 class="f-title" data-i18n="feat2.title">We deliver</h2>
+      <p class="f-copy" data-i18n="feat2.copy">Every phone inside that fence gets an instant push notification, credited to your organization. Even if someone is just visiting for the weekend, their phone already knows who to trust.</p>
+    </div>
+    <div class="feature">
+      <p class="f-num">03</p>
+      <h2 class="f-title" data-i18n="feat3.title">Nobody is tracked</h2>
+      <p class="f-copy" data-i18n="feat3.copy">Geofence matching happens locally on the user's device. No accounts, no location pings home, and no logs to subpoena. Privacy isn't a setting we offer. It's the architecture.</p>
+    </div>
+    <div class="feature">
+      <p class="f-num">04</p>
+      <h2 class="f-title" data-i18n="feat4.title">Native in every language</h2>
+      <p class="f-copy" data-i18n="feat4.copy">You publish in your language; the alert arrives in theirs. Translation happens on delivery, so a warning written in Dutch reads flawlessly in English, German, or Polish. No extra work for your team.</p>
+    </div>
+  </section>
+
+  <section class="split" id="app">
+    <div class="split-copy">
+      <span class="kicker" data-i18n="app.kicker">The demo app — live prototype</span>
+      <h2 class="split-title" data-i18n="app.title">One app. Your name on every alert.</h2>
+      <p class="note" data-i18n="app.note1">Users download a single global app. The data on it is yours: every alert carries your organization's name, your photo, your lab numbers. The trust you built on the ground travels with the warning.</p>
+      <p class="note" data-i18n-html="app.note2"><b>Try it! Tap an alert to open it.</b> A push lands a few seconds in, or replay it under the phone.</p>
+    </div>
+    <div class="split-figure">
+      <iframe class="app-frame" src="../Redaura%20App.dc.html" title="Redaura user app — live prototype" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <section class="quote">
+    <figure>
+      <!-- keep the leading “ — the blockquote's negative text-indent hangs it in the margin -->
+      <blockquote data-i18n="quote.text">“We have the volunteers, the test kits, and twenty years of trust. What we never had was €50,000 for an app.”</blockquote>
+      <!-- keep the leading "— " — the figcaption's negative text-indent hangs it -->
+      <figcaption data-i18n="quote.attr">— Drug checking coordinator, prospective pilot partner</figcaption>
+    </figure>
+  </section>
+
+</div>
+
+<section class="pilot" id="pilot">
+  <div class="wrap">
+    <span class="kicker" data-i18n="pilot.kicker">The pilot</span>
+    <h2 class="pilot-title" data-i18n="pilot.title">Three yeses start the build.</h2>
+    <p class="note" data-i18n="pilot.note">We are building this infrastructure for networks like Unity, DIMS, and DanceSafe. If your organization would publish local data on a free, secure platform - let us know. A simple letter of intent is all we need to unlock our first round of public-interest funding.</p>
+    <form class="pilot-form" id="pilot-form">
+      <div class="field"><label for="pf-org" data-i18n="pilot.org">Organization</label><input class="input" id="pf-org" name="org" required /></div>
+      <div class="field"><label for="pf-email" data-i18n="pilot.email">Work email</label><input class="input" id="pf-email" name="email" type="email" required /></div>
+      <button type="submit" class="btn btn-primary" data-i18n="pilot.submit">Request pilot access</button>
+    </form>
+    <p class="pilot-done"><span class="sq"></span><span data-i18n="pilot.done">Received. We'll reply within two days — from a human.</span></p>
+  </div>
+</section>
+
+<section class="close" id="start">
+  <div class="wrap">
+    <h3><span class="line" data-i18n="close.line1">We power the network.</span> <span class="line" data-i18n="close.line2">You protect the community.</span></h3>
+    <div class="row">
+      <a href="#pilot" class="btn btn-ghost" data-i18n="close.cta">Request pilot access</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer data-i18n-html="footer.text">Redaura — a non-profit organisation registered in the Netherlands.<br>Design, built, and hosted in the EU.</footer>
+</div>
+<script src="image-slot.js"></script>
+<script>
+// Review aid: baseline-grid overlay — add ?baselines to the URL, or press B to toggle.
+(() => {
+  if (new URLSearchParams(location.search).has('baselines')) document.body.setAttribute('data-baselines', '');
+  addEventListener('keydown', (e) => {
+    const t = e.target;
+    if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    if ((e.key === 'b' || e.key === 'B') && !e.metaKey && !e.ctrlKey && !e.altKey) document.body.toggleAttribute('data-baselines');
+  });
+})();
+// Pilot form — frontend mock: confirm without sending anywhere.
+document.getElementById('pilot-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  document.getElementById('pilot').setAttribute('data-sent', '');
+});
+// Page grid spotlight — the strong grid layer follows the pointer anywhere.
+(() => {
+  const root = document.body;
+  document.addEventListener('pointermove', (e) => {
+    root.style.setProperty('--mx', e.clientX + 'px');
+    root.style.setProperty('--my', e.clientY + 'px');
+  });
+  document.addEventListener('pointerleave', () => {
+    root.style.setProperty('--mx', '-999px');
+    root.style.setProperty('--my', '-999px');
+  });
+  // The embedded app iframe forwards pointer coords (it would otherwise swallow
+  // pointermove); map them into page space so the spotlight follows over it.
+  const frame = document.querySelector('.app-frame');
+  addEventListener('message', (e) => {
+    if (!e.data || e.data.t !== 'redaura-pointer' || !frame) return;
+    if (e.data.out) {
+      root.style.setProperty('--mx', '-999px');
+      root.style.setProperty('--my', '-999px');
+      return;
+    }
+    const r = frame.getBoundingClientRect();
+    root.style.setProperty('--mx', (r.left + e.data.x) + 'px');
+    root.style.setProperty('--my', (r.top + e.data.y) + 'px');
+  });
+})();
+// Keep the strong grid always lit around the hero pulse — track the hero-art
+// center in viewport coords so the spotlight follows it as the page scrolls.
+(() => {
+  const art = document.querySelector('.hero-art');
+  if (!art) return;
+  const root = document.body;
+  const place = () => {
+    const r = art.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) {
+      root.style.setProperty('--hx', '-999px');
+      root.style.setProperty('--hy', '-999px');
+      return;
+    }
+    root.style.setProperty('--hx', (r.left + r.width / 2) + 'px');
+    root.style.setProperty('--hy', (r.top + r.height / 2) + 'px');
+  };
+  place();
+  addEventListener('scroll', place, { passive: true });
+  addEventListener('resize', place);
+  addEventListener('load', place);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+  requestAnimationFrame(place);
+  setTimeout(place, 300);
+})();
+// Once the hero scrolls out of view, draw a quiet pulse on the nav CTA — fires
+// once per arrival at that scroll region, not continuously.
+(() => {
+  const cta = document.querySelector('.nav-cta');
+  const hero = document.querySelector('.hero');
+  if (!cta || !hero || !('IntersectionObserver' in window)) return;
+  let armed = false;
+  new IntersectionObserver((entries) => {
+    const past = !entries[0].isIntersecting;
+    if (past && armed) {
+      cta.classList.remove('pulsing');
+      void cta.offsetWidth;
+      cta.classList.add('pulsing');
+    }
+    armed = true;
+  }, { threshold: 0 }).observe(hero);
+  cta.addEventListener('animationend', () => cta.classList.remove('pulsing'));
+})();
+// Hero broadcast wave — after the fence draws, the signal spreads outward in
+// synced beats: each beat activates the next ring of dots (turning them red)
+// and every already-active dot pulses in unison, until the whole field is lit.
+(() => {
+  const svg = document.querySelector('.hero-art svg');
+  if (!svg) return;
+  const cx = 240, cy = 240;
+  const nodes = [...svg.querySelectorAll('circle.ha-ph')].map((n) => ({
+    n, d: Math.hypot(n.cx.baseVal.value - cx, n.cy.baseVal.value - cy),
+  }));
+  nodes.forEach((o) => { o.n.classList.remove('in'); o.n.style.animation = 'none'; });
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { nodes.forEach((o) => o.n.classList.add('active')); return; }
+
+  const WAVES = 7;
+  const maxD = Math.max(...nodes.map((o) => o.d));
+  nodes.forEach((o) => { o.wave = Math.min(WAVES - 1, Math.floor((o.d / (maxD + 1)) * WAVES)); });
+  const rings = [...svg.querySelectorAll('.ha-pulse')];
+  rings.forEach((r) => { r.style.animation = 'none'; r.style.opacity = '0'; });
+  // the fence and its fill grow with the broadcast, covering each newly
+  // reached band of dots, then contract when the wave resets
+  const growers = [...svg.querySelectorAll('.ha-fill, .ha-fence, .ha-pulse')];
+  growers.forEach((g) => { g.style.transition = 'r 1100ms cubic-bezier(0.22, 1, 0.36, 1), opacity 1100ms ease'; });
+  const growTo = (w) => {
+    const covered = nodes.filter((o) => o.wave <= w).map((o) => o.d);
+    const final = w >= WAVES - 1;
+    // final pulse: the circle expands past the whole dot field and fades out
+    // while the hero's full-bleed ground fades IN to the same fence tint — the
+    // fill visually hands off to the section background
+    const R = w < 0 || !covered.length ? 152 : final ? maxD + 90 : Math.max(152, Math.max(...covered) + 14);
+    growers.forEach((g) => { g.style.r = R + 'px'; g.style.opacity = final ? '0' : ''; });
+    const hero = svg.closest('.hero');
+    if (hero) hero.classList.toggle('covered', final);
+  };
+
+  let wave = -1, ringIdx = 0, frozen = false;
+  // the headline's reach word grows with the broadcast, small → planetary,
+  // one tier per beat, resetting with the wave
+  let WORDS = ['party', 'festival', 'neighborhood', 'community', 'city', 'region', 'country'];
+  const wordEl = document.querySelector('.ha-word');
+  // reserve the widest word's width AND the tallest resulting heading height up
+  // front, so swapping never reflows or shifts the page in any language
+  // (some scripts change line-box height per word; long words change wrapping)
+  const sizeSlot = () => {
+    if (!wordEl) return;
+    const h1 = wordEl.closest('h1');
+    const held = wordEl.textContent;
+    wordEl.style.minWidth = '0px';
+    if (h1) h1.style.minHeight = '0px';
+    let max = 0, maxH = 0;
+    WORDS.forEach((w) => {
+      wordEl.textContent = w;
+      max = Math.max(max, wordEl.offsetWidth);
+      if (h1) maxH = Math.max(maxH, h1.offsetHeight);
+    });
+    wordEl.textContent = held;
+    wordEl.style.minWidth = Math.ceil(max) + 'px';
+    if (h1) h1.style.minHeight = Math.ceil(maxH) + 'px';
+  };
+  sizeSlot();
+  let rsT;
+  addEventListener('resize', () => { clearTimeout(rsT); rsT = setTimeout(sizeSlot, 150); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeSlot);
+  addEventListener('redaura:lang', (e) => { const w = e.detail.t('hero.words'); if (Array.isArray(w) && w.length) { WORDS = w; sizeSlot(); if (wordEl) wordEl.textContent = WORDS[Math.max(0, Math.min(wave, WORDS.length - 1))]; } });
+  const setWord = (i) => {
+    if (!wordEl) return;
+    wordEl.textContent = WORDS[Math.min(i, WORDS.length - 1)];
+    wordEl.animate(
+      [{ opacity: 0.35, transform: 'translateY(0.06em)' }, { opacity: 1, transform: 'none' }],
+      { duration: 320, easing: 'ease-out' },
+    );
+  };
+  const fireRing = () => {
+    const r = rings[ringIdx % rings.length]; ringIdx++;
+    if (!r) return;
+    r.animate(
+      [{ transform: 'scale(0.12)', opacity: 0.5 }, { transform: 'scale(1.35)', opacity: 0 }],
+      { duration: 1400, easing: 'ease-out' },
+    );
+  };
+  const pulseActive = () => {
+    nodes.forEach((o) => {
+      if (!o.n.classList.contains('active')) return;
+      o.n.animate(
+        [{ transform: 'scale(1)' }, { transform: 'scale(1.9)' }, { transform: 'scale(1)' }],
+        { duration: 620, easing: 'cubic-bezier(0.3,0,0.3,1)' },
+      );
+    });
+  };
+  const beat = () => {
+    wave++;
+    if (wave >= WAVES) wave = 0; // the reach word keeps cycling…
+    setWord(wave);
+    if (!frozen) { // …but once the fence has covered everything, it stays covered
+      nodes.forEach((o) => { if (o.wave <= wave) o.n.classList.add('active'); });
+      growTo(wave);
+      if (wave >= WAVES - 1) frozen = true;
+    }
+    if (!frozen) fireRing(); // no ripple once the circle has handed off to the bg
+    pulseActive();
+    setTimeout(beat, wave >= WAVES - 1 ? 4200 : 2200);
+  };
+  setTimeout(beat, 3000); // begin once the fence has surveyed itself
+})();
+</script>
+<script src="i18n.js" defer></script>
+</body>
+</html>

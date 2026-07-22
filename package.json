@@ -1,0 +1,13 @@
+{
+  "name": "redaura-www",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Redaura website & landing page",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "translate": "node tools/translate.mjs"
+  }
+}

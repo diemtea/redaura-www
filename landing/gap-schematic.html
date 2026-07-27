@@ -204,13 +204,14 @@ body { margin: 0; background: var(--gd-bg); color: var(--gd-ink); padding: 80vh 
 </style>
 </head>
 <body>
+<main>
 <p style="opacity:0.5">scroll down ↓</p>
 
 <!-- ===== MARKUP: the whole component ===== -->
-<div class="gap-dia">
+<div class="gap-dia" role="region" aria-label="Alert routing schematic diagram">
   <div class="gd-box b1"><p class="t" data-i18n="dia.team">Drug-checking team</p><p class="s" data-i18n="dia.teamSub">Verified on-site detection</p></div>
   <span class="gd-line l1"></span>
-  <div class="gd-hub"><span class="rip"></span><span class="rip r2"></span><svg class="sq" viewBox="0 0 20 20" width="16" height="16"><circle cx="10" cy="10" r="7.5" fill="none" stroke="var(--gd-accent)" stroke-width="4"/></svg><span class="t">Redaura</span></div>
+  <div class="gd-hub"><span class="rip"></span><span class="rip r2"></span><svg class="sq" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="var(--gd-accent)" stroke-width="4"/></svg><span class="t">Redaura</span></div>
   <span class="gd-line-h"></span>
   <div class="gd-box b3"><p class="t" data-i18n="dia.ews">National monitoring</p><p class="s" data-i18n="dia.ewsSub">Structured early-warning data</p></div>
   <span class="gd-line l2"></span>
@@ -256,6 +257,7 @@ body { margin: 0; background: var(--gd-bg); color: var(--gd-ink); padding: 80vh 
     </div>
   </div>
 </div>
+</main>
 
 <!-- ===== JS: scroll trigger (the only script needed) ===== -->
 <script>

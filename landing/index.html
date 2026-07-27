@@ -44,6 +44,31 @@
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body { margin: 0; text-wrap: pretty; }
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  background: var(--color-text);
+  color: var(--color-bg);
+  padding: 10px 16px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  z-index: 10000;
+  text-decoration: underline;
+}
+.skip-link:focus-visible {
+  top: 10px;
+  left: 10px;
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.hero, .gap, .features, .split, .quote, .protocol, .pilot, .close {
+  scroll-margin-top: clamp(60px, 8vh, 80px);
+}
+body[data-paused-anim] *, body[data-paused-anim] *::before, body[data-paused-anim] *::after {
+  animation-play-state: paused !important;
+}
 .wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--edge); }
 /* the component demo pads the masthead with its own spacing; on the page the
    masthead's contents take the page gutter and sit on the wrap's text axis
@@ -183,7 +208,7 @@ body::after {
 /* a reached node turns confident ink, not red — red stays the signal itself */
 .hero-art circle.ha-ph.active { fill: var(--color-text); }
 @keyframes ha-ph { 40% { transform: scale(1.7); } 100% { fill: var(--color-text); transform: scale(1); } }
-.ha-pin { fill: var(--color-accent); opacity: 0; transform-box: fill-box; transform-origin: center;
+.ha-pin { opacity: 0; transform-box: fill-box; transform-origin: center;
   animation: ha-pin 0.5s cubic-bezier(0.2, 1.2, 0.4, 1) 0.3s forwards; }
 @keyframes ha-pin { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: none; } }
 @keyframes ha-beat { 0%, 88%, 100% { opacity: 1; } 93% { opacity: 0.55; } }
@@ -242,16 +267,16 @@ body::after {
 
 /* — stat row: the red field — full-width accent block, numerals reversed to
    paper (display-grade on the accent, the system's own 3:1 large-text bar) — */
-.stats { background: var(--color-accent); color: var(--color-bg); }
+.stats { position: relative; z-index: 10; background: var(--color-accent-700); color: #ffffff; }
 .stats .wrap { padding-top: calc(2.5 * var(--leading)); padding-bottom: calc(2.5 * var(--leading)); }
 .stats .grid { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: calc(1.5 * var(--leading)) var(--leading); }
 .stat-num { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
   font-size: clamp(34px, 3.4vw, 48px); line-height: calc(2 * var(--leading));
-  color: var(--color-bg);
+  color: #ffffff;
   margin: 0; margin-left: -0.045em; /* digits lead — the deck's "0"-population value */
   text-box: trim-both cap alphabetic; }
 .stat-label { font-size: 13px; line-height: var(--half); letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--color-bg);
+  color: #ffffff; font-weight: 600;
   margin: var(--half) 0 0; }
 
 /* — the gap section — 2-column desktop layout (text left, vertical schematic right) — */
@@ -517,15 +542,15 @@ body::after {
    label rides everywhere. */
 .close { background: var(--color-accent); color: var(--color-bg); }
 .close .wrap { padding-top: calc(3 * var(--leading)); padding-bottom: calc(3 * var(--leading)); }
-.close h3 { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+.close h2 { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
   font-size: clamp(34px, 4.2vw, 56px); line-height: clamp(36px, 4.45vw, 59.4px); /* ≈1.06 —
      display-grade, so it carries the display-block lattice exemption (the
-     rhythm probe excludes .display and .close h3 alike) */
+     rhythm probe excludes .display and .close h2 alike) */
   letter-spacing: -0.015em; margin: 0; margin-left: -0.058em;
   text-box: trim-both cap alphabetic; }
-.close h3 .line { display: block; }
+.close h2 .line { display: block; }
 .close .row { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: calc(1.5 * var(--leading)); }
-.close .btn-ghost { color: var(--color-bg); border-color: var(--color-bg); } /* paper outline on the red field */
+.close .btn-ghost { color: #ffffff; border-color: #ffffff; font-weight: 600; } /* paper outline on the red field */
 footer { padding: calc(2 * var(--leading)) 0; font-size: 13px; line-height: var(--leading);
   color: color-mix(in srgb, var(--color-text) 70%, transparent); /* 5.8:1 — see .stat-label */ }
 
@@ -559,11 +584,11 @@ footer { padding: calc(2 * var(--leading)) 0; font-size: 13px; line-height: var(
 .pilot-form { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: flex-end;
   margin-top: calc(1.5 * var(--leading)); max-width: 720px; }
 .pilot-form .field { flex: 1 1 220px; margin: 0; }
-.pilot-form .field > label { color: color-mix(in srgb, var(--color-bg) 70%, transparent); }
+.pilot-form .field > label { color: color-mix(in srgb, var(--color-bg) 80%, transparent); }
 .pilot-form .input { background: color-mix(in srgb, var(--color-bg) 8%, transparent);
-  border-color: color-mix(in srgb, var(--color-bg) 40%, transparent); color: var(--color-bg); }
-.pilot-form .input::placeholder { color: color-mix(in srgb, var(--color-bg) 45%, transparent); }
-.pilot-form .input:hover { border-color: color-mix(in srgb, var(--color-bg) 60%, transparent); }
+  border-color: color-mix(in srgb, var(--color-bg) 55%, transparent); color: var(--color-bg); }
+.pilot-form .input::placeholder { color: color-mix(in srgb, var(--color-bg) 68%, transparent); }
+.pilot-form .input:hover { border-color: color-mix(in srgb, var(--color-bg) 75%, transparent); }
 .pilot-form .btn { min-height: 36px; }
 .pilot-done { display: none; margin-top: calc(1.5 * var(--leading)); font-size: 15.5px; line-height: var(--leading); }
 .pilot-done .sq { display: inline-block; width: 10px; height: 10px; background: var(--color-accent-500); margin-right: 10px; }
@@ -587,14 +612,17 @@ body[data-baselines]::after {
 </style>
 </head>
 <body>
-<nav class="nav">
-  <span class="nav-brand"><span class="nav-logo"><span class="rip"></span><span class="rip r2"></span><svg class="sq" viewBox="0 0 20 20" width="16" height="16"><circle cx="10" cy="10" r="7.5" fill="none" stroke="var(--color-accent)" stroke-width="4"/></svg></span><span>Red<span style="color: var(--color-accent);">aura</span></span></span>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<nav class="nav" aria-label="Main navigation">
+  <span class="nav-brand"><span class="nav-logo"><span class="rip"></span><span class="rip r2"></span><svg class="sq" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="var(--color-accent)" stroke-width="4"/></svg></span><span>Red<span style="color: var(--color-accent);">aura</span></span></span>
   <a href="#product" aria-current="location" data-i18n="nav.how">How it works</a>
   <a href="#app" data-i18n="nav.app">User app</a>
   <a href="#pilot" data-i18n="nav.pilot">Pilot</a>
+  <button type="button" class="btn btn-ghost anim-toggle" id="anim-toggle" aria-label="Pause motion animations" title="Pause motion animations" style="font-size: 12px; padding: 4px 8px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg><span data-i18n="motion.pause">Pause motion</span></button>
   <span class="lang-wrap"><span class="lang-code" id="lang-code" aria-hidden="true">EN</span><select class="lang-select" id="lang-select" aria-label="Language"></select></span>
   <a href="#pilot" class="btn btn-primary nav-cta" data-i18n="nav.cta">Request pilot access</a>
 </nav>
+<main id="main-content">
 <div class="wrap">
 
   <section class="hero">
@@ -603,6 +631,9 @@ body[data-baselines]::after {
     <div class="row">
       <a href="#pilot" class="btn btn-primary" data-i18n="hero.ctaPrimary">Request pilot access</a>
       <a href="#app" class="btn btn-ghost" data-i18n="hero.ctaDemo">See the demo app</a>
+    </div>
+    <div class="hero-art-ctrl" style="position: absolute; right: 0; bottom: calc(3 * var(--leading) - 20px); z-index: 10;">
+      <button type="button" class="btn btn-ghost anim-toggle" aria-label="Pause motion animations" aria-pressed="false" style="font-size: 11.5px; padding: 4px 10px; background: color-mix(in srgb, var(--color-bg) 85%, transparent); border: 1px solid var(--color-divider);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg><span data-i18n="motion.pause">Pause motion</span></button>
     </div>
     <div class="hero-art" aria-hidden="true">
       <svg viewBox="0 0 480 480">
@@ -681,7 +712,7 @@ body[data-baselines]::after {
         <circle class="ha-ph amb" cx="393" cy="369" r="4" style="opacity: 1.00;"></circle>
         <circle class="ha-ph amb" cx="655" cy="402" r="4" style="opacity: 0.68;"></circle>
         <circle class="ha-ph amb" cx="49" cy="327" r="4" style="opacity: 1.00;"></circle>
-        <circle class="ha-pin" cx="240" cy="240" r="8"></circle>
+        <circle class="ha-pin" cx="240" cy="240" r="10" fill="none" stroke="var(--color-accent)" stroke-width="4.5"></circle>
       </svg>
       <div class="ha-push"><span class="k" data-i18n="hero.pushKicker">Redaura · now</span><strong data-i18n="hero.pushBody">Near you: pills sold as MDMA contain PMMA. Alert by Local Drug Checking Team.</strong></div>
     </div>
@@ -719,10 +750,13 @@ body[data-baselines]::after {
         <h2 class="gap-heading" data-i18n-html="gap.heading"><span class="gap-brand">Redaura</span> connects everyone.</h2>
       </div>
       <div class="gap-dia-side">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+          <button type="button" class="btn btn-ghost anim-toggle" aria-label="Pause motion animations" aria-pressed="false" style="font-size: 11.5px; padding: 4px 10px; background: color-mix(in srgb, var(--color-bg) 85%, transparent); border: 1px solid var(--color-divider);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg><span data-i18n="motion.pause">Pause motion</span></button>
+        </div>
         <div class="gap-dia">
           <div class="gd-box b1"><p class="t" data-i18n="dia.team">Drug-checking team</p><p class="s" data-i18n="dia.teamSub">Verified on-site detection</p></div>
           <span class="gd-line l1"><span class="pkt"></span></span>
-          <div class="gd-hub"><span class="rip"></span><span class="rip r2"></span><svg class="sq" viewBox="0 0 20 20" width="16" height="16"><circle cx="10" cy="10" r="7.5" fill="none" stroke="var(--gd-accent)" stroke-width="4"/></svg><span class="t">Redaura</span></div>
+          <div class="gd-hub"><span class="rip"></span><span class="rip r2"></span><svg class="sq" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="var(--gd-accent)" stroke-width="4"/></svg><span class="t">Redaura</span></div>
           <span class="gd-line-h"><span class="pkt"></span></span>
           <div class="gd-box b3"><p class="t" data-i18n="dia.ews">National monitoring</p><p class="s" data-i18n="dia.ewsSub">Structured early-warning data</p></div>
           <span class="gd-line l2"><span class="pkt"></span></span>
@@ -862,25 +896,26 @@ body[data-baselines]::after {
     <h2 class="pilot-title" data-i18n="pilot.title">Working prototype. Open protocol.</h2>
     <p class="note" data-i18n-html="pilot.note">A non-profit registered in the Netherlands, built and hosted in the EU. We're looking for three founding partners — drug-checking services, peer-support networks, or regional health bodies — to shape this before it ships. Pilot partners sit on the governance board and set the accreditation rules.<br><br>Non-binding, no funding commitment, no exclusivity.</p>
     <form class="pilot-form" id="pilot-form">
-      <div class="field"><label for="pf-name" data-i18n="pilot.name">Name</label><input class="input" id="pf-name" name="name" required /></div>
-      <div class="field"><label for="pf-org" data-i18n="pilot.org">Organization</label><input class="input" id="pf-org" name="org" required /></div>
-      <div class="field"><label for="pf-email" data-i18n="pilot.email">Work email</label><input class="input" id="pf-email" name="email" type="email" required /></div>
+      <div class="field"><label for="pf-name" data-i18n="pilot.name">Name</label><input class="input" id="pf-name" name="name" autocomplete="name" required /></div>
+      <div class="field"><label for="pf-org" data-i18n="pilot.org">Organization</label><input class="input" id="pf-org" name="org" autocomplete="organization" required /></div>
+      <div class="field"><label for="pf-email" data-i18n="pilot.email">Work email</label><input class="input" id="pf-email" name="email" type="email" autocomplete="email" required /></div>
       <button type="submit" class="btn btn-primary" data-i18n="pilot.submit">Request pilot access</button>
     </form>
-    <p class="pilot-error" id="pilot-error" style="display:none; color: #ff6b6b; margin-top: 12px; font-size: 14.5px;"></p>
-    <p class="pilot-done"><span class="sq"></span><span data-i18n="pilot.done">Received. We'll reply within two days — from a human.</span></p>
+    <p class="pilot-error" id="pilot-error" role="alert" aria-live="assertive" style="display:none; color: #ffb3b3; margin-top: 12px; font-size: 14.5px;"></p>
+    <p class="pilot-done" aria-live="polite"><span class="sq"></span><span data-i18n="pilot.done">Received. We'll reply within two days — from a human.</span></p>
     <p class="pilot-follow" data-i18n="pilot.follow" style="margin-top: calc(1.5 * var(--leading)); font-size: 14.5px; color: color-mix(in srgb, var(--color-bg) 65%, transparent);">Not an organization but want to follow along? Leave an email — updates roughly monthly.</p>
   </div>
 </section>
 
 <section class="close" id="start">
   <div class="wrap">
-    <h3><span class="line" data-i18n="close.line1">We power the network.</span> <span class="line" data-i18n="close.line2">You protect the community.</span></h3>
+    <h2><span class="line" data-i18n="close.line1">We build the infrastructure.</span> <span class="line" data-i18n="close.line2">You save lives with it.</span></h2>
     <div class="row">
       <a href="#pilot" class="btn btn-ghost" data-i18n="close.cta">Request pilot access</a>
     </div>
   </div>
 </section>
+</main>
 
 <div class="wrap">
   <footer data-i18n-html="footer.text">Redaura — a non-profit organisation registered in the Netherlands.<br>Designed, built, and hosted in the EU.</footer>
@@ -1243,7 +1278,48 @@ body[data-baselines]::after {
       }, delay);
     });
   };
+  let beatTimer = null, l1Timer = null;
+  const isPaused = () => document.body.hasAttribute('data-paused-anim');
+
+  const PAUSE_ICON = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+  const PLAY_ICON = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+
+  window.toggleRedauraMotion = (forceState) => {
+    const currentState = isPaused();
+    const newState = forceState !== undefined ? forceState : !currentState;
+    if (newState) {
+      document.body.setAttribute('data-paused-anim', '');
+      clearTimeout(beatTimer);
+      clearTimeout(l1Timer);
+      document.getAnimations().forEach(anim => {
+        try { anim.pause(); } catch(e) {}
+      });
+    } else {
+      document.body.removeAttribute('data-paused-anim');
+      document.getAnimations().forEach(anim => {
+        try { anim.play(); } catch(e) {}
+      });
+      beat();
+    }
+    document.querySelectorAll('.anim-toggle').forEach((btn) => {
+      const key = newState ? 'motion.resume' : 'motion.pause';
+      const text = (window.redauraI18n && window.redauraI18n.t(key)) || (newState ? 'Resume motion' : 'Pause motion');
+      btn.innerHTML = (newState ? PLAY_ICON : PAUSE_ICON) + `<span data-i18n="${key}">${text}</span>`;
+      btn.setAttribute('aria-label', text);
+      btn.setAttribute('aria-pressed', newState ? 'true' : 'false');
+    });
+  };
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.anim-toggle');
+    if (btn) {
+      e.preventDefault();
+      window.toggleRedauraMotion();
+    }
+  });
+
   const beat = () => {
+    if (isPaused()) return;
     wave++;
     if (wave >= WAVES) wave = 0; // the reach word keeps cycling…
     setWord(wave);
@@ -1257,12 +1333,12 @@ body[data-baselines]::after {
     const isFinalWord = wave === WAVES - 1;
     const nextDelay = isFinalWord ? 8000 : 3200;
     // Pre-schedule l1 packet so it arrives at the hub exactly when the next beat fires
-    setTimeout(() => animPktV(l1Pkt, 0), nextDelay - 560);
-    setTimeout(beat, nextDelay);
+    l1Timer = setTimeout(() => { if (!isPaused()) animPktV(l1Pkt, 0); }, nextDelay - 560);
+    beatTimer = setTimeout(beat, nextDelay);
   };
   // First beat: pre-schedule l1 so it arrives at t=3000ms
-  setTimeout(() => animPktV(l1Pkt, 0), 3000 - 560);
-  setTimeout(beat, 3000); // begin once the fence has surveyed itself
+  l1Timer = setTimeout(() => { if (!isPaused()) animPktV(l1Pkt, 0); }, 3000 - 560);
+  beatTimer = setTimeout(beat, 3000); // begin once the fence has surveyed itself
 })();
 </script>
 <script src="i18n.js" defer></script>

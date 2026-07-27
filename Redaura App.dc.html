@@ -20,6 +20,8 @@
     @keyframes sp-screen { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
     @keyframes nav-beat { 0%, 12%, 100% { transform: none; } 4% { transform: scale(1.3); } }
     @keyframes nav-rip { 0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.5; } 12% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; } 100% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; } }
+    [role="button"]:focus-visible, button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: -2px; }
+    select:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
   </style>
 </helmet>
 <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px;">
@@ -67,7 +69,7 @@
           <div style="flex: 1; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none;">
             <div style="padding: 16px 18px 6px; font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">{{ t.near }}</div>
             <sc-for list="{{ near }}" as="a" hint-placeholder-count="2">
-              <div onClick="{{ a.open }}" role="button" tabindex="0" style="display: grid; grid-template-columns: 14px 1fr; gap: 4px 12px; padding: 13px 18px 14px; border-top: 1px solid var(--color-divider); cursor: pointer; transition: background 120ms;" style-hover="background: color-mix(in srgb, var(--color-text) 4%, transparent);" style-active="background: color-mix(in srgb, var(--color-text) 9%, transparent);">
+              <div onClick="{{ a.open }}" onKeyDown="{{ a.onKeyDown }}" role="button" tabindex="0" style="display: grid; grid-template-columns: 14px 1fr; gap: 4px 12px; padding: 13px 18px 14px; border-top: 1px solid var(--color-divider); cursor: pointer; transition: background 120ms;" style-hover="background: color-mix(in srgb, var(--color-text) 4%, transparent);" style-active="background: color-mix(in srgb, var(--color-text) 9%, transparent);">
                 <span style="width: 10px; height: 10px; margin-top: 4px; background: {{ a.dotBg }}; border: 2px solid {{ a.dotBd }}; box-sizing: border-box;"></span>
                 <div style="min-width: 0;">
                   <div style="font-family: var(--font-heading); font-weight: 800; font-size: 15px; line-height: 1.25; letter-spacing: -0.01em;">{{ a.title }}</div>
@@ -78,7 +80,7 @@
             </sc-for>
             <div style="padding: 22px 18px 6px; font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 60%, transparent); font-weight: 600; border-top: 2px solid var(--color-divider); margin-top: 14px;">{{ t.network }}</div>
             <sc-for list="{{ net }}" as="a" hint-placeholder-count="3">
-              <div onClick="{{ a.open }}" role="button" tabindex="0" style="display: grid; grid-template-columns: 14px 1fr; gap: 4px 12px; padding: 13px 18px 14px; border-top: 1px solid var(--color-divider); cursor: pointer; transition: background 120ms;" style-hover="background: color-mix(in srgb, var(--color-text) 4%, transparent);" style-active="background: color-mix(in srgb, var(--color-text) 9%, transparent);">
+              <div onClick="{{ a.open }}" onKeyDown="{{ a.onKeyDown }}" role="button" tabindex="0" style="display: grid; grid-template-columns: 14px 1fr; gap: 4px 12px; padding: 13px 18px 14px; border-top: 1px solid var(--color-divider); cursor: pointer; transition: background 120ms;" style-hover="background: color-mix(in srgb, var(--color-text) 4%, transparent);" style-active="background: color-mix(in srgb, var(--color-text) 9%, transparent);">
                 <span style="width: 10px; height: 10px; margin-top: 4px; background: {{ a.dotBg }}; border: 2px solid {{ a.dotBd }}; box-sizing: border-box;"></span>
                 <div style="min-width: 0;">
                   <div style="font-family: var(--font-heading); font-weight: 800; font-size: 15px; line-height: 1.25; letter-spacing: -0.01em;">{{ a.title }}</div>
@@ -129,7 +131,7 @@
         </div>
       </sc-if>
       <sc-if value="{{ pushVisible }}" hint-placeholder-val="{{ false }}">
-        <div onClick="{{ openPush }}" onAnimationEnd="{{ settlePush }}" role="button" tabindex="0" style="position: absolute; top: 70px; left: 12px; right: 12px; z-index: 40; background: var(--color-neutral-900); color: var(--color-bg); padding: 13px 15px 14px; box-shadow: var(--shadow-lg); cursor: pointer; animation: {{ pushAnim }};">
+        <div onClick="{{ openPush }}" onKeyDown="{{ openPushKeyDown }}" onAnimationEnd="{{ settlePush }}" role="button" tabindex="0" style="position: absolute; top: 70px; left: 12px; right: 12px; z-index: 40; background: var(--color-neutral-900); color: var(--color-bg); padding: 13px 15px 14px; box-shadow: var(--shadow-lg); cursor: pointer; animation: {{ pushAnim }};">
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
             <span style="display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75;"><span style="width: 8px; height: 8px; background: var(--color-accent-500);"></span>Redaura</span>
             <span style="font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.6;">{{ t.now }}</span>
@@ -302,7 +304,9 @@ class Component extends DCLogic {
         title: o.title || a.title, finding: o.finding || a.finding,
         time: o.time || a.time, fence: o.fence || a.fence, advice: o.advice || a.advice,
         rows: a.rows.map((r, i) => ({ k: t.rowK[i], v: rowsV[i] })),
-        dotBg: s.dotBg, dotBd: s.dotBd, sevLabel: t['sev_' + a.sev], sevBg: s.bg, sevFg: s.fg, sevBd: s.bd, open: () => this.open(a.id) };
+        dotBg: s.dotBg, dotBd: s.dotBd, sevLabel: t['sev_' + a.sev], sevBg: s.bg, sevFg: s.fg, sevBd: s.bd,
+        open: () => this.open(a.id),
+        onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.open(a.id); } } };
     });
     const near = deco.filter((a) => a.city === region);
     const net = deco.filter((a) => a.city !== region);
@@ -327,6 +331,7 @@ class Component extends DCLogic {
       pushBody: pushAlert.finding + ' ' + t.alertBy + ' ' + pushAlert.org + '.',
       back: () => this.setState({ screen: 'feed' }),
       openPush: () => this.open(pushAlert.id),
+      openPushKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.open(pushAlert.id); } },
       replay: () => {
         clearTimeout(this._t);
         this.setState({ push: false, screen: 'feed' });

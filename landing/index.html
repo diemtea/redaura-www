@@ -165,10 +165,58 @@ body[data-paused-anim] *, body[data-paused-anim] *::before, body[data-paused-ani
 .nav-menu-anim { width: 100%; justify-content: center; border: 1px solid var(--color-divider); padding: 8px 12px; font-size: 12.5px; font-weight: 600; box-sizing: border-box; }
 .nav-menu-cta { display: block; width: 100%; text-align: center; justify-content: center; padding: 10px 16px; font-size: 13.5px; font-weight: 700; box-sizing: border-box; white-space: nowrap; }
 
+/* Mobile Fixed Bottom Navigation */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 990;
+  background: color-mix(in srgb, var(--color-bg) 94%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-top: 2px solid var(--color-text);
+  padding: 10px var(--edge);
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+  box-shadow: 0 -4px 20px color-mix(in srgb, var(--color-text) 10%, transparent);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  box-sizing: border-box;
+}
+.mobile-bottom-nav.is-hidden {
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+.mobile-bottom-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 44px;
+  padding: 10px 16px;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-bg);
+  background: var(--color-accent);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.mobile-bottom-cta:hover { background: var(--color-accent-600); color: var(--color-bg); }
+.mobile-bottom-cta:active { background: var(--color-accent-700); color: var(--color-bg); }
+
 @media (max-width: 760px) {
   .nav-links, .nav-anim-desktop, .nav-cta-desktop { display: none !important; }
   .nav-toggle { display: flex; }
   .nav-menu { display: block; }
+  .mobile-bottom-nav { display: block; }
+  footer { padding-bottom: calc(48px + env(safe-area-inset-bottom)); }
 }
 @media (max-width: 480px) {
   .nav-bar { padding-inline: var(--space-3); height: 54px; }
@@ -698,6 +746,9 @@ body[data-baselines]::after {
     </div>
   </div>
 </nav>
+<div class="mobile-bottom-nav" id="mobile-bottom-nav">
+  <a href="#pilot" class="btn btn-primary mobile-bottom-cta" data-i18n="nav.cta">Request pilot access</a>
+</div>
 <main id="main-content">
 <div class="wrap">
 
@@ -1414,14 +1465,36 @@ body[data-baselines]::after {
   };
   // First beat: pre-schedule l1 so it arrives at t=3000ms
   l1Timer = setTimeout(() => { if (!isPaused()) animPktV(l1Pkt, 0); }, 3000 - 560);
-  // Mobile navigation drawer controller
+  // Mobile navigation & bottom bar controller
   const navToggle = document.getElementById('nav-toggle');
   const navMenu = document.getElementById('nav-menu');
+  const mobileBottomNav = document.getElementById('mobile-bottom-nav');
+  const pilotSection = document.getElementById('pilot');
+
+  const updateMobileBottomNavVisibility = (menuExpanded) => {
+    if (!mobileBottomNav) return;
+    const isExpanded = menuExpanded !== undefined ? menuExpanded : (navToggle && navToggle.getAttribute('aria-expanded') === 'true');
+    if (isExpanded) {
+      mobileBottomNav.classList.add('is-hidden');
+      return;
+    }
+    if (pilotSection) {
+      const rect = pilotSection.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (inView) {
+        mobileBottomNav.classList.add('is-hidden');
+        return;
+      }
+    }
+    mobileBottomNav.classList.remove('is-hidden');
+  };
+
   if (navToggle && navMenu) {
     const toggleMenu = (open) => {
       const isExpanded = open !== undefined ? open : navToggle.getAttribute('aria-expanded') !== 'true';
       navToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
       navMenu.setAttribute('aria-hidden', isExpanded ? 'false' : 'true');
+      updateMobileBottomNavVisibility(isExpanded);
     };
     navToggle.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -1445,7 +1518,33 @@ body[data-baselines]::after {
       if (window.innerWidth > 760 && navToggle.getAttribute('aria-expanded') === 'true') {
         toggleMenu(false);
       }
+      updateMobileBottomNavVisibility();
     });
+  }
+
+  if (mobileBottomNav) {
+    window.addEventListener('scroll', () => {
+      updateMobileBottomNavVisibility();
+    }, { passive: true });
+
+    if (pilotSection && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(() => {
+        updateMobileBottomNavVisibility();
+      }, { threshold: [0, 0.1, 0.5, 1.0] });
+      observer.observe(pilotSection);
+    }
+
+    const ctaBtn = mobileBottomNav.querySelector('.mobile-bottom-cta');
+    if (ctaBtn) {
+      ctaBtn.addEventListener('click', () => {
+        const pfName = document.getElementById('pf-name');
+        if (pfName) {
+          setTimeout(() => {
+            pfName.focus({ preventScroll: true });
+          }, 450);
+        }
+      });
+    }
   }
 })();
 </script>

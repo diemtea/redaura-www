@@ -1153,16 +1153,26 @@ body[data-baselines]::after {
     if (!r) return;
     r.animate(
       [{ transform: 'scale(0.12)', opacity: 0.5 }, { transform: 'scale(1.35)', opacity: 0 }],
-      { duration: 1400, easing: 'ease-out' },
+      { duration: 3200, easing: 'ease-out' },
     );
   };
   const pulseActive = () => {
+    const maxDistance = Math.max(...nodes.map((o) => o.d));
     nodes.forEach((o) => {
-      if (!o.n.classList.contains('active')) return;
-      o.n.animate(
-        [{ transform: 'scale(1)' }, { transform: 'scale(1.9)' }, { transform: 'scale(1)' }],
-        { duration: 620, easing: 'cubic-bezier(0.3,0,0.3,1)' },
-      );
+      if (o.wave > wave && !o.n.classList.contains('active')) return;
+      const wasActive = o.n.classList.contains('active');
+      const delay = Math.round((o.d / maxDistance) * 3000);
+      setTimeout(() => {
+        o.n.classList.add('active');
+        o.n.animate(
+          [
+            { transform: 'scale(1)', fill: wasActive ? 'var(--color-text)' : 'var(--color-neutral-400)' },
+            { transform: 'scale(2.2)', fill: 'var(--color-accent)', offset: 0.35 },
+            { transform: 'scale(1)', fill: 'var(--color-text)', offset: 1 }
+          ],
+          { duration: 750, easing: 'cubic-bezier(0.3, 0, 0.3, 1)' }
+        );
+      }, delay);
     });
   };
   const beat = () => {
@@ -1170,13 +1180,13 @@ body[data-baselines]::after {
     if (wave >= WAVES) wave = 0; // the reach word keeps cycling…
     setWord(wave);
     if (!frozen) { // …but once the fence has covered everything, it stays covered
-      nodes.forEach((o) => { if (o.wave <= wave) o.n.classList.add('active'); });
       growTo(wave);
       if (wave >= WAVES - 1) frozen = true;
     }
     if (!frozen) fireRing(); // no ripple once the circle has handed off to the bg
     pulseActive();
-    setTimeout(beat, wave >= WAVES - 1 ? 4200 : 2200);
+    const isFinalWord = wave === WAVES - 1;
+    setTimeout(beat, isFinalWord ? 8000 : 3200);
   };
   setTimeout(beat, 3000); // begin once the fence has surveyed itself
 })();

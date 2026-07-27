@@ -396,23 +396,23 @@ body::after {
 }
 @keyframes gd-beat {
   0%, 12%, 100% { transform: none; }
-  4% { transform: scale(1.4); }
+  4% { transform: scale(1.18); }
 }
 @keyframes gd-flash {
   0%, 10%, 100% { background-color: var(--gd-bg); }
-  3% { background-color: color-mix(in srgb, var(--gd-accent) 15%, var(--gd-bg)); }
+  3% { background-color: color-mix(in srgb, var(--gd-accent) 6%, var(--gd-bg)); }
 }
 @keyframes gd-dot {
   0%, 100% { background: var(--gd-dot); opacity: var(--o, 0.85); transform: translate(-50%, -50%); }
-  2% { background: var(--gd-accent); opacity: 1; transform: translate(-50%, -50%) scale(2.2); }
+  2% { background: color-mix(in srgb, var(--gd-accent) 65%, var(--gd-dot)); opacity: 1; transform: translate(-50%, -50%) scale(1.35); }
   6% { background: var(--gd-ink); opacity: 1; transform: translate(-50%, -50%); }
   80% { background: var(--gd-ink); opacity: var(--o, 0.85); }
   90% { background: var(--gd-dot); opacity: var(--o, 0.85); }
 }
 @keyframes gd-rip {
-  0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.85; }
-  12% { transform: translate(-50%, -50%) scale(14); opacity: 0; }
-  100% { transform: translate(-50%, -50%) scale(14); opacity: 0; }
+  0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.35; }
+  12% { transform: translate(-50%, -50%) scale(6.5); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(6.5); opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .gap-dia.pre .gd-box, .gap-dia.pre .gd-hub, .gap-dia.pre .gd-field, .gap-dia.pre .gd-zone, .gap-dia.pre .gd-line .lbl, .gap-dia.pre .gd-line-h { opacity: 1; transform: none; }
@@ -1191,12 +1191,12 @@ body[data-baselines]::after {
     ));
     // Gap hub
     if (gdSq) gdSq.animate(
-      [{ transform: 'none' }, { transform: 'scale(1.4)', offset: 1 / 3 }, { transform: 'none' }],
+      [{ transform: 'none' }, { transform: 'scale(1.18)', offset: 1 / 3 }, { transform: 'none' }],
       { duration: 840, easing: 'ease' }
     );
     gdRips.forEach((r, i) => r.animate(
-      [{ transform: 'translate(-50%,-50%) scale(0.2)', opacity: 0.85 },
-       { transform: 'translate(-50%,-50%) scale(14)', opacity: 0 }],
+      [{ transform: 'translate(-50%,-50%) scale(0.2)', opacity: 0.35 },
+       { transform: 'translate(-50%,-50%) scale(6.5)', opacity: 0 }],
       { duration: 840, delay: i * 190, easing: 'ease-out', fill: 'backwards' }
     ));
     // Hero centre pin beat
@@ -1209,17 +1209,17 @@ body[data-baselines]::after {
     animPktH(lineHPkt, 0);
     // Gap: b2 flash when l2 arrives, b3 flash when line-h arrives
     if (b2Box && !reduce) b2Box.animate(
-      [{ backgroundColor: 'var(--gd-bg)' }, { backgroundColor: 'color-mix(in srgb, var(--gd-accent) 15%, var(--gd-bg))', offset: 0.35 }, { backgroundColor: 'var(--gd-bg)' }],
+      [{ backgroundColor: 'var(--gd-bg)' }, { backgroundColor: 'color-mix(in srgb, var(--gd-accent) 6%, var(--gd-bg))', offset: 0.35 }, { backgroundColor: 'var(--gd-bg)' }],
       { duration: 900, delay: 560, easing: 'ease' }
     );
     if (b3Box && !reduce) b3Box.animate(
-      [{ backgroundColor: 'var(--gd-bg)' }, { backgroundColor: 'color-mix(in srgb, var(--gd-accent) 15%, var(--gd-bg))', offset: 0.35 }, { backgroundColor: 'var(--gd-bg)' }],
+      [{ backgroundColor: 'var(--gd-bg)' }, { backgroundColor: 'color-mix(in srgb, var(--gd-accent) 6%, var(--gd-bg))', offset: 0.35 }, { backgroundColor: 'var(--gd-bg)' }],
       { duration: 900, delay: 700, easing: 'ease' }
     );
     // Gap: dot field ripple (staggered by --d, firing after l2 arrives)
     if (!reduce) gdDots.forEach((dot, idx) => dot.animate(
       [{ background: 'var(--gd-dot)', transform: 'translate(-50%,-50%)' },
-       { background: 'var(--gd-accent)', transform: 'translate(-50%,-50%) scale(2.2)', offset: 0.3 },
+       { background: 'color-mix(in srgb, var(--gd-accent) 65%, var(--gd-dot))', transform: 'translate(-50%,-50%) scale(1.35)', offset: 0.3 },
        { background: 'var(--gd-ink)', transform: 'translate(-50%,-50%)' }],
       { duration: 600, delay: 560 + gdDotDelays[idx], easing: 'ease' }
     ));

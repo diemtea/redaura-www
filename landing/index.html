@@ -907,7 +907,7 @@ body[data-baselines]::after {
     if ((e.key === 'b' || e.key === 'B') && !e.metaKey && !e.ctrlKey && !e.altKey) document.body.toggleAttribute('data-baselines');
   });
 })();
-// Pilot form — submission handler: send to /api/pilot-signup via Resend backend
+// Pilot form — submission handler: send to /api/pilot-signup with FormSubmit fallback to hello@redaura.app
 (() => {
   const form = document.getElementById('pilot-form');
   if (!form) return;
@@ -933,6 +933,10 @@ body[data-baselines]::after {
       submitBtn.textContent = 'Sending...';
     }
 
+    let success = false;
+    let errorMessage = '';
+
+    // 1. Try local/server backend route /api/pilot-signup
     try {
       const res = await fetch('/api/pilot-signup', {
         method: 'POST',
@@ -940,25 +944,66 @@ body[data-baselines]::after {
         body: JSON.stringify({ name, org, email }),
       });
 
-      const data = await res.json().catch(() => ({}));
-
-      if (res.ok && data.success) {
-        document.getElementById('pilot').setAttribute('data-sent', '');
-        form.reset();
+      if (res.ok) {
+        const data = await res.json().catch(() => ({}));
+        if (data.success) {
+          success = true;
+        } else {
+          errorMessage = data.error || 'Server processing error.';
+        }
       } else {
-        throw new Error(data.error || 'Failed to send request. Please try again.');
+        // HTTP 405 (static web server) or 404/500
+        console.warn(`[Pilot Signup] /api/pilot-signup returned HTTP ${res.status}. Attempting direct fallback service.`);
       }
-    } catch (err) {
-      console.error('Pilot signup error:', err);
+    } catch (apiErr) {
+      console.warn('[Pilot Signup] API route fetch failed, trying direct fallback service:', apiErr);
+    }
+
+    // 2. Fallback: Direct delivery to hello@redaura.app via FormSubmit AJAX service
+    if (!success) {
+      try {
+        const fsRes = await fetch('https://formsubmit.co/ajax/hello@redaura.app', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name || 'N/A',
+            organization: org,
+            email: email,
+            _subject: `New Pilot Access Request: ${org}${name ? ` (${name})` : ''}`,
+            _template: 'table'
+          }),
+        });
+
+        const fsData = await fsRes.json().catch(() => ({}));
+
+        if (fsRes.ok || fsData.success === 'true' || fsData.success === true || (fsData.message && fsData.message.includes('Activation'))) {
+          success = true;
+        } else {
+          errorMessage = fsData.message || errorMessage || 'Failed to send request. Please try again.';
+        }
+      } catch (fsErr) {
+        console.error('[Pilot Signup Fallback Error]', fsErr);
+        if (!errorMessage) errorMessage = 'Failed to send request. Please try again.';
+      }
+    }
+
+    if (success) {
+      document.getElementById('pilot').setAttribute('data-sent', '');
+      form.reset();
+    } else {
+      console.error('Pilot signup error:', errorMessage);
       if (errorEl) {
-        errorEl.textContent = err.message || 'An error occurred. Please try again.';
+        errorEl.textContent = errorMessage;
         errorEl.style.display = 'block';
       }
-    } finally {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-      }
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
     }
   });
 })();

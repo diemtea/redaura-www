@@ -90,7 +90,7 @@ const server = http.createServer((req, res) => {
 
         const resend = new Resend(apiKey);
         const toEmail = process.env.TO_EMAIL || 'hello@redaura.app';
-        const fromEmail = process.env.FROM_EMAIL || 'Redaura Pilot <onboarding@resend.dev>';
+        const fromEmail = process.env.FROM_EMAIL || 'Redaura Pilot <hello@redaura.app>';
 
         const emailResult = await resend.emails.send({
           from: fromEmail,

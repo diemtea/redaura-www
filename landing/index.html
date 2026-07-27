@@ -73,8 +73,9 @@ body[data-paused-anim] *, body[data-paused-anim] *::before, body[data-paused-ani
 /* the component demo pads the masthead with its own spacing; on the page the
    masthead's contents take the page gutter and sit on the wrap's text axis
    (padding-only — full-width paint such as a masthead rule is untouched) */
-.nav { position: sticky; top: 0; z-index: 100; background: var(--color-bg); border-bottom: 2px solid var(--color-text); padding-inline: max(var(--edge), calc((100% - 1200px) / 2 + var(--edge))); }
-.nav .nav-brand { display: inline-flex; align-items: center; gap: 8px; position: relative; }
+.nav { display: block !important; position: sticky; top: 0; z-index: 100; background: var(--color-bg); border-bottom: 2px solid var(--color-text); padding: 0; width: 100%; box-sizing: border-box; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 0 var(--edge); height: 60px; box-sizing: border-box; width: 100%; }
+.nav .nav-brand { display: inline-flex; align-items: center; gap: 8px; position: relative; font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 18px; color: var(--color-text); text-decoration: none; flex-shrink: 0; line-height: 1; }
 .nav-brand .nav-logo { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; flex-shrink: 0; }
 .nav-brand .sq { width: 16px; height: 16px; flex-shrink: 0; display: block; position: relative; z-index: 2; }
 .nav-brand .rip {
@@ -100,35 +101,81 @@ body[data-paused-anim] *, body[data-paused-anim] *::before, body[data-paused-ani
   12% { transform: translate(-50%, -50%) scale(8); opacity: 0; }
   100% { transform: translate(-50%, -50%) scale(8); opacity: 0; }
 }
-.nav .lang-wrap { position: relative; display: inline-flex; align-items: center; border: 2px solid var(--color-text); border-radius: 0;
-  background: transparent url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M1 1l4 4 4-4' stroke='%23201e1d' stroke-width='2' fill='none'/></svg>") no-repeat right 9px center;
-  color: var(--color-text); font-family: var(--font-body); font-size: 12.5px; font-weight: 600; letter-spacing: 0.05em;
-  text-transform: uppercase; padding: 7px 27px 7px 10px; cursor: pointer; }
+.nav-links { display: flex; align-items: center; gap: var(--space-4); }
+.nav-links a { color: var(--color-text); text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap; transition: color 0.15s ease; }
+.nav-links a:hover, .nav-links a[aria-current='location'] { color: var(--color-accent); }
+.nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+.nav .lang-wrap { position: relative; display: inline-flex; align-items: center; height: 34px; border: 2px solid var(--color-text); border-radius: 0;
+  background: transparent url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M1 1l4 4 4-4' stroke='%23201e1d' stroke-width='2' fill='none'/></svg>") no-repeat right 8px center;
+  color: var(--color-text); font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase; padding: 0 24px 0 8px; cursor: pointer; box-sizing: border-box; }
 .nav .lang-wrap:hover { background-color: color-mix(in srgb, var(--color-text) 6%, transparent); }
 .nav .lang-wrap:focus-within { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 .nav .lang-select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 .nav a { white-space: nowrap; }
-.nav a[aria-current='location'] { color: var(--color-accent); } /* in-page anchor, not
-   a page link — 'location' is the truthful value; carry the component's active ink */
-.nav a.btn-primary, .nav a.btn-primary:hover { color: var(--color-bg); } /* the .nav a
-   link rules outrank .btn-primary's label color and turn it accent-on-accent on
-   hover — pin the paper ink; background hover/active states come from .btn-primary */
+.nav a[aria-current='location'] { color: var(--color-accent); }
+.nav a.btn-primary, .nav a.btn-primary:hover { color: var(--color-bg); }
 .nav a.btn-primary:hover { background: var(--color-accent-600); }
 .nav a.btn-primary:active { background: var(--color-accent-700); }
-@media (max-width: 760px) { /* tablet squeeze: drop the text links first; brand,
-   language and the one action remain */
-  .nav a:not(.btn-primary) { display: none; }
-  .nav { gap: var(--space-3); }
+
+/* Hamburger Toggle Button */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 2px solid var(--color-text);
+  border-radius: 0;
+  padding: 0;
+  width: 34px;
+  height: 34px;
+  box-sizing: border-box;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
 }
-@media (max-width: 480px) { /* phone width: tighten paddings and let the CTA
-   shrink its label instead of overflowing (layout-only — component look untouched) */
-  .nav { padding-inline: var(--space-3); gap: var(--space-2); }
-  .nav .nav-brand { font-size: 16px; }
-  .nav a.btn-primary { padding: 8px 12px; font-size: 12.5px; white-space: nowrap; }
-  .nav .lang-wrap { font-size: 11.5px; padding: 6px 22px 6px 8px; background-position: right 7px center; }
+.nav-toggle:hover { background-color: color-mix(in srgb, var(--color-text) 6%, transparent); }
+.nav-toggle:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.nav-toggle-icon { display: flex; flex-direction: column; justify-content: space-between; width: 16px; height: 12px; position: relative; }
+.nav-toggle-bar { display: block; width: 100%; height: 2px; background-color: currentColor; transition: transform 0.25s ease, opacity 0.2s ease; transform-origin: center; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+/* Mobile Dropdown Menu */
+.nav-menu {
+  display: none;
+  width: 100%;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-divider);
+  box-sizing: border-box;
 }
-@media (max-width: 350px) { .nav .lang-wrap { display: none; } } /* smallest phones:
-   the action wins; language stays reachable via the browser default (en detect) */
+.nav-menu[aria-hidden="false"] { max-height: 400px; opacity: 1; }
+.nav-menu-inner { padding: 16px var(--edge) 20px; display: flex; flex-direction: column; gap: 12px; max-width: 1200px; margin: 0 auto; box-sizing: border-box; width: 100%; }
+.nav-menu-links { display: flex; flex-direction: column; width: 100%; }
+.nav-menu-link { display: block; width: 100%; padding: 12px 0; font-family: var(--font-heading); font-weight: 700; font-size: 16px; color: var(--color-text); text-decoration: none; border-bottom: 1px solid var(--color-divider); box-sizing: border-box; }
+.nav-menu-link:hover, .nav-menu-link:focus-visible { color: var(--color-accent); }
+.nav-menu-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; width: 100%; }
+.nav-menu-anim { width: 100%; justify-content: center; border: 1px solid var(--color-divider); padding: 8px 12px; font-size: 12.5px; font-weight: 600; box-sizing: border-box; }
+.nav-menu-cta { display: block; width: 100%; text-align: center; justify-content: center; padding: 10px 16px; font-size: 13.5px; font-weight: 700; box-sizing: border-box; white-space: nowrap; }
+
+@media (max-width: 760px) {
+  .nav-links, .nav-anim-desktop, .nav-cta-desktop { display: none !important; }
+  .nav-toggle { display: flex; }
+  .nav-menu { display: block; }
+}
+@media (max-width: 480px) {
+  .nav-bar { padding-inline: var(--space-3); height: 54px; }
+  .nav-brand { font-size: 16px; }
+  .nav .lang-wrap { font-size: 11px; height: 32px; padding: 0 22px 0 7px; background-position: right 5px center; }
+  .nav-toggle { width: 32px; height: 32px; }
+}
 
 /* — drawn structure: the 2px rule is the section seam (the deck's header
    band as page grammar; rules span the content column, solid — this system
@@ -238,7 +285,7 @@ body::after {
   .hero-art { width: min(340px, 40vw); }
   .ha-push { left: calc(50% + 14px); top: calc(50% - 112px); max-width: 220px; }
 }
-@media (max-width: 640px) { .hero-art { display: none; } .hero p.sub { max-width: var(--measure); } }
+@media (max-width: 640px) { .hero-art, .hero-art-ctrl { display: none !important; } .hero p.sub { max-width: var(--measure); } }
 @media (prefers-reduced-motion: reduce) {
   .ha-fence, .ha-fill, .ha-ph, .ha-pin, .ha-push, .ha-label { animation: none; }
   .ha-fence { stroke-dashoffset: 0; }
@@ -614,13 +661,42 @@ body[data-baselines]::after {
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <nav class="nav" aria-label="Main navigation">
-  <span class="nav-brand"><span class="nav-logo"><span class="rip"></span><span class="rip r2"></span><svg class="sq" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="var(--color-accent)" stroke-width="4"/></svg></span><span>Red<span style="color: var(--color-accent);">aura</span></span></span>
-  <a href="#product" aria-current="location" data-i18n="nav.how">How it works</a>
-  <a href="#app" data-i18n="nav.app">User app</a>
-  <a href="#pilot" data-i18n="nav.pilot">Pilot</a>
-  <button type="button" class="btn btn-ghost anim-toggle" id="anim-toggle" aria-label="Pause motion animations" title="Pause motion animations" style="font-size: 12px; padding: 4px 8px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg><span data-i18n="motion.pause">Pause motion</span></button>
-  <span class="lang-wrap"><span class="lang-code" id="lang-code" aria-hidden="true">EN</span><select class="lang-select" id="lang-select" aria-label="Language"></select></span>
-  <a href="#pilot" class="btn btn-primary nav-cta" data-i18n="nav.cta">Request pilot access</a>
+  <div class="nav-bar">
+    <a href="#" class="nav-brand" aria-label="Redaura Homepage">
+      <span class="nav-logo"><span class="rip"></span><span class="rip r2"></span><svg class="sq" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="var(--color-accent)" stroke-width="4"/></svg></span>
+      <span>Red<span style="color: var(--color-accent);">aura</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#product" aria-current="location" data-i18n="nav.how">How it works</a>
+      <a href="#app" data-i18n="nav.app">User app</a>
+      <a href="#pilot" data-i18n="nav.pilot">Pilot</a>
+    </div>
+    <div class="nav-actions">
+      <button type="button" class="btn btn-ghost anim-toggle nav-anim-desktop" id="anim-toggle" aria-label="Pause motion animations" title="Pause motion animations" style="font-size: 12px; padding: 4px 8px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg><span data-i18n="motion.pause">Pause motion</span></button>
+      <span class="lang-wrap"><span class="lang-code" id="lang-code" aria-hidden="true">EN</span><select class="lang-select" id="lang-select" aria-label="Language"></select></span>
+      <a href="#pilot" class="btn btn-primary nav-cta nav-cta-desktop" data-i18n="nav.cta">Request pilot access</a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-icon">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-menu" id="nav-menu" aria-hidden="true">
+    <div class="nav-menu-inner">
+      <div class="nav-menu-links">
+        <a href="#product" data-i18n="nav.how" class="nav-menu-link">How it works</a>
+        <a href="#app" data-i18n="nav.app" class="nav-menu-link">User app</a>
+        <a href="#pilot" data-i18n="nav.pilot" class="nav-menu-link">Pilot</a>
+      </div>
+      <div class="nav-menu-actions">
+        <button type="button" class="btn btn-ghost anim-toggle nav-menu-anim" aria-label="Pause motion animations" style="font-size: 13px; padding: 8px 12px; width: 100%; justify-content: flex-start; margin-bottom: 6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block; vertical-align:-1px; margin-right:6px;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg><span data-i18n="motion.pause">Pause motion</span></button>
+        <a href="#pilot" class="btn btn-primary nav-menu-cta" data-i18n="nav.cta" style="text-align: center; justify-content: center; width: 100%;">Request pilot access</a>
+      </div>
+    </div>
+  </div>
 </nav>
 <main id="main-content">
 <div class="wrap">
@@ -1338,7 +1414,39 @@ body[data-baselines]::after {
   };
   // First beat: pre-schedule l1 so it arrives at t=3000ms
   l1Timer = setTimeout(() => { if (!isPaused()) animPktV(l1Pkt, 0); }, 3000 - 560);
-  beatTimer = setTimeout(beat, 3000); // begin once the fence has surveyed itself
+  // Mobile navigation drawer controller
+  const navToggle = document.getElementById('nav-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  if (navToggle && navMenu) {
+    const toggleMenu = (open) => {
+      const isExpanded = open !== undefined ? open : navToggle.getAttribute('aria-expanded') !== 'true';
+      navToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+      navMenu.setAttribute('aria-hidden', isExpanded ? 'false' : 'true');
+    };
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+    navMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => toggleMenu(false));
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
+        toggleMenu(false);
+      }
+    });
+    document.addEventListener('click', (e) => {
+      const navEl = document.querySelector('.nav');
+      if (navEl && !navEl.contains(e.target) && navToggle.getAttribute('aria-expanded') === 'true') {
+        toggleMenu(false);
+      }
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 760 && navToggle.getAttribute('aria-expanded') === 'true') {
+        toggleMenu(false);
+      }
+    });
+  }
 })();
 </script>
 <script src="i18n.js" defer></script>

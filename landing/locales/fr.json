@@ -29,7 +29,7 @@
   "gap.col2Title": "Portée sans réactivité",
   "gap.p1": "À 1h du matin lors d'un festival, une équipe d'analyse de substances découvre un échantillon falsifié. Elle a le résultat, l'équipement et vingt ans de confiance avec les festivaliers. Son seul moyen d'alerter est un tableau blanc devant le stand et une publication pour ses abonnés.",
   "gap.p2": "Les systèmes nationaux de surveillance ont la portée, mais pas ce mandat. Ils agrègent, analysent les tendances et émettent des rapports en plusieurs semaines. Ils n'ont jamais été conçus pour alerter trente mille téléphones ce soir.",
-  "gap.heading": "Redaura fait le lien entre les deux.",
+  "gap.heading": "<span class=\"gap-brand\">Redaura</span> connecte tout le monde.",
   "feat.kicker": "Comment ça marche",
   "feat1.title": "Seules les organisations accréditées publient",
   "feat1.copy": "L'accréditation est validée avant la création d'un compte. Un bénévole sur le point de test rédige l'alerte ; un responsable la valide. Le principe du double contrôle, à chaque fois.",
@@ -140,5 +140,7 @@
     "close.line2": "You protect the community.",
     "close.cta": "Request pilot access",
     "footer.text": "Redaura — a non-profit organisation registered in the Netherlands.<br>Design, built, and hosted in the EU."
-  }
+  },
+  "dia.users": "Utilisateurs de l'application géolocalisés",
+  "dia.usersSub": "Alertes pertinentes selon la localisation"
 }

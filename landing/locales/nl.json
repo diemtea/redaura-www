@@ -29,7 +29,7 @@
   "gap.col2Title": "Bereik zonder snelheid",
   "gap.p1": "Om 01:00 uur 's nachts ontdekt een drugscheckteam een verkeerd verkocht monster op een festival. Ze hebben het resultaat, de apparatuur en twintig jaar vertrouwen bij de bezoekers. Hun enige manier om de waarschuwing te verspreiden is een whiteboard voor de tent en een bericht voor wie hen al volgt.",
   "gap.p2": "Landelijke monitoringsystemen hebben het bereik, maar niet deze opdracht. Zij verzamelen data, analyseren trends en brengen pas na weken advies uit. Ze zijn nooit gebouwd om vannacht dertigduizend telefoons te bereiken.",
-  "gap.heading": "Redaura verbindt de twee.",
+  "gap.heading": "<span class=\"gap-brand\">Redaura</span> verbindt iedereen.",
   "feat.kicker": "Hoe het werkt",
   "feat1.title": "Alleen geaccrediteerde organisaties publiceren",
   "feat1.copy": "Accreditatie vindt plaats voordat er een account bestaat. Een vrijwilliger bij het testpunt stelt de melding op; een aangewezen leidinggevende geeft deze vrij. Het vierogenprincipe, elke keer weer.",
@@ -140,5 +140,7 @@
     "close.line2": "You protect the community.",
     "close.cta": "Request pilot access",
     "footer.text": "Redaura — a non-profit organisation registered in the Netherlands.<br>Design, built, and hosted in the EU."
-  }
+  },
+  "dia.users": "Geofenced app-gebruikers",
+  "dia.usersSub": "Locatierelevante waarschuwingen"
 }

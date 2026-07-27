@@ -29,7 +29,7 @@
   "gap.col2Title": "Hızı olmayan erişim",
   "gap.p1": "Bir madde analiz ekibi gece saat 1'de festivalde hatalı etiketlenmiş bir numune tespit eder. Ellerinde test sonucu, ekipman ve o festivaldeki insanlarla 20 yıllık güven bağı vardır. Ancak uyarıyı yaymanın tek yolu çadırın dışındaki yazı tahtası ve sadece kendilerini takip edenlere ulaşan bir sosyal medya gönderisidir.",
   "gap.p2": "Ulusal izleme sistemleri geniş erişime sahiptir ancak acil durum yetkisine sahip değildir. Veri toplarlar, eğilimleri izlerler ve haftalar içinde tavsiyeler yayınlarlar. Bu gece otuz bin telefona anında uyarı ulaştırmak üzere tasarlanmamışlardır.",
-  "gap.heading": "Redaura bu iki dünyayı birleştirir.",
+  "gap.heading": "<span class=\"gap-brand\">Redaura</span> herkesi birleştirir.",
   "feat.kicker": "Nasıl çalışır",
   "feat1.title": "Yalnızca onaylı kuruluşlar yayın yapabilir",
   "feat1.copy": "Yetkilendirme hesap oluşturulmadan önce gerçekleşir. Test noktasındaki bir gönüllü taslak uyarıyı hazırlar; belirlenen yetkili onaylayıp yayınlar. Her zaman iki kişi onaylar.",
@@ -138,5 +138,7 @@
     "close.line2": "You protect the community.",
     "close.cta": "Request pilot access",
     "footer.text": "Redaura — a non-profit organisation registered in the Netherlands.<br>Design, built, and hosted in the EU."
-  }
+  },
+  "dia.users": "Coğrafi sınırlı uygulama kullanıcıları",
+  "dia.usersSub": "Konumla ilgili uyarılar"
 }

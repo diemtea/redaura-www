@@ -49,6 +49,34 @@ body { margin: 0; text-wrap: pretty; }
    masthead's contents take the page gutter and sit on the wrap's text axis
    (padding-only — full-width paint such as a masthead rule is untouched) */
 .nav { position: sticky; top: 0; z-index: 100; background: var(--color-bg); border-bottom: 2px solid var(--color-text); padding-inline: max(var(--edge), calc((100% - 1200px) / 2 + var(--edge))); }
+.nav .nav-brand { display: inline-flex; align-items: center; gap: 8px; position: relative; }
+.nav-brand .nav-logo { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; flex-shrink: 0; }
+.nav-brand .sq { width: 16px; height: 16px; flex-shrink: 0; display: block; position: relative; z-index: 2; animation: nav-beat 7s ease 3.16s infinite; }
+.nav-brand .rip {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: 1.5px solid var(--color-accent);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  animation: nav-rip 7s ease-out 3.16s infinite;
+}
+.nav-brand .rip.r2 { animation-delay: 3.35s; }
+@keyframes nav-beat {
+  0%, 12%, 100% { transform: none; }
+  4% { transform: scale(1.15); }
+}
+@keyframes nav-rip {
+  0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0.45; }
+  12% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; }
+}
 .nav .lang-wrap { position: relative; display: inline-flex; align-items: center; border: 2px solid var(--color-text); border-radius: 0;
   background: transparent url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M1 1l4 4 4-4' stroke='%23201e1d' stroke-width='2' fill='none'/></svg>") no-repeat right 9px center;
   color: var(--color-text); font-family: var(--font-body); font-size: 12.5px; font-weight: 600; letter-spacing: 0.05em;
@@ -228,83 +256,141 @@ body::after {
   color: var(--color-bg);
   margin: var(--half) 0 0; }
 
-/* — the gap section — */
+/* — the gap section — 2-column desktop layout (text left, vertical schematic right) — */
 .gap { padding: calc(3 * var(--leading)) 0 calc(2.5 * var(--leading)); border-bottom: 2px solid var(--color-divider); }
-.gap-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--leading) clamp(24px, 4vw, 72px); margin-top: calc(0.5 * var(--leading)); }
+.gap-flex-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 440px);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+}
+.gap-grid { display: grid; grid-template-columns: 1fr; gap: calc(1.25 * var(--leading)); margin-top: calc(0.75 * var(--leading)); }
 .gap-col-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; line-height: var(--leading); letter-spacing: -0.01em; margin: 0 0 calc(0.5 * var(--leading)); text-box: trim-both cap alphabetic; }
 .gap-p { font-size: 16px; line-height: var(--leading); color: color-mix(in srgb, var(--color-text) 82%, transparent); margin: 0; max-width: 52ch; text-box: trim-both cap alphabetic; }
 .gap-heading { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(28px, 3.6vw, 44px); line-height: clamp(32px, 3.8vw, 48px); letter-spacing: -0.015em; margin: calc(1.5 * var(--leading)) 0 0; text-box: trim-both cap alphabetic; }
-@media (max-width: 720px) {
-  .gap-grid { grid-template-columns: 1fr; }
+.gap-brand { color: var(--color-accent); }
+
+@media (max-width: 860px) {
+  .gap-flex-wrap { grid-template-columns: 1fr; }
+  .gap-dia-side { margin-top: calc(2 * var(--leading)); }
 }
 
-/* — alert-route schematic component — */
+/* — alert-route schematic component (vertical layout with right EWS branch) — */
 .gap-dia {
   --gd-bg: var(--color-bg);
   --gd-ink: var(--color-text);
   --gd-accent: var(--color-accent);
   --gd-accent-deep: var(--color-accent-700);
   --gd-dot: var(--color-neutral-400);
-  display: grid; grid-template-columns: auto minmax(48px, 1fr) auto minmax(48px, 1fr) auto;
-  align-items: center; max-width: 860px; margin-top: calc(2 * var(--leading));
+  display: grid;
+  grid-template-columns: minmax(160px, 200px) minmax(24px, 40px) minmax(130px, 170px);
+  align-items: center;
+  gap: 0;
+  max-width: 440px;
+  width: 100%;
 }
-.gd-box { position: relative; border: 2px solid var(--gd-ink); padding: 12px 16px 13px; background: var(--gd-bg); }
-.gd-box .t { font-weight: 700; font-size: 13.5px; line-height: 18px; margin: 0; }
-.gd-box .s { font-size: 10.5px; line-height: 14px; letter-spacing: 0.07em; text-transform: uppercase;
-  color: color-mix(in srgb, var(--gd-ink) 62%, transparent); margin: 4px 0 0; }
-.gd-line { position: relative; height: 2px; background: var(--gd-ink); min-width: 48px; }
-.gd-line .lbl { position: absolute; bottom: 7px; inset-inline-start: 50%; transform: translateX(-50%);
-  font-size: 9.5px; line-height: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
-  white-space: nowrap; color: color-mix(in srgb, var(--gd-ink) 60%, transparent); }
-.gd-line::after { content: ""; position: absolute; top: -3px; inset-inline-start: 0; width: 8px; height: 8px;
+.gap-dia .b1 { grid-column: 1; grid-row: 1; }
+.gap-dia .l1 { grid-column: 1; grid-row: 2; justify-self: center; }
+.gap-dia .gd-hub { grid-column: 1; grid-row: 3; justify-self: center; display: flex; align-items: center; gap: 8px; padding: 4px 0; position: relative; }
+.gap-dia .gd-line-h { grid-column: 2; grid-row: 3; position: relative; height: 2px; background: var(--gd-ink); width: 100%; }
+.gap-dia .gd-line-h::after { content: ""; position: absolute; top: -3px; left: 0; width: 8px; height: 8px; background: var(--gd-accent); opacity: 0; }
+[dir='rtl'] .gap-dia .gd-line-h::after { left: auto; right: 0; }
+.gap-dia .b3 { grid-column: 3; grid-row: 3; align-self: center; }
+.gap-dia .l2 { grid-column: 1; grid-row: 4; justify-self: center; }
+.gap-dia .b2 { grid-column: 1; grid-row: 5; width: 100%; display: flex; flex-direction: column; gap: 0; }
+
+.gd-box { position: relative; border: 2px solid var(--gd-ink); padding: 10px 14px 11px; background: var(--gd-bg); width: 100%; box-sizing: border-box; z-index: 2; }
+.gd-box .t { font-weight: 700; font-size: 13px; line-height: 17px; margin: 0; }
+.gd-box .s { font-size: 10px; line-height: 13px; letter-spacing: 0.07em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--gd-ink) 62%, transparent); margin: 3px 0 0; }
+.gd-line { position: relative; width: 2px; height: 48px; min-width: 0; background: var(--gd-ink); }
+.gd-line::after { content: ""; position: absolute; top: 0; inset-inline-start: -3px; width: 8px; height: 8px;
   background: var(--gd-accent); opacity: 0; }
-.gd-hub { display: grid; justify-items: center; gap: 7px; padding: 0 12px; }
-.gd-hub .sq { width: 16px; height: 16px; background: var(--gd-accent); }
-.gd-hub .t { font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
-.gd-drop { grid-column: 3; grid-row: 2; justify-self: center; display: grid; justify-items: center; }
-.gd-drop .v { position: relative; width: 2px; height: 26px; background: var(--gd-ink); }
-.gd-drop .v::after { content: ""; position: absolute; inset-inline-start: -3px; top: 0; width: 8px; height: 8px;
-  background: var(--gd-accent); opacity: 0; }
-.gd-field { position: relative; width: clamp(150px, 22vw, 210px); height: 110px; }
-.gd-field i { position: absolute; inset-inline-start: var(--x); top: var(--y); width: 5px; height: 5px;
-  border-radius: 50%; background: var(--gd-dot); }
-.gd-field .rip { position: absolute; inset-inline-start: -6px; top: 50%; width: 12px; height: 12px;
-  margin-top: -6px; border: 2px solid var(--gd-accent); border-radius: 50%; opacity: 0; }
-.gd-field .cap { position: absolute; top: calc(100% + 8px); inset-inline-start: 0; font-size: 10.5px;
-  line-height: 14px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600;
-  white-space: nowrap; color: color-mix(in srgb, var(--gd-ink) 62%, transparent); }
-.gap-dia.pre .gd-box, .gap-dia.pre .gd-hub, .gap-dia.pre .gd-field, .gap-dia.pre .gd-line .lbl { opacity: 0; transform: translateY(8px); }
-.gap-dia.pre .gd-line { transform: scaleX(0); transform-origin: 0 50%; }
-[dir='rtl'] .gap-dia.pre .gd-line { transform-origin: 100% 50%; }
-.gap-dia.pre .gd-drop .v { transform: scaleY(0); transform-origin: top; }
-.gap-dia .gd-box, .gap-dia .gd-hub, .gap-dia .gd-field, .gap-dia .gd-line, .gap-dia .gd-drop .v, .gap-dia .gd-line .lbl {
+.gd-hub .sq { width: 16px; height: 16px; flex-shrink: 0; display: block; position: relative; z-index: 2; }
+.gd-hub .t { font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; position: relative; z-index: 2; }
+
+/* Pulse rings emanating directly from Redaura logo icon */
+.gd-hub .rip {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: 2px solid var(--gd-accent);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+/* Geofenced Zone Container */
+.gd-zone {
+  position: relative;
+  width: 100%;
+  border: 1.5px dashed color-mix(in srgb, var(--gd-accent) 65%, var(--gd-ink));
+  background: color-mix(in srgb, var(--gd-accent) 4.5%, var(--gd-bg));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--gd-accent) 10%, transparent), inset 0 0 30px color-mix(in srgb, var(--gd-accent) 3.5%, transparent);
+  margin-top: -2px;
+  padding: 16px 10px 10px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+.gd-fence-tag {
+  position: absolute;
+  left: 10px;
+  bottom: 6px;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--gd-accent-deep);
+  opacity: 0.8;
+  pointer-events: none;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Expanded dot field with uniform 5px dots and random/variant spatial distribution */
+.gd-field { position: relative; width: 100%; height: 210px; margin-block: 4px 6px; }
+.gd-field i {
+  position: absolute;
+  inset-inline-start: var(--x);
+  top: var(--y);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gd-dot);
+  transform: translate(-50%, -50%);
+}
+
+.gap-dia.pre .gd-box, .gap-dia.pre .gd-hub, .gap-dia.pre .gd-field, .gap-dia.pre .gd-zone { opacity: 0; transform: translateY(8px); }
+.gap-dia.pre .gd-line { transform: scaleY(0); transform-origin: top; }
+.gap-dia.pre .gd-line-h { transform: scaleX(0); transform-origin: 0 50%; }
+[dir='rtl'] .gap-dia.pre .gd-line-h { transform-origin: 100% 50%; }
+.gap-dia .gd-box, .gap-dia .gd-hub, .gap-dia .gd-field, .gap-dia .gd-zone, .gap-dia .gd-line, .gap-dia .gd-line-h {
   transition: opacity 0.45s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
-.gap-dia.play .gd-box, .gap-dia.play .gd-hub, .gap-dia.play .gd-field, .gap-dia.play .gd-line,
-.gap-dia.play .gd-drop .v, .gap-dia.play .gd-line .lbl { opacity: 1; transform: none; }
+.gap-dia.play .gd-box, .gap-dia.play .gd-hub, .gap-dia.play .gd-field, .gap-dia.play .gd-zone, .gap-dia.play .gd-line,
+.gap-dia.play .gd-line-h { opacity: 1; transform: none; }
 .gap-dia.play .b1 { transition-delay: 0s; }
 .gap-dia.play .l1 { transition-delay: 0.25s; }
-.gap-dia.play .l1 .lbl { transition-delay: 0.55s; }
 .gap-dia.play .gd-hub { transition-delay: 0.6s; }
-.gap-dia.play .l2 { transition-delay: 0.85s; }
-.gap-dia.play .l2 .lbl { transition-delay: 1.15s; }
-.gap-dia.play .b2 { transition-delay: 1.2s; }
-.gap-dia.play .gd-drop .v { transition-delay: 1.5s; }
-.gap-dia.play .b3 { transition-delay: 1.7s; }
-.gap-dia.play .l1::after { animation: gd-pk 7s linear 2.6s infinite; }
-.gap-dia.play .l2::after { animation: gd-pk 7s linear 3.8s infinite; }
-.gap-dia.play .gd-drop .v::after { animation: gd-pkv 7s linear 5s infinite; }
-.gap-dia.play .gd-hub .sq { animation: gd-beat 7s ease 2.6s infinite; }
-.gap-dia.play .b3 { animation: gd-flash 7s ease 4.6s infinite; }
-.gap-dia.play .gd-field i { animation: gd-dot 7s ease calc(4.7s + var(--d)) infinite; }
-.gap-dia.play .gd-field .rip { animation: gd-rip 7s ease-out 4.7s infinite; }
-.gap-dia.play .gd-field .rip.r2 { animation-delay: 4.9s; }
-@keyframes gd-pk {
-  0% { inset-inline-start: 0; opacity: 0; }
-  1.5% { opacity: 1; }
-  13% { inset-inline-start: calc(100% - 8px); opacity: 1; }
-  15% { opacity: 0; }
-  100% { inset-inline-start: calc(100% - 8px); opacity: 0; }
-}
+.gap-dia.play .gd-line-h { transition-delay: 0.75s; }
+.gap-dia.play .b3 { transition-delay: 0.9s; }
+.gap-dia.play .l2 { transition-delay: 1.15s; }
+.gap-dia.play .b2 { transition-delay: 1.5s; }
+
+/* 7s Signal Loop Animations — fully in sync with packet arrival at 3.16s */
+.gap-dia.play .l1::after { animation: gd-pkv 7s linear 2.6s infinite; }
+.gap-dia.play .gd-hub .sq { animation: gd-beat 7s ease 3.16s infinite; }
+.gap-dia.play .gd-hub .rip { animation: gd-rip 7s ease-out 3.16s infinite; }
+.gap-dia.play .gd-hub .rip.r2 { animation: gd-rip 7s ease-out 3.35s infinite; }
+.gap-dia.play .l2::after { animation: gd-pkv 7s linear 3.16s infinite; }
+.gap-dia.play .gd-line-h::after { animation: gd-pkh-right 7s linear 3.16s infinite; }
+.gap-dia.play .b3 { animation: gd-flash 7s ease 3.9s infinite; }
+.gap-dia.play .b2 .gd-box { animation: gd-flash 7s ease 3.72s infinite; }
+.gap-dia.play .gd-field i { animation: gd-dot 7s ease calc(3.72s + var(--d)) infinite; }
+
 @keyframes gd-pkv {
   0% { top: 0; opacity: 0; }
   1.5% { opacity: 1; }
@@ -312,43 +398,41 @@ body::after {
   10% { opacity: 0; }
   100% { top: calc(100% - 8px); opacity: 0; }
 }
-@keyframes gd-beat { 0%, 13%, 24%, 100% { transform: none; } 17% { transform: scale(1.4); } }
+@keyframes gd-pkh-right {
+  0% { left: 0; opacity: 0; }
+  1.5% { opacity: 1; }
+  10% { left: calc(100% - 8px); opacity: 1; }
+  12% { opacity: 0; }
+  100% { left: calc(100% - 8px); opacity: 0; }
+}
+@keyframes gd-beat {
+  0%, 12%, 100% { transform: none; }
+  4% { transform: scale(1.4); }
+}
 @keyframes gd-flash {
-  0%, 12%, 20%, 100% { background-color: var(--gd-bg); }
-  14% { background-color: color-mix(in srgb, var(--gd-accent) 10%, var(--gd-bg)); }
+  0%, 10%, 100% { background-color: var(--gd-bg); }
+  3% { background-color: color-mix(in srgb, var(--gd-accent) 15%, var(--gd-bg)); }
 }
 @keyframes gd-dot {
-  0%, 100% { background: var(--gd-dot); transform: none; }
-  2% { background: var(--gd-accent); transform: scale(2.2); }
-  6% { background: var(--gd-ink); transform: none; }
-  80% { background: var(--gd-ink); }
-  90% { background: var(--gd-dot); }
+  0%, 100% { background: var(--gd-dot); opacity: var(--o, 0.85); transform: translate(-50%, -50%); }
+  2% { background: var(--gd-accent); opacity: 1; transform: translate(-50%, -50%) scale(2.2); }
+  6% { background: var(--gd-ink); opacity: 1; transform: translate(-50%, -50%); }
+  80% { background: var(--gd-ink); opacity: var(--o, 0.85); }
+  90% { background: var(--gd-dot); opacity: var(--o, 0.85); }
 }
 @keyframes gd-rip {
-  0% { transform: scale(0.3); opacity: 0.6; }
-  12% { transform: scale(9); opacity: 0; }
-  100% { transform: scale(9); opacity: 0; }
+  0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.85; }
+  12% { transform: translate(-50%, -50%) scale(14); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(14); opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .gap-dia.pre .gd-box, .gap-dia.pre .gd-hub, .gap-dia.pre .gd-field, .gap-dia.pre .gd-line .lbl { opacity: 1; transform: none; }
-  .gap-dia.pre .gd-line, .gap-dia.pre .gd-drop .v { transform: none; }
-  .gap-dia.play .l1::after, .gap-dia.play .l2::after, .gap-dia.play .gd-drop .v::after,
+  .gap-dia.pre .gd-box, .gap-dia.pre .gd-hub, .gap-dia.pre .gd-field, .gap-dia.pre .gd-zone, .gap-dia.pre .gd-line .lbl, .gap-dia.pre .gd-line-h { opacity: 1; transform: none; }
+  .gap-dia.pre .gd-line, .gap-dia.pre .gd-line-h { transform: none; }
+  .gap-dia.play .l1::after, .gap-dia.play .l2::after, .gap-dia.play .gd-line-h::after,
   .gap-dia.play .gd-hub .sq, .gap-dia.play .b3,
   .gap-dia.play .gd-field i, .gap-dia.play .gd-field .rip { animation: none; }
   .gap-dia .gd-field i { background: var(--gd-ink); }
-}
-@media (max-width: 720px) {
-  .gap-dia { grid-template-columns: auto; justify-items: start; }
-  .gd-line { width: 2px; height: 26px; min-width: 0; margin-inline-start: 22px; }
-  .gap-dia.pre .gd-line { transform: scaleY(0); transform-origin: top; }
-  .gd-line .lbl, .gap-dia.play .gd-line .lbl { bottom: auto; top: 50%; inset-inline-start: 12px; transform: translateY(-50%); }
-  .gap-dia.pre .gd-line .lbl { opacity: 0; transform: translateY(-50%); }
-  .gd-line::after, .gd-drop .v::after { display: none; }
-  .gap-dia.play .gd-hub .sq, .gap-dia.play .b3 { animation: none; }
-  .gd-field { margin-block: 4px 18px; }
-  .gd-hub { grid-auto-flow: column; align-items: center; gap: 9px; padding: 0; }
-  .gd-drop { grid-column: 1; grid-row: auto; justify-self: start; justify-items: start; }
-  .gd-drop .v { margin-inline-start: 22px; }
+  .nav-brand .sq, .nav-brand .rip { animation: none; }
 }
 
 /* — feature rows (the deck's ruled-toc grammar: 2px rules ON the seams,
@@ -515,7 +599,7 @@ body[data-baselines]::after {
 </head>
 <body>
 <nav class="nav">
-  <span class="nav-brand">Red<span style="color: var(--color-accent);">aura</span></span>
+  <span class="nav-brand"><span class="nav-logo"><span class="rip"></span><span class="rip r2"></span><svg class="sq" viewBox="0 0 20 20" width="16" height="16"><circle cx="10" cy="10" r="7.5" fill="none" stroke="var(--color-accent)" stroke-width="4"/></svg></span><span>Red<span style="color: var(--color-accent);">aura</span></span></span>
   <a href="#product" aria-current="location" data-i18n="nav.how">How it works</a>
   <a href="#app" data-i18n="nav.app">User app</a>
   <a href="#pilot" data-i18n="nav.pilot">Pilot</a>
@@ -630,49 +714,72 @@ body[data-baselines]::after {
 <div class="wrap">
 
   <section class="gap" id="gap">
-    <span class="kicker" data-i18n="gap.kicker">The gap</span>
-    <div class="gap-grid">
-      <div>
-        <h3 class="gap-col-title" data-i18n="gap.col1Title">Trust without reach</h3>
-        <p class="gap-p" data-i18n="gap.p1">A drug-checking team finds a mislabelled sample at a festival at 1am. They have the result, the equipment, and twenty years of trust with the people at that festival. Their only way to spread the warning is a whiteboard outside the tent and a post that reaches whoever is already following them.</p>
+    <div class="gap-flex-wrap">
+      <div class="gap-text-side">
+        <span class="kicker" data-i18n="gap.kicker">The gap</span>
+        <div class="gap-grid">
+          <div>
+            <h3 class="gap-col-title" data-i18n="gap.col1Title">Trust without reach</h3>
+            <p class="gap-p" data-i18n="gap.p1">A drug-checking team finds a mislabelled sample at a festival at 1am. They have the result, the equipment, and twenty years of trust with the people at that festival. Their only way to spread the warning is a whiteboard outside the tent and a post that reaches whoever is already following them.</p>
+          </div>
+          <div>
+            <h3 class="gap-col-title" data-i18n="gap.col2Title">Reach without speed</h3>
+            <p class="gap-p" data-i18n="gap.p2">National monitoring systems have the reach, but not this mandate. They aggregate, they track trends, they issue guidance over weeks. They were never built to put a warning on thirty thousand phones tonight.</p>
+          </div>
+        </div>
+        <h2 class="gap-heading" data-i18n-html="gap.heading"><span class="gap-brand">Redaura</span> connects everyone.</h2>
       </div>
-      <div>
-        <h3 class="gap-col-title" data-i18n="gap.col2Title">Reach without speed</h3>
-        <p class="gap-p" data-i18n="gap.p2">National monitoring systems have the reach, but not this mandate. They aggregate, they track trends, they issue guidance over weeks. They were never built to put a warning on thirty thousand phones tonight.</p>
+      <div class="gap-dia-side">
+        <div class="gap-dia">
+          <div class="gd-box b1"><p class="t" data-i18n="dia.team">Drug-checking team</p><p class="s" data-i18n="dia.teamSub">Verified on-site detection</p></div>
+          <span class="gd-line l1"></span>
+          <div class="gd-hub"><span class="rip"></span><span class="rip r2"></span><svg class="sq" viewBox="0 0 20 20" width="16" height="16"><circle cx="10" cy="10" r="7.5" fill="none" stroke="var(--gd-accent)" stroke-width="4"/></svg><span class="t">Redaura</span></div>
+          <span class="gd-line-h"></span>
+          <div class="gd-box b3"><p class="t" data-i18n="dia.ews">National monitoring</p><p class="s" data-i18n="dia.ewsSub">Structured early-warning data</p></div>
+          <span class="gd-line l2"></span>
+          <div class="b2">
+            <div class="gd-box"><p class="t" data-i18n="dia.users">Geofenced app users</p><p class="s" data-i18n="dia.usersSub">Instant, anonymous reach</p></div>
+            <div class="gd-zone">
+              <span class="gd-fence-tag" data-i18n="dia.geofenceTag">Geofence boundary</span>
+              <div class="gd-field">
+            <!-- Phone dots: uniform shape and size (5px), bigger spread (210px height), variant/random distances -->
+            <i style="--x:48%;--y:3%;--d:0s"></i>
+            <i style="--x:31%;--y:7%;--d:0.02s"></i>
+            <i style="--x:67%;--y:6%;--d:0.02s"></i>
+            <i style="--x:18%;--y:13%;--d:0.05s"></i>
+            <i style="--x:43%;--y:12%;--d:0.04s"></i>
+            <i style="--x:84%;--y:14%;--d:0.05s"></i>
+            <i style="--x:59%;--y:18%;--d:0.07s"></i>
+            <i style="--x:9%;--y:22%;--d:0.09s"></i>
+            <i style="--x:33%;--y:24%;--d:0.10s"></i>
+            <i style="--x:76%;--y:23%;--d:0.10s"></i>
+            <i style="--x:51%;--y:29%;--d:0.12s"></i>
+            <i style="--x:22%;--y:33%;--d:0.14s"></i>
+            <i style="--x:91%;--y:32%;--d:0.14s"></i>
+            <i style="--x:64%;--y:37%;--d:0.16s"></i>
+            <i style="--x:41%;--y:41%;--d:0.18s"></i>
+            <i style="--x:12%;--y:44%;--d:0.19s"></i>
+            <i style="--x:78%;--y:45%;--d:0.20s"></i>
+            <i style="--x:27%;--y:51%;--d:0.23s"></i>
+            <i style="--x:56%;--y:52%;--d:0.23s"></i>
+            <i style="--x:94%;--y:54%;--d:0.24s"></i>
+            <i style="--x:5%;--y:58%;--d:0.26s"></i>
+            <i style="--x:38%;--y:61%;--d:0.27s"></i>
+            <i style="--x:71%;--y:63%;--d:0.28s"></i>
+            <i style="--x:19%;--y:69%;--d:0.31s"></i>
+            <i style="--x:49%;--y:71%;--d:0.32s"></i>
+            <i style="--x:83%;--y:72%;--d:0.32s"></i>
+            <i style="--x:31%;--y:79%;--d:0.36s"></i>
+            <i style="--x:62%;--y:81%;--d:0.37s"></i>
+            <i style="--x:11%;--y:85%;--d:0.39s"></i>
+            <i style="--x:88%;--y:86%;--d:0.39s"></i>
+            <i style="--x:44%;--y:92%;--d:0.42s"></i>
+            <i style="--x:69%;--y:93%;--d:0.43s"></i>
+            <i style="--x:23%;--y:96%;--d:0.45s"></i>
+          </div>
+        </div>
       </div>
     </div>
-    <h2 class="gap-heading" data-i18n="gap.heading">Redaura connects the two.</h2>
-    <div class="gap-dia">
-      <div class="gd-box b1"><p class="t" data-i18n="dia.team">Drug-checking team</p><p class="s" data-i18n="dia.teamSub">The result. The trust.</p></div>
-      <span class="gd-line l1"><span class="lbl" data-i18n="dia.release">Release</span></span>
-      <div class="gd-hub"><span class="sq"></span><span class="t">Redaura</span></div>
-      <span class="gd-line l2"><span class="lbl">&lt; 60 s</span></span>
-      <div class="gd-field b2">
-        <span class="rip"></span><span class="rip r2"></span>
-        <i style="--x:5%;--y:46%;--d:0s"></i>
-        <i style="--x:14%;--y:30%;--d:0.05s"></i>
-        <i style="--x:13%;--y:64%;--d:0.06s"></i>
-        <i style="--x:24%;--y:48%;--d:0.09s"></i>
-        <i style="--x:27%;--y:14%;--d:0.13s"></i>
-        <i style="--x:28%;--y:80%;--d:0.14s"></i>
-        <i style="--x:38%;--y:34%;--d:0.16s"></i>
-        <i style="--x:40%;--y:64%;--d:0.18s"></i>
-        <i style="--x:36%;--y:6%;--d:0.19s"></i>
-        <i style="--x:50%;--y:20%;--d:0.22s"></i>
-        <i style="--x:52%;--y:50%;--d:0.23s"></i>
-        <i style="--x:50%;--y:86%;--d:0.24s"></i>
-        <i style="--x:63%;--y:10%;--d:0.28s"></i>
-        <i style="--x:66%;--y:38%;--d:0.29s"></i>
-        <i style="--x:64%;--y:70%;--d:0.30s"></i>
-        <i style="--x:78%;--y:24%;--d:0.34s"></i>
-        <i style="--x:80%;--y:56%;--d:0.35s"></i>
-        <i style="--x:77%;--y:88%;--d:0.36s"></i>
-        <i style="--x:91%;--y:14%;--d:0.40s"></i>
-        <i style="--x:92%;--y:44%;--d:0.41s"></i>
-        <i style="--x:90%;--y:76%;--d:0.42s"></i>
-        <span class="cap" data-i18n="dia.phones">Every phone in the area</span>
-      </div>
-      <div class="gd-drop"><span class="v"></span><div class="gd-box b3"><p class="t" data-i18n="dia.ews">National monitoring</p><p class="s" data-i18n="dia.ewsSub">The same publication</p></div></div>
     </div>
     <script>
     (() => {

@@ -29,7 +29,7 @@
   "gap.col2Title": "広範な拡散力と欠ける即時性",
   "gap.p1": "深夜1時、フェスの現場で検査チームが偽装・危険成分を検出しました。検査結果、設備、そして長年培った信頼関係があっても、警告を伝える方法はテント前のホワイトボードや既存フォロワーへのSNS投稿に限られていました。",
   "gap.p2": "国の監視機関は広範なネットワークを持っていますが、即時警告の仕組みがありません。データの集計やトレンド分析に数週間を要します。今夜3万人のスマートフォンに即座に警告を送る設計にはなっていません。",
-  "gap.heading": "Redauraが両者をつなぎます。",
+  "gap.heading": "<span class=\"gap-brand\">Redaura</span>がすべての人をつなぎます。",
   "feat.kicker": "仕組み",
   "feat1.title": "認証された専門機関のみが配信",
   "feat1.copy": "アカウント開設前に厳格な事前認証を実施。現場のスタッフがアラートの下書きを作成し、指定管理者が承認・配信します。常に二重チェック体制で運用されます。",
@@ -140,5 +140,7 @@
     "close.line2": "You protect the community.",
     "close.cta": "Request pilot access",
     "footer.text": "Redaura — a non-profit organisation registered in the Netherlands.<br>Design, built, and hosted in the EU."
-  }
+  },
+  "dia.users": "ジオフェンスされたアプリユーザー",
+  "dia.usersSub": "位置情報に関連するアラート"
 }

@@ -29,7 +29,7 @@
   "gap.col2Title": "Dosah bez rychlosti",
   "gap.p1": "Tým testování drog objeví na festivalu v 1 ráno nebezpečně zaměněný vzorek. Mají výsledky, vybavení i dvacetiletou důvěru návštěvníků festivalu. Jejich jediným způsobem, jak varování rozšířit, je tabule před stanem a příspěvek na sociálních sítích, který uvidí jen ti, kteří je již sledují.",
   "gap.p2": "Národní monitorovací systémy mají dosah, ale nemají tento mandát. Shromažďují data, sledují trendy a vydávají doporučení v řádu týdnů. Nebyly navrženy tak, aby dnes večer doručily varování na třicet tisíc telefonů.",
-  "gap.heading": "Redaura propojuje obě strany.",
+  "gap.heading": "<span class=\"gap-brand\">Redaura</span> propojuje všechny.",
   "feat.kicker": "Jak to funguje",
   "feat1.title": "Publikují pouze ověřené organizace",
   "feat1.copy": "Akreditace probíhá ještě před vytvořením účtu. Dobrovolník na testovacím místě připraví návrh varování; pověřený vedoucí jej schválí a odešle. Vždy dva lidé.",
@@ -138,5 +138,7 @@
     "close.line2": "You protect the community.",
     "close.cta": "Request pilot access",
     "footer.text": "Redaura — a non-profit organisation registered in the Netherlands.<br>Design, built, and hosted in the EU."
-  }
+  },
+  "dia.users": "Geofencovaní uživatelé aplikace",
+  "dia.usersSub": "Upozornění relevantní pro danou lokalitu"
 }

@@ -29,7 +29,7 @@
   "gap.col2Title": "Portata senza tempestività",
   "gap.p1": "Alle 1 di notte in un festival, un team di drug checking individua un campione misetichettato. Hanno il risultato, la strumentazione e vent'anni di fiducia con le persone. Il loro unico modo per avvisare è una lavagna fuori dal tendone e un post per chi già li segue.",
   "gap.p2": "I sistemi di monitoraggio nazionali hanno la portata, ma non questo mandato. Aggregano dati, analizzano tendenze ed emettono linee guida in diverse settimane. Non sono mai stati progettati per inviare un allarme a trentamila telefoni stasera.",
-  "gap.heading": "Redaura unisce le due realtà.",
+  "gap.heading": "<span class=\"gap-brand\">Redaura</span> connette tutti.",
   "feat.kicker": "Come funziona",
   "feat1.title": "Solo organizzazioni accreditate pubblicano",
   "feat1.copy": "L'accreditamento avviene prima della creazione di un account. Un volontario al punto di test bozza l'allerta; un responsabile la autorizza. Principio del doppio controllo, sempre.",
@@ -140,5 +140,7 @@
     "close.line2": "You protect the community.",
     "close.cta": "Request pilot access",
     "footer.text": "Redaura — a non-profit organisation registered in the Netherlands.<br>Design, built, and hosted in the EU."
-  }
+  },
+  "dia.users": "Utenti dell'app geolocalizzati",
+  "dia.usersSub": "Avvisi rilevanti in base alla posizione"
 }

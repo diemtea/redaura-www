@@ -29,7 +29,7 @@
   "gap.col2Title": "Hedapena abiadurarik gabe",
   "gap.p1": "Substantziak aztertzen dituen talde batek gaueko 1etan jaialdi batean gaizki etiketatutako lagin bat aurkitzen du. Emaitza, tresneria eta jaialdiko jendearekin hogei urteko konfiantza-harremana dituzte. Abisua zabaltzeko duten bide bakarra kanpadenda kanpoko arbela eta lehendik jarraitzen dietenei bakarrik heltzen dien argitalpena dira.",
   "gap.p2": "Jarraipen-sistema nazionalek badute hedapena, baina ez agindu hau. Datuak bildu, joerak aztertu eta asteak igaro ahala gomendioak plazaratzen dituzte. Ez ziren diseinatu gaur gauean hogeita hamar mila telefonotan abisua uzteko.",
-  "gap.heading": "Redaura-k bi munduak lotzen ditu.",
+  "gap.heading": "<span class=\"gap-brand\">Redaura</span>-k guztiak lotzen ditu.",
   "feat.kicker": "Nola dabil",
   "feat1.title": "Egiaztatutako erakundeek bakarrik argitaratzen dute",
   "feat1.copy": "Akreditazioa kontua sortu baino lehen egiten da. Azterketa-guneko boluntario batek alertaren zirriborroa egiten du; izendatutako arduradun batek bidalketa baimentzen du. Beti bi pertsona.",
@@ -138,5 +138,7 @@
     "close.line2": "You protect the community.",
     "close.cta": "Request pilot access",
     "footer.text": "Redaura — a non-profit organisation registered in the Netherlands.<br>Design, built, and hosted in the EU."
-  }
+  },
+  "dia.users": "Geolokalizatutako aplikazioaren erabiltzaileak",
+  "dia.usersSub": "Kokalekurako garrantzitsuak diren abisuak"
 }

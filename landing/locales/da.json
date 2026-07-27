@@ -29,7 +29,7 @@
   "gap.col2Title": "Rækkevidde uden hastighed",
   "gap.p1": "Et stofkontrolhold opdager en fejldeklareret prøve på en festival klokken 1 om natten. De har analyseresultatet, udstyret og tyve års tillid fra festivaldeltagerne. Deres eneste måde at sprede advarslen på er et whiteboard foran teltet og et opslag på sociale medier, der kun når dem, der allerede følger dem.",
   "gap.p2": "Nationale overvågningssystemer har rækkevidden, men ikke dette mandat. De indsamler data, følger tendenser og udgiver vejledninger over uger. De blev aldrig bygget til at sende en advarsel ud på tredive tusinde mobiler i aften.",
-  "gap.heading": "Redaura forbinder de to verdener.",
+  "gap.heading": "<span class=\"gap-brand\">Redaura</span> forbinder alle.",
   "feat.kicker": "Sådan fungerer det",
   "feat1.title": "Kun godkendte organisationer udgiver",
   "feat1.copy": "Akkreditering sker inden en konto oprettes. En frivillig ved teststedet udarbejder advarslen; en udpeget ansvarlig frigiver den. Altid to personer.",
@@ -138,5 +138,7 @@
     "close.line2": "You protect the community.",
     "close.cta": "Request pilot access",
     "footer.text": "Redaura — a non-profit organisation registered in the Netherlands.<br>Design, built, and hosted in the EU."
-  }
+  },
+  "dia.users": "Geofencede app-brugere",
+  "dia.usersSub": "Placeringsrelevante advarsler"
 }

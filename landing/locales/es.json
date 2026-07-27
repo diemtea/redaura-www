@@ -29,7 +29,7 @@
   "gap.col2Title": "Alcance sin rapidez",
   "gap.p1": "Un equipo de análisis detecta una muestra mal etiquetada en un festival a la 1:00 am. Tienen los resultados, el equipo y veinte años de confianza con los asistentes. Su única vía para alertar es una pizarra frente a la tienda y una publicación para sus seguidores.",
   "gap.p2": "Los sistemas nacionales de alerta tienen el alcance, pero no este mandato. Agregan datos, analizan tendencias y publican informes semanas después. Nunca fueron diseñados para poner una alerta en treinta mil teléfonos esta misma noche.",
-  "gap.heading": "Redaura conecta ambos mundos.",
+  "gap.heading": "<span class=\"gap-brand\">Redaura</span> conecta a todos.",
   "feat.kicker": "Cómo funciona",
   "feat1.title": "Solo publican organizaciones acreditadas",
   "feat1.copy": "La acreditación se realiza antes de crear una cuenta. Un voluntario en el punto de prueba redacta la alerta; un responsable autorizado la emite. Regla de doble control, siempre.",
@@ -140,5 +140,7 @@
     "close.line2": "You protect the community.",
     "close.cta": "Request pilot access",
     "footer.text": "Redaura — a non-profit organisation registered in the Netherlands.<br>Design, built, and hosted in the EU."
-  }
+  },
+  "dia.users": "Usuarios de la app geolocalizados",
+  "dia.usersSub": "Alertas relevantes según la ubicación"
 }

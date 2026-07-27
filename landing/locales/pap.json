@@ -29,7 +29,7 @@
   "gap.col2Title": "Alcance sin velocidad",
   "gap.p1": "Pa 1'or di marduga na un festival, un equipo di test ta descubri un muestra mal etiqueta. Nan tin e resultado, e equipo y binti aña di confiansa cu e bishitantenan. Nan unico manera pa spardie e aviso ta un borchi dilanti di e tent y un publicacion cu ta yega na esnan cu ta sigui nan caba.",
   "gap.p2": "Sistemanan di monitoreo nacional tin e alcance, pero no e mandato aki. Nan ta acumula dato, analisa tendencia y saca guia despues di simannan. Nan no a wordo traha pa pone un alerta riba trinta mil telefon awe nochi.",
-  "gap.heading": "Redaura ta conecta e dosnan aki.",
+  "gap.heading": "<span class=\"gap-brand\">Redaura</span> ta conecta tur hende.",
   "feat.kicker": "Con e ta funciona",
   "feat1.title": "Solamente organizacion di confiansa ta publica",
   "feat1.copy": "Acreditacion ta sosode prome cu un cuenta ta existi. Un voluntario na e punto di test ta traha e alerta; un lider designa ta laga esaki sali. Dos persona, tur biaha.",
@@ -140,5 +140,7 @@
     "close.line2": "You protect the community.",
     "close.cta": "Request pilot access",
     "footer.text": "Redaura — a non-profit organisation registered in the Netherlands.<br>Design, built, and hosted in the EU."
-  }
+  },
+  "dia.users": "Usuarionan di app geofenced",
+  "dia.usersSub": "Alerta relevante pa e localisacion"
 }

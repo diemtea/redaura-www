@@ -1,4 +1,4 @@
-﻿{
+{
   "meta.title": "Redaura — varslingsinfrastruktur for skadereduksjon",
   "nav.how": "Slik fungerer det",
   "nav.app": "Bruker-app",
@@ -19,7 +19,7 @@
   "hero.ctaPrimary": "Be om tilgang til pilot",
   "hero.ctaDemo": "Se demo-appen",
   "hero.pushKicker": "Redaura · nå",
-  "hero.pushBody": "Nær deg: piller solgt som MDMA inneholder PMMA. Varsel fra Unity · Jellinek.",
+  "hero.pushBody": "Nær deg: piller solgt som MDMA inneholder PMMA. Varsel fra lokalt rusmiddeltestingsteam.",
   "stats.l1": "Fra godkjenning til mobiler i området",
   "stats.l2": "Språk, ingen oversettelsesforsinkelse",
   "stats.l3": "Kostnad for skadereduksjonsutgivere",
@@ -88,7 +88,7 @@
     "hero.ctaPrimary": "Request pilot access",
     "hero.ctaDemo": "See the demo app",
     "hero.pushKicker": "Redaura · now",
-    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Unity · Jellinek.",
+    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Local Drug Checking Team.",
     "stats.l1": "From approval to phones in the area",
     "stats.l2": "Languages, no translation delay",
     "stats.l3": "Cost to harm-reduction publishers",

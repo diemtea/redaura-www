@@ -1,4 +1,4 @@
-﻿{
+{
   "meta.title": "Redaura — kalteak murrizteko alerta-infrastruktura",
   "nav.how": "Nola dabil",
   "nav.app": "Aplikazioa",
@@ -19,7 +19,7 @@
   "hero.ctaPrimary": "Eskatu pilotu-sarbidea",
   "hero.ctaDemo": "Ikus demostrazio-aplikazioa",
   "hero.pushKicker": "Redaura · orain",
-  "hero.pushBody": "Zure inguruan: MDMA gisa saldutako pilulek PMMA dute. Alertaren egilea: Unity · Jellinek.",
+  "hero.pushBody": "Zure inguruan: MDMA gisa saldutako pilulek PMMA dute. Alertaren egilea: Tokiko Drogak Egiaztatzeko Taldea.",
   "stats.l1": "Onespenetik eremuko telefonoetaraino",
   "stats.l2": "Hizkuntzak, itzulpen-atzerapenik gabe",
   "stats.l3": "Egile diren erakundeentzako kostua",
@@ -88,7 +88,7 @@
     "hero.ctaPrimary": "Request pilot access",
     "hero.ctaDemo": "See the demo app",
     "hero.pushKicker": "Redaura · now",
-    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Unity · Jellinek.",
+    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Local Drug Checking Team.",
     "stats.l1": "From approval to phones in the area",
     "stats.l2": "Languages, no translation delay",
     "stats.l3": "Cost to harm-reduction publishers",

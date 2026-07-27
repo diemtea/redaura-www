@@ -1,4 +1,4 @@
-﻿{
+{
   "meta.title": "Redaura — infrastructure d'alerte pour la réduction des risques",
   "nav.how": "Comment ça marche",
   "nav.app": "Application",
@@ -19,7 +19,7 @@
   "hero.ctaPrimary": "Demander un accès pilote",
   "hero.ctaDemo": "Voir l'application démo",
   "hero.pushKicker": "Redaura · maintenant",
-  "hero.pushBody": "Près de chez vous: des pilules vendues comme MDMA contiennent du PMMA. Alerte par Unity · Jellinek.",
+  "hero.pushBody": "Près de chez vous: des pilules vendues comme MDMA contiennent du PMMA. Alerte par l'équipe locale d'analyse.",
   "stats.l1": "De la validation à la réception sur les téléphones de la zone",
   "stats.l2": "Langues, sans aucun délai de traduction",
   "stats.l3": "Coût pour les acteurs de la réduction des risques",
@@ -90,7 +90,7 @@
     "hero.ctaPrimary": "Request pilot access",
     "hero.ctaDemo": "See the demo app",
     "hero.pushKicker": "Redaura · now",
-    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Unity · Jellinek.",
+    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Local Drug Checking Team.",
     "stats.l1": "From approval to phones in the area",
     "stats.l2": "Languages, no translation delay",
     "stats.l3": "Cost to harm-reduction publishers",

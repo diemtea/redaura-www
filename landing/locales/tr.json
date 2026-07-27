@@ -1,4 +1,4 @@
-﻿{
+{
   "meta.title": "Redaura — zarar azaltımı için uyarı altyapısı",
   "nav.how": "Nasıl çalışır",
   "nav.app": "Uygulama",
@@ -19,7 +19,7 @@
   "hero.ctaPrimary": "Pilot erişimi isteyin",
   "hero.ctaDemo": "Demo uygulamayı inceleyin",
   "hero.pushKicker": "Redaura · şimdi",
-  "hero.pushBody": "Yakınınızda: MDMA olarak satılan haplar PMMA içeriyor. Uyarı: Unity · Jellinek.",
+  "hero.pushBody": "Yakınınızda: MDMA olarak satılan haplar PMMA içeriyor. Uyarı: Yerel Madde Analiz Ekibi.",
   "stats.l1": "Onay anından bölgedeki telefonlara ulaşma süresi",
   "stats.l2": "Dil desteği, çeviri gecikmesi yok",
   "stats.l3": "Zarar azaltımı yayıncıları için maliyet",
@@ -88,7 +88,7 @@
     "hero.ctaPrimary": "Request pilot access",
     "hero.ctaDemo": "See the demo app",
     "hero.pushKicker": "Redaura · now",
-    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Unity · Jellinek.",
+    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Local Drug Checking Team.",
     "stats.l1": "From approval to phones in the area",
     "stats.l2": "Languages, no translation delay",
     "stats.l3": "Cost to harm-reduction publishers",

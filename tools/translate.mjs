@@ -44,7 +44,7 @@ async function claude(texts, lang) {
       model: 'claude-sonnet-4-20250514', max_tokens: 4096,
       messages: [{ role: 'user', content:
         `Translate this JSON array of UI strings from English to ${TARGETS[lang]} (${lang}) for a harm-reduction alert platform. ` +
-        `Keep HTML tags, the Redaura brand name, and org names (Unity, Jellinek, Trimbos, DIMS, DanceSafe, NEXT Distro) untranslated. ` +
+        `Keep HTML tags, the Redaura brand name, and fictional org names (CheckPoint Network, Vanguard Testing, Aura Harm Reduction) untranslated. ` +
         `Reply with ONLY the translated JSON array.\n${JSON.stringify(texts)}` }],
     }),
   });

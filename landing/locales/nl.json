@@ -1,4 +1,4 @@
-﻿{
+{
   "meta.title": "Redaura — alert-infrastructuur voor harm reduction",
   "nav.how": "Hoe het werkt",
   "nav.app": "Gebruikersapp",
@@ -19,7 +19,7 @@
   "hero.ctaPrimary": "Vraag pilottoegang aan",
   "hero.ctaDemo": "Bekijk de demo-app",
   "hero.pushKicker": "Redaura · nu",
-  "hero.pushBody": "Bij jou in de buurt: pillen verkocht als MDMA bevatten PMMA. Melding van Unity · Jellinek.",
+  "hero.pushBody": "Bij jou in de buurt: pillen verkocht als MDMA bevatten PMMA. Melding van Lokaal Drugstestteam.",
   "stats.l1": "Van goedkeuring tot melding op telefoons in het gebied",
   "stats.l2": "Talen, zonder vertaalvertraging",
   "stats.l3": "Kosten voor harm-reductionorganisaties",
@@ -90,7 +90,7 @@
     "hero.ctaPrimary": "Request pilot access",
     "hero.ctaDemo": "See the demo app",
     "hero.pushKicker": "Redaura · now",
-    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Unity · Jellinek.",
+    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Local Drug Checking Team.",
     "stats.l1": "From approval to phones in the area",
     "stats.l2": "Languages, no translation delay",
     "stats.l3": "Cost to harm-reduction publishers",

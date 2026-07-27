@@ -1,4 +1,4 @@
-﻿{
+{
   "meta.title": "Redaura — infraestructura di alerta pa reduccion di daño",
   "nav.how": "Con e ta funciona",
   "nav.app": "App pa usuario",
@@ -19,7 +19,7 @@
   "hero.ctaPrimary": "Pidi acceso pa piloto",
   "hero.ctaDemo": "Mira e demo app",
   "hero.pushKicker": "Redaura · awo",
-  "hero.pushBody": "Cerca di bo: pildornan bendi como MDMA ta contene PMMA. Alerta pa Unity · Jellinek.",
+  "hero.pushBody": "Cerca di bo: pildornan bendi como MDMA ta contene PMMA. Alerta pa ekipo lokal di tèst di droga.",
   "stats.l1": "For di aprobacion te na telefon den e area",
   "stats.l2": "Idiomanan, sin tardanza di traduccion",
   "stats.l3": "Costo pa organizacionnan di reduccion di daño",
@@ -90,7 +90,7 @@
     "hero.ctaPrimary": "Request pilot access",
     "hero.ctaDemo": "See the demo app",
     "hero.pushKicker": "Redaura · now",
-    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Unity · Jellinek.",
+    "hero.pushBody": "Near you: pills sold as MDMA contain PMMA. Alert by Local Drug Checking Team.",
     "stats.l1": "From approval to phones in the area",
     "stats.l2": "Languages, no translation delay",
     "stats.l3": "Cost to harm-reduction publishers",

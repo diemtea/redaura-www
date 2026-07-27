@@ -18,6 +18,8 @@
     body { margin: 0; background: transparent; overflow: hidden; }
     @keyframes sp-push { 0% { transform: translateY(-130%); opacity: 0; } 70% { transform: translateY(4px); } 100% { transform: none; opacity: 1; } }
     @keyframes sp-screen { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    @keyframes nav-beat { 0%, 12%, 100% { transform: none; } 4% { transform: scale(1.3); } }
+    @keyframes nav-rip { 0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.8; } 12% { transform: translate(-50%, -50%) scale(8); opacity: 0; } 100% { transform: translate(-50%, -50%) scale(8); opacity: 0; } }
   </style>
 </helmet>
 <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px;">
@@ -30,7 +32,11 @@
           <div style="padding: 14px 18px 12px; border-bottom: 2px solid var(--color-divider);">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 9px;">
               <div style="display: flex; align-items: center; gap: 9px;">
-                <span style="width: 10px; height: 10px; background: var(--color-accent);"></span>
+                <span style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; flex-shrink: 0;">
+                  <span style="position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: 0; border: 1.5px solid var(--color-accent); border-radius: 50%; opacity: 0; pointer-events: none; transform: translate(-50%, -50%); animation: nav-rip 7s ease-out 3.16s infinite;"></span>
+                  <span style="position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: 0; border: 1.5px solid var(--color-accent); border-radius: 50%; opacity: 0; pointer-events: none; transform: translate(-50%, -50%); animation: nav-rip 7s ease-out 3.35s infinite;"></span>
+                  <svg viewBox="0 0 20 20" width="16" height="16" style="display: block; position: relative; z-index: 2; animation: nav-beat 7s ease 3.16s infinite;"><circle cx="10" cy="10" r="7.5" fill="none" stroke="var(--color-accent)" stroke-width="4"/></svg>
+                </span>
                 <span style="font-family: var(--font-heading); font-weight: 800; font-size: 19px; letter-spacing: -0.01em;">Red<span style="color: var(--color-accent);">aura</span></span>
               </div>
               <select value="{{ lang }}" onChange="{{ setLang }}" aria-label="Language" style="appearance: none; -webkit-appearance: none; border: 2px solid var(--color-text); border-radius: 0; background: transparent; color: var(--color-text); font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 8px; cursor: pointer;">

@@ -228,6 +228,16 @@ body::after {
   color: var(--color-bg);
   margin: var(--half) 0 0; }
 
+/* — the gap section — */
+.gap { padding: calc(3 * var(--leading)) 0 calc(2.5 * var(--leading)); border-bottom: 2px solid var(--color-divider); }
+.gap-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--leading) clamp(24px, 4vw, 72px); margin-top: calc(0.5 * var(--leading)); }
+.gap-col-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; line-height: var(--leading); letter-spacing: -0.01em; margin: 0 0 calc(0.5 * var(--leading)); text-box: trim-both cap alphabetic; }
+.gap-p { font-size: 16px; line-height: var(--leading); color: color-mix(in srgb, var(--color-text) 82%, transparent); margin: 0; max-width: 52ch; text-box: trim-both cap alphabetic; }
+.gap-heading { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(28px, 3.6vw, 44px); line-height: clamp(32px, 3.8vw, 48px); letter-spacing: -0.015em; margin: calc(1.5 * var(--leading)) 0 0; text-box: trim-both cap alphabetic; }
+@media (max-width: 720px) {
+  .gap-grid { grid-template-columns: 1fr; }
+}
+
 /* — feature rows (the deck's ruled-toc grammar: 2px rules ON the seams,
    red square marks hanging at the numbers — drawn structure, no cards) — */
 .features { padding: calc(3 * var(--leading)) 0 calc(2.5 * var(--leading)); }
@@ -381,7 +391,7 @@ body[data-baselines]::after {
 
   <section class="hero">
     <h1 class="display"><span class="line" style="color: var(--color-accent)" data-i18n="hero.line1">One bad batch.</span> <span class="line"><span data-i18n="hero.line2pre">Alert an entire</span> <span class="ha-word">comunity</span></span></h1>
-    <p class="sub" data-i18n-html="hero.sub"><b>Redaura is an open-source public health infrastructure for harm reduction services.</b><br><br>Test the sample, drop a pin, hit publish — everyone inside the geofence gets the warning, credited to your organization by name. You bring the trust and the data. We bring the tech, free.</p>
+    <p class="sub" data-i18n="hero.sub">Redaura lets drug-checking and harm-reduction organizations send a warning to every phone in a defined area, in seconds, in the reader's own language, credited to their organization by name.</p>
     <div class="row">
       <a href="#pilot" class="btn btn-primary" data-i18n="hero.ctaPrimary">Request pilot access</a>
       <a href="#app" class="btn btn-ghost" data-i18n="hero.ctaDemo">See the demo app</a>
@@ -474,46 +484,61 @@ body[data-baselines]::after {
 <section class="stats" aria-label="Redaura, by the numbers">
   <div class="wrap">
     <div class="grid">
-      <div><p class="stat-num">200k+</p><p class="stat-label" data-i18n="stats.l1">Downloads of one venue's alert feed — demand is proven</p></div>
-      <div><p class="stat-num">€0</p><p class="stat-label" data-i18n="stats.l2">Cost to your organization, ever</p></div>
-      <div><p class="stat-num">60s</p><p class="stat-label" data-i18n="stats.l3">From publish to phones in the fence</p></div>
-      <div><p class="stat-num">0</p><p class="stat-label" data-i18n="stats.l4">Personal data retained</p></div>
+      <div><p class="stat-num">&lt; 60s</p><p class="stat-label" data-i18n="stats.l1">From approval to phones in the area</p></div>
+      <div><p class="stat-num">20+</p><p class="stat-label" data-i18n="stats.l2">Languages, no translation delay</p></div>
+      <div><p class="stat-num">€0</p><p class="stat-label" data-i18n="stats.l3">Cost to harm-reduction publishers</p></div>
+      <div><p class="stat-num">0 bytes</p><p class="stat-label" data-i18n="stats.l4">Location data leaving user devices</p></div>
     </div>
   </div>
 </section>
 
 <div class="wrap">
 
+  <section class="gap" id="gap">
+    <span class="kicker" data-i18n="gap.kicker">The gap</span>
+    <div class="gap-grid">
+      <div>
+        <h3 class="gap-col-title" data-i18n="gap.col1Title">Trust without reach</h3>
+        <p class="gap-p" data-i18n="gap.p1">A drug-checking team finds a mislabelled sample at a festival at 1am. They have the result, the equipment, and twenty years of trust with the people at that festival. Their only way to spread the warning is a whiteboard outside the tent and a post that reaches whoever is already following them.</p>
+      </div>
+      <div>
+        <h3 class="gap-col-title" data-i18n="gap.col2Title">Reach without speed</h3>
+        <p class="gap-p" data-i18n="gap.p2">National monitoring systems have the reach, but not this mandate. They aggregate, they track trends, they issue guidance over weeks. They were never built to put a warning on thirty thousand phones tonight.</p>
+      </div>
+    </div>
+    <h2 class="gap-heading" data-i18n="gap.heading">Redaura connects the two.</h2>
+  </section>
+
   <section class="features" id="product">
     <span class="kicker" data-i18n="feat.kicker">How it works</span>
     <div class="feature">
       <p class="f-num">01</p>
-      <h2 class="f-title" data-i18n="feat1.title">You publish</h2>
-      <p class="f-copy" data-i18n-html="feat1.copy">Log in to your dashboard. Upload the test result, draw a boundary around the festival or city, and hit publish. Alerts are instantly formatted to international public health standards (CAP). The whole process takes exactly as long as it took to read this.</p>
+      <h2 class="f-title" data-i18n="feat1.title">Only vetted organizations publish</h2>
+      <p class="f-copy" data-i18n="feat1.copy">Accreditation happens before an account exists. A volunteer at the testing point drafts the alert; a designated lead releases it. Two people, every time.</p>
     </div>
     <div class="feature">
       <p class="f-num">02</p>
-      <h2 class="f-title" data-i18n="feat2.title">We deliver</h2>
-      <p class="f-copy" data-i18n="feat2.copy">Every phone inside that fence gets an instant push notification, credited to your organization. Even if someone is just visiting for the weekend, their phone already knows who to trust.</p>
+      <h2 class="f-title" data-i18n="feat2.title">Structured alerts, not free text</h2>
+      <p class="f-copy" data-i18n="feat2.copy">Alerts are built from fixed fields, not written as prose. Every value is expert-reviewed in 20+ languages, so a Dutch team's warning arrives natively in Polish or German with no translation step and no room for slang or ambiguity.</p>
     </div>
     <div class="feature">
       <p class="f-num">03</p>
       <h2 class="f-title" data-i18n="feat3.title">Nobody is tracked</h2>
-      <p class="f-copy" data-i18n="feat3.copy">Geofence matching happens locally on the user's device. No accounts, no location pings home, and no logs to subpoena. Privacy isn't a setting we offer. It's the architecture.</p>
+      <p class="f-copy" data-i18n="feat3.copy">Matching happens on the device — the phone works out whether it's inside an alert area. Nothing is transmitted, nothing is logged, nothing can be subpoenaed. That's the architecture, not a setting.</p>
     </div>
     <div class="feature">
       <p class="f-num">04</p>
-      <h2 class="f-title" data-i18n="feat4.title">Native in every language</h2>
-      <p class="f-copy" data-i18n="feat4.copy">You publish in your language; the alert arrives in theirs. Translation happens on delivery, so a warning written in Dutch reads flawlessly in English, German, or Polish. No extra work for your team.</p>
+      <h2 class="f-title" data-i18n="feat4.title">The data goes both ways</h2>
+      <p class="f-copy" data-i18n="feat4.copy">Because alerts are structured, the same publication that reaches phones tonight can reach national monitoring tonight, in a format their systems already read. The publisher decides what goes where.</p>
     </div>
   </section>
 
   <section class="split" id="app">
     <div class="split-copy">
       <span class="kicker" data-i18n="app.kicker">The demo app — live prototype</span>
-      <h2 class="split-title" data-i18n="app.title">One app. Your name on every alert.</h2>
-      <p class="note" data-i18n="app.note1">Users download a single global app. The data on it is yours: every alert carries your organization's name, your photo, your lab numbers. The trust you built on the ground travels with the warning.</p>
-      <p class="note" data-i18n-html="app.note2"><b>Try it! Tap an alert to open it.</b> A push lands a few seconds in, or replay it under the phone.</p>
+      <h2 class="split-title" data-i18n="app.title">One app.</h2>
+      <p class="note" data-i18n="app.note1">Users download a single global client; the alerts on it belong to the organizations that publish them — their name, their logo, their lab reference. The trust built on the ground travels with the warning.</p>
+      <p class="note" data-i18n="app.note2">Tap an alert to open it. A push lands a few seconds later, or replay it under the phone.</p>
     </div>
     <div class="split-figure">
       <iframe class="app-frame" src="../Redaura%20App.dc.html" title="Redaura user app — live prototype" loading="lazy"></iframe>
@@ -533,15 +558,18 @@ body[data-baselines]::after {
 
 <section class="pilot" id="pilot">
   <div class="wrap">
-    <span class="kicker" data-i18n="pilot.kicker">The pilot</span>
-    <h2 class="pilot-title" data-i18n="pilot.title">Three yeses start the build.</h2>
-    <p class="note" data-i18n="pilot.note">We are building this infrastructure for networks like Unity, DIMS, and DanceSafe. If your organization would publish local data on a free, secure platform - let us know. A simple letter of intent is all we need to unlock our first round of public-interest funding.</p>
+    <span class="kicker" data-i18n="pilot.kicker">Where we are</span>
+    <h2 class="pilot-title" data-i18n="pilot.title">Working prototype. Open protocol.</h2>
+    <p class="note" data-i18n-html="pilot.note">A non-profit registered in the Netherlands, built and hosted in the EU. We're looking for three founding partners — drug-checking services, peer-support networks, or regional health bodies — to shape this before it ships. Pilot partners sit on the governance board and set the accreditation rules.<br><br>A one-page letter of intent is all we need. Non-binding, no funding commitment, no exclusivity.</p>
     <form class="pilot-form" id="pilot-form">
+      <div class="field"><label for="pf-name" data-i18n="pilot.name">Name</label><input class="input" id="pf-name" name="name" required /></div>
       <div class="field"><label for="pf-org" data-i18n="pilot.org">Organization</label><input class="input" id="pf-org" name="org" required /></div>
       <div class="field"><label for="pf-email" data-i18n="pilot.email">Work email</label><input class="input" id="pf-email" name="email" type="email" required /></div>
       <button type="submit" class="btn btn-primary" data-i18n="pilot.submit">Request pilot access</button>
     </form>
+    <p class="pilot-error" id="pilot-error" style="display:none; color: #ff6b6b; margin-top: 12px; font-size: 14.5px;"></p>
     <p class="pilot-done"><span class="sq"></span><span data-i18n="pilot.done">Received. We'll reply within two days — from a human.</span></p>
+    <p class="pilot-follow" data-i18n="pilot.follow" style="margin-top: calc(1.5 * var(--leading)); font-size: 14.5px; color: color-mix(in srgb, var(--color-bg) 65%, transparent);">Not an organization but want to follow along? Leave an email — updates roughly monthly.</p>
   </div>
 </section>
 
@@ -568,11 +596,61 @@ body[data-baselines]::after {
     if ((e.key === 'b' || e.key === 'B') && !e.metaKey && !e.ctrlKey && !e.altKey) document.body.toggleAttribute('data-baselines');
   });
 })();
-// Pilot form — frontend mock: confirm without sending anywhere.
-document.getElementById('pilot-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  document.getElementById('pilot').setAttribute('data-sent', '');
-});
+// Pilot form — submission handler: send to /api/pilot-signup via Resend backend
+(() => {
+  const form = document.getElementById('pilot-form');
+  if (!form) return;
+  const errorEl = document.getElementById('pilot-error');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (errorEl) errorEl.style.display = 'none';
+
+    const nameInput = document.getElementById('pf-name');
+    const orgInput = document.getElementById('pf-org');
+    const emailInput = document.getElementById('pf-email');
+    const name = nameInput ? nameInput.value.trim() : '';
+    const org = orgInput ? orgInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim() : '';
+
+    if (!org || !email) return;
+
+    const originalText = submitBtn ? submitBtn.textContent : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+    }
+
+    try {
+      const res = await fetch('/api/pilot-signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, org, email }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.success) {
+        document.getElementById('pilot').setAttribute('data-sent', '');
+        form.reset();
+      } else {
+        throw new Error(data.error || 'Failed to send request. Please try again.');
+      }
+    } catch (err) {
+      console.error('Pilot signup error:', err);
+      if (errorEl) {
+        errorEl.textContent = err.message || 'An error occurred. Please try again.';
+        errorEl.style.display = 'block';
+      }
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    }
+  });
+})();
 // Page grid spotlight — the strong grid layer follows the pointer anywhere.
 (() => {
   const root = document.body;

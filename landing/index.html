@@ -333,7 +333,35 @@ body::after {
   .hero-art { width: min(340px, 40vw); }
   .ha-push { left: calc(50% + 14px); top: calc(50% - 112px); max-width: 220px; }
 }
-@media (max-width: 640px) { .hero-art, .hero-art-ctrl { display: none !important; } .hero p.sub { max-width: var(--measure); } }
+@media (max-width: 640px) {
+  .hero { display: flex; flex-direction: column; }
+  .hero-art {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: min(320px, 85vw);
+    height: auto;
+    margin: calc(1.5 * var(--leading)) auto 0;
+    align-self: center;
+    display: block !important;
+  }
+  .hero-art-ctrl {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 10px;
+    align-self: center;
+    display: block !important;
+  }
+  .ha-push {
+    left: 50%;
+    top: calc(50% - 100px);
+    transform: translateX(-50%) translateY(0);
+    max-width: 210px;
+  }
+  .hero p.sub { max-width: var(--measure); }
+}
 @media (prefers-reduced-motion: reduce) {
   .ha-fence, .ha-fill, .ha-ph, .ha-pin, .ha-push, .ha-label { animation: none; }
   .ha-fence { stroke-dashoffset: 0; }
@@ -1463,8 +1491,9 @@ body[data-baselines]::after {
     l1Timer = setTimeout(() => { if (!isPaused()) animPktV(l1Pkt, 0); }, nextDelay - 560);
     beatTimer = setTimeout(beat, nextDelay);
   };
-  // First beat: pre-schedule l1 so it arrives at t=3000ms
+  // First beat: pre-schedule l1 and start initial beat loop at t=3000ms
   l1Timer = setTimeout(() => { if (!isPaused()) animPktV(l1Pkt, 0); }, 3000 - 560);
+  beatTimer = setTimeout(beat, 3000);
   // Mobile navigation & bottom bar controller
   const navToggle = document.getElementById('nav-toggle');
   const navMenu = document.getElementById('nav-menu');

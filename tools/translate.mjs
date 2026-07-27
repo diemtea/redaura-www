@@ -20,7 +20,7 @@ const TARGETS = {
   ro: 'Română', bg: 'Български', el: 'Ελληνικά', da: 'Dansk', sv: 'Svenska',
   nb: 'Norsk', fi: 'Suomi', et: 'Eesti', lv: 'Latviešu', lt: 'Lietuvių',
   sl: 'Slovenščina', tr: 'Türkçe', uk: 'Українська', ja: '日本語',
-  ar: 'العربية', pap: 'Papiamento', zh: '中文', // pap: no DeepL support — uses the Claude fallback
+  ar: 'العربية', pap: 'Papiamento', zh: '中文', eu: 'Euskara', ca: 'Català',
 };
 const DEEPL_CODE = { nb: 'NB', pt: 'PT-PT' }; // codes DeepL spells differently
 
@@ -86,9 +86,10 @@ for (const lang of Object.keys(TARGETS)) {
   console.log(`${lang}: translated ${stale.length} strings`);
 }
 
-// regenerate the manifest the runtime picker reads
 const manifest = [{ code: 'en', label: 'English' },
-  ...Object.entries(TARGETS).map(([code, label]) => ({ code, label }))]
-  .filter((l) => existsSync(join(LOCALES, `${l.code}.json`)));
+  ...Object.entries(TARGETS)
+    .map(([code, label]) => ({ code, label }))
+    .filter((l) => l.code !== 'en' && existsSync(join(LOCALES, `${l.code}.json`)))
+    .sort((a, b) => a.label.localeCompare(b.label, 'en'))];
 writeFileSync(join(LOCALES, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 console.log(`manifest: ${manifest.length} languages`);

@@ -238,6 +238,119 @@ body::after {
   .gap-grid { grid-template-columns: 1fr; }
 }
 
+/* — alert-route schematic component — */
+.gap-dia {
+  --gd-bg: var(--color-bg);
+  --gd-ink: var(--color-text);
+  --gd-accent: var(--color-accent);
+  --gd-accent-deep: var(--color-accent-700);
+  --gd-dot: var(--color-neutral-400);
+  display: grid; grid-template-columns: auto minmax(48px, 1fr) auto minmax(48px, 1fr) auto;
+  align-items: center; max-width: 860px; margin-top: calc(2 * var(--leading));
+}
+.gd-box { position: relative; border: 2px solid var(--gd-ink); padding: 12px 16px 13px; background: var(--gd-bg); }
+.gd-box .t { font-weight: 700; font-size: 13.5px; line-height: 18px; margin: 0; }
+.gd-box .s { font-size: 10.5px; line-height: 14px; letter-spacing: 0.07em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--gd-ink) 62%, transparent); margin: 4px 0 0; }
+.gd-line { position: relative; height: 2px; background: var(--gd-ink); min-width: 48px; }
+.gd-line .lbl { position: absolute; bottom: 7px; inset-inline-start: 50%; transform: translateX(-50%);
+  font-size: 9.5px; line-height: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
+  white-space: nowrap; color: color-mix(in srgb, var(--gd-ink) 60%, transparent); }
+.gd-line::after { content: ""; position: absolute; top: -3px; inset-inline-start: 0; width: 8px; height: 8px;
+  background: var(--gd-accent); opacity: 0; }
+.gd-hub { display: grid; justify-items: center; gap: 7px; padding: 0 12px; }
+.gd-hub .sq { width: 16px; height: 16px; background: var(--gd-accent); }
+.gd-hub .t { font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.gd-drop { grid-column: 3; grid-row: 2; justify-self: center; display: grid; justify-items: center; }
+.gd-drop .v { position: relative; width: 2px; height: 26px; background: var(--gd-ink); }
+.gd-drop .v::after { content: ""; position: absolute; inset-inline-start: -3px; top: 0; width: 8px; height: 8px;
+  background: var(--gd-accent); opacity: 0; }
+.gd-field { position: relative; width: clamp(150px, 22vw, 210px); height: 110px; }
+.gd-field i { position: absolute; inset-inline-start: var(--x); top: var(--y); width: 5px; height: 5px;
+  border-radius: 50%; background: var(--gd-dot); }
+.gd-field .rip { position: absolute; inset-inline-start: -6px; top: 50%; width: 12px; height: 12px;
+  margin-top: -6px; border: 2px solid var(--gd-accent); border-radius: 50%; opacity: 0; }
+.gd-field .cap { position: absolute; top: calc(100% + 8px); inset-inline-start: 0; font-size: 10.5px;
+  line-height: 14px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600;
+  white-space: nowrap; color: color-mix(in srgb, var(--gd-ink) 62%, transparent); }
+.gap-dia.pre .gd-box, .gap-dia.pre .gd-hub, .gap-dia.pre .gd-field, .gap-dia.pre .gd-line .lbl { opacity: 0; transform: translateY(8px); }
+.gap-dia.pre .gd-line { transform: scaleX(0); transform-origin: 0 50%; }
+[dir='rtl'] .gap-dia.pre .gd-line { transform-origin: 100% 50%; }
+.gap-dia.pre .gd-drop .v { transform: scaleY(0); transform-origin: top; }
+.gap-dia .gd-box, .gap-dia .gd-hub, .gap-dia .gd-field, .gap-dia .gd-line, .gap-dia .gd-drop .v, .gap-dia .gd-line .lbl {
+  transition: opacity 0.45s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+.gap-dia.play .gd-box, .gap-dia.play .gd-hub, .gap-dia.play .gd-field, .gap-dia.play .gd-line,
+.gap-dia.play .gd-drop .v, .gap-dia.play .gd-line .lbl { opacity: 1; transform: none; }
+.gap-dia.play .b1 { transition-delay: 0s; }
+.gap-dia.play .l1 { transition-delay: 0.25s; }
+.gap-dia.play .l1 .lbl { transition-delay: 0.55s; }
+.gap-dia.play .gd-hub { transition-delay: 0.6s; }
+.gap-dia.play .l2 { transition-delay: 0.85s; }
+.gap-dia.play .l2 .lbl { transition-delay: 1.15s; }
+.gap-dia.play .b2 { transition-delay: 1.2s; }
+.gap-dia.play .gd-drop .v { transition-delay: 1.5s; }
+.gap-dia.play .b3 { transition-delay: 1.7s; }
+.gap-dia.play .l1::after { animation: gd-pk 7s linear 2.6s infinite; }
+.gap-dia.play .l2::after { animation: gd-pk 7s linear 3.8s infinite; }
+.gap-dia.play .gd-drop .v::after { animation: gd-pkv 7s linear 5s infinite; }
+.gap-dia.play .gd-hub .sq { animation: gd-beat 7s ease 2.6s infinite; }
+.gap-dia.play .b3 { animation: gd-flash 7s ease 4.6s infinite; }
+.gap-dia.play .gd-field i { animation: gd-dot 7s ease calc(4.7s + var(--d)) infinite; }
+.gap-dia.play .gd-field .rip { animation: gd-rip 7s ease-out 4.7s infinite; }
+.gap-dia.play .gd-field .rip.r2 { animation-delay: 4.9s; }
+@keyframes gd-pk {
+  0% { inset-inline-start: 0; opacity: 0; }
+  1.5% { opacity: 1; }
+  13% { inset-inline-start: calc(100% - 8px); opacity: 1; }
+  15% { opacity: 0; }
+  100% { inset-inline-start: calc(100% - 8px); opacity: 0; }
+}
+@keyframes gd-pkv {
+  0% { top: 0; opacity: 0; }
+  1.5% { opacity: 1; }
+  8% { top: calc(100% - 8px); opacity: 1; }
+  10% { opacity: 0; }
+  100% { top: calc(100% - 8px); opacity: 0; }
+}
+@keyframes gd-beat { 0%, 13%, 24%, 100% { transform: none; } 17% { transform: scale(1.4); } }
+@keyframes gd-flash {
+  0%, 12%, 20%, 100% { background-color: var(--gd-bg); }
+  14% { background-color: color-mix(in srgb, var(--gd-accent) 10%, var(--gd-bg)); }
+}
+@keyframes gd-dot {
+  0%, 100% { background: var(--gd-dot); transform: none; }
+  2% { background: var(--gd-accent); transform: scale(2.2); }
+  6% { background: var(--gd-ink); transform: none; }
+  80% { background: var(--gd-ink); }
+  90% { background: var(--gd-dot); }
+}
+@keyframes gd-rip {
+  0% { transform: scale(0.3); opacity: 0.6; }
+  12% { transform: scale(9); opacity: 0; }
+  100% { transform: scale(9); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gap-dia.pre .gd-box, .gap-dia.pre .gd-hub, .gap-dia.pre .gd-field, .gap-dia.pre .gd-line .lbl { opacity: 1; transform: none; }
+  .gap-dia.pre .gd-line, .gap-dia.pre .gd-drop .v { transform: none; }
+  .gap-dia.play .l1::after, .gap-dia.play .l2::after, .gap-dia.play .gd-drop .v::after,
+  .gap-dia.play .gd-hub .sq, .gap-dia.play .b3,
+  .gap-dia.play .gd-field i, .gap-dia.play .gd-field .rip { animation: none; }
+  .gap-dia .gd-field i { background: var(--gd-ink); }
+}
+@media (max-width: 720px) {
+  .gap-dia { grid-template-columns: auto; justify-items: start; }
+  .gd-line { width: 2px; height: 26px; min-width: 0; margin-inline-start: 22px; }
+  .gap-dia.pre .gd-line { transform: scaleY(0); transform-origin: top; }
+  .gd-line .lbl, .gap-dia.play .gd-line .lbl { bottom: auto; top: 50%; inset-inline-start: 12px; transform: translateY(-50%); }
+  .gap-dia.pre .gd-line .lbl { opacity: 0; transform: translateY(-50%); }
+  .gd-line::after, .gd-drop .v::after { display: none; }
+  .gap-dia.play .gd-hub .sq, .gap-dia.play .b3 { animation: none; }
+  .gd-field { margin-block: 4px 18px; }
+  .gd-hub { grid-auto-flow: column; align-items: center; gap: 9px; padding: 0; }
+  .gd-drop { grid-column: 1; grid-row: auto; justify-self: start; justify-items: start; }
+  .gd-drop .v { margin-inline-start: 22px; }
+}
+
 /* — feature rows (the deck's ruled-toc grammar: 2px rules ON the seams,
    red square marks hanging at the numbers — drawn structure, no cards) — */
 .features { padding: calc(3 * var(--leading)) 0 calc(2.5 * var(--leading)); }
@@ -529,6 +642,49 @@ body[data-baselines]::after {
       </div>
     </div>
     <h2 class="gap-heading" data-i18n="gap.heading">Redaura connects the two.</h2>
+    <div class="gap-dia">
+      <div class="gd-box b1"><p class="t" data-i18n="dia.team">Drug-checking team</p><p class="s" data-i18n="dia.teamSub">The result. The trust.</p></div>
+      <span class="gd-line l1"><span class="lbl" data-i18n="dia.release">Release</span></span>
+      <div class="gd-hub"><span class="sq"></span><span class="t">Redaura</span></div>
+      <span class="gd-line l2"><span class="lbl">&lt; 60 s</span></span>
+      <div class="gd-field b2">
+        <span class="rip"></span><span class="rip r2"></span>
+        <i style="--x:5%;--y:46%;--d:0s"></i>
+        <i style="--x:14%;--y:30%;--d:0.05s"></i>
+        <i style="--x:13%;--y:64%;--d:0.06s"></i>
+        <i style="--x:24%;--y:48%;--d:0.09s"></i>
+        <i style="--x:27%;--y:14%;--d:0.13s"></i>
+        <i style="--x:28%;--y:80%;--d:0.14s"></i>
+        <i style="--x:38%;--y:34%;--d:0.16s"></i>
+        <i style="--x:40%;--y:64%;--d:0.18s"></i>
+        <i style="--x:36%;--y:6%;--d:0.19s"></i>
+        <i style="--x:50%;--y:20%;--d:0.22s"></i>
+        <i style="--x:52%;--y:50%;--d:0.23s"></i>
+        <i style="--x:50%;--y:86%;--d:0.24s"></i>
+        <i style="--x:63%;--y:10%;--d:0.28s"></i>
+        <i style="--x:66%;--y:38%;--d:0.29s"></i>
+        <i style="--x:64%;--y:70%;--d:0.30s"></i>
+        <i style="--x:78%;--y:24%;--d:0.34s"></i>
+        <i style="--x:80%;--y:56%;--d:0.35s"></i>
+        <i style="--x:77%;--y:88%;--d:0.36s"></i>
+        <i style="--x:91%;--y:14%;--d:0.40s"></i>
+        <i style="--x:92%;--y:44%;--d:0.41s"></i>
+        <i style="--x:90%;--y:76%;--d:0.42s"></i>
+        <span class="cap" data-i18n="dia.phones">Every phone in the area</span>
+      </div>
+      <div class="gd-drop"><span class="v"></span><div class="gd-box b3"><p class="t" data-i18n="dia.ews">National monitoring</p><p class="s" data-i18n="dia.ewsSub">The same publication</p></div></div>
+    </div>
+    <script>
+    (() => {
+      const dia = document.querySelector('#gap .gap-dia');
+      if (!dia || !('IntersectionObserver' in window)) return;
+      dia.classList.add('pre');
+      const io = new IntersectionObserver((es) => {
+        if (es[0].isIntersecting) { dia.classList.add('play'); io.disconnect(); }
+      }, { threshold: 0.4 });
+      io.observe(dia);
+    })();
+    </script>
   </section>
 
   <section class="features" id="product">

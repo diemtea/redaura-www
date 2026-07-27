@@ -20,7 +20,7 @@ const TARGETS = {
   ro: 'Română', bg: 'Български', el: 'Ελληνικά', da: 'Dansk', sv: 'Svenska',
   nb: 'Norsk', fi: 'Suomi', et: 'Eesti', lv: 'Latviešu', lt: 'Lietuvių',
   sl: 'Slovenščina', tr: 'Türkçe', uk: 'Українська', ja: '日本語',
-  ar: 'العربية', pap: 'Papiamentu', zh: '中文', // pap: no DeepL support — uses the Claude fallback
+  ar: 'العربية', pap: 'Papiamento', zh: '中文', // pap: no DeepL support — uses the Claude fallback
 };
 const DEEPL_CODE = { nb: 'NB', pt: 'PT-PT' }; // codes DeepL spells differently
 
